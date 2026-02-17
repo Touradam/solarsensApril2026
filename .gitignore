@@ -7,8 +7,8 @@ venv/
 .venv/
 env/
 
-# Streamlit
-.streamlit/
+# Streamlit (keep .streamlit/config.toml for deployment)
+# .streamlit/
 
 # IDE
 .idea/
