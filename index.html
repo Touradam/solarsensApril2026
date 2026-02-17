@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Solar Sense | Solar Sense is a hardware-AI platform for next-generation solar module intelligence, with the mission to make solar technology smarter, safer, and more sustainable.</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <!-- SECTION A — Sticky Nav -->
+  <header class="nav" role="banner">
+    <div class="nav-inner">
+      <a href="#hero" class="nav-logo">
+        <img src="assets/SolarSensLogo1.jpg" alt="Solar Sense" width="40" height="40">
+        <span data-en="Solar Sense" data-zh="Solar Sense">Solar Sense</span>
+      </a>
+      <nav class="nav-links" aria-label="Main navigation">
+        <a href="#problem" data-en="Problem" data-zh="问题">Problem</a>
+        <a href="#technology" data-en="Technology" data-zh="技术">Technology</a>
+        <a href="#" data-dashboard-link data-en="Live Demo" data-zh="现场演示">Live Demo</a>
+        <a href="#roadmap" data-en="Roadmap" data-zh="路线图">Roadmap</a>
+        <a href="#team" data-en="Team" data-zh="团队">Team</a>
+        <a href="#contact" data-en="Contact" data-zh="联系">Contact</a>
+      </nav>
+      <div class="nav-actions">
+        <div class="lang-toggle" role="group" aria-label="Language">
+          <button type="button" class="lang-btn active" data-lang="en" aria-pressed="true">EN</button>
+          <button type="button" class="lang-btn" data-lang="zh" aria-pressed="false">中文</button>
+        </div>
+        <a href="#contact" class="btn btn-primary" data-en="Request a Meeting" data-zh="预约会面">Request a Meeting</a>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <!-- SECTION B — Hero -->
+    <section id="hero" class="section hero">
+      <div class="container hero-inner">
+        <div class="hero-text">
+          <h1 class="hero-title" data-en="Solar Sense is a hardware-AI platform for next-generation solar module intelligence." data-zh="Solar Sense 是面向下一代光伏组件智能的硬件-AI 平台。">Solar Sense is a hardware-AI platform for next-generation solar module intelligence.</h1>
+          <p class="hero-mission" data-en="Our mission: to make solar technology smarter, safer, and more sustainable." data-zh="我们的使命：让太阳能技术更智能、更安全、更可持续。">Our mission: to make solar technology smarter, safer, and more sustainable.</p>
+          <p class="hero-sub" data-en="Real-time module-level signals, IV-curve intelligence, and AI-ready diagnostics—designed to scale." data-zh="实时组件级信号、I-V 曲线智能与 AI 就绪诊断——面向规模化设计。">Real-time module-level signals, IV-curve intelligence, and AI-ready diagnostics—designed to scale.</p>
+          <div class="hero-ctas">
+            <a href="#" data-dashboard-link class="btn btn-primary btn-glow" data-en="See Live Demo" data-zh="观看现场演示">See Live Demo</a>
+            <a href="#contact" class="btn btn-secondary" data-en="Partner with Us" data-zh="合作伙伴">Partner with Us</a>
+          </div>
+          <ul class="hero-chips">
+            <li data-en="Module-level sensing" data-zh="组件级传感">Module-level sensing</li>
+            <li data-en="IV-curve intelligence" data-zh="I-V 曲线智能">IV-curve intelligence</li>
+            <li data-en="Manufacturing-ready architecture" data-zh="面向规模化制造">Manufacturing-ready architecture</li>
+          </ul>
+        </div>
+        <div class="hero-media">
+          <figure class="hero-frame">
+            <img src="assets/Adama and Jordan presenting solar Sense.jpg" alt="Adama and Jordan presenting Solar Sense" width="640" height="427">
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION C — Problem -->
+    <section id="problem" class="section problem">
+      <div class="container">
+        <h2 class="section-title" data-en="The Challenge" data-zh="核心挑战">The Challenge</h2>
+        <div class="cards three-cols">
+          <article class="card">
+            <h3 class="card-title" data-en="Safety requirements are expanding globally" data-zh="全球安全要求持续升级">Safety requirements are expanding globally</h3>
+            <p class="card-desc" data-en="Rapid shutdown and firefighter safety are driving new standards." data-zh="快速关断与消防员安全正在推动新标准落地。">Rapid shutdown and firefighter safety are driving new standards.</p>
+          </article>
+          <article class="card">
+            <h3 class="card-title" data-en="Hidden module-level faults reduce yield" data-zh="组件级隐性故障拉低发电量">Hidden module-level faults reduce yield</h3>
+            <p class="card-desc" data-en="Shading, mismatch, hotspots, connector issues—often invisible at string level." data-zh="遮挡、失配、热斑、接头问题——在组串层面往往不可见。">Shading, mismatch, hotspots, connector issues—often invisible at string level.</p>
+          </article>
+          <article class="card">
+            <h3 class="card-title" data-en="Diagnostics today are expensive and slow" data-zh="现有诊断成本高、效率低">Diagnostics today are expensive and slow</h3>
+            <p class="card-desc" data-en="Truck rolls, manual inspections, and limited signal visibility increase O&M cost." data-zh="现场巡检、人工排查与有限的信号可见性推高运维成本。">Truck rolls, manual inspections, and limited signal visibility increase O&M cost.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION D — Global Compliance -->
+    <section id="compliance" class="section compliance">
+      <div class="container">
+        <h2 class="section-title" data-en="Rapid Shutdown is Going Global" data-zh="快速关断正在走向全球">Rapid Shutdown is Going Global</h2>
+        <div class="compliance-layout">
+          <div class="compliance-image">
+            <img src="assets/rapidShutdownMap.jpg" alt="Rapid shutdown adoption map" width="800" height="500">
+          </div>
+          <ul class="compliance-bullets">
+            <li data-en="Adopted across multiple regions" data-zh="已在多地区采纳">Adopted across multiple regions</li>
+            <li data-en="Creates new requirements for MLPE + monitoring" data-zh="为 MLPE 与监控带来新需求">Creates new requirements for MLPE + monitoring</li>
+            <li data-en="Opportunity for smarter, safer module intelligence" data-zh="更智能、更安全的组件级智能机遇">Opportunity for smarter, safer module intelligence</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION E — Technology -->
+    <section id="technology" class="section technology">
+      <div class="container">
+        <h2 class="section-title" data-en="Solar Sense Architecture" data-zh="Solar Sense 技术架构">Solar Sense Architecture</h2>
+        <div class="tech-diagram">
+          <img src="assets/SolarsenseDiagram.jpg" alt="Solar Sense architecture diagram" width="900" height="500">
+        </div>
+        <div class="cards three-cols capability-cards">
+          <article class="card">
+            <h3 class="card-title" data-en="Real-time V/I/T + streaming" data-zh="实时电压/电流/温度 + 数据流">Real-time V/I/T + streaming</h3>
+          </article>
+          <article class="card">
+            <h3 class="card-title" data-en="IV curve behavior signatures" data-zh="I-V 曲线特征识别">IV curve behavior signatures</h3>
+          </article>
+          <article class="card">
+            <h3 class="card-title" data-en="AI-ready digital twin pipeline" data-zh="面向 AI 的数字孪生管线">AI-ready digital twin pipeline</h3>
+          </article>
+        </div>
+        <figure class="tech-pcb">
+          <img src="assets/solarSensePcBboard.jpg" alt="Solar Sense PCB board" width="800" height="450">
+          <figcaption data-en="Designed for DFM and cost-down iterations." data-zh="面向 DFM 与成本优化迭代设计。">Designed for DFM and cost-down iterations.</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <!-- SECTION F — Live Demo -->
+    <section id="demo" class="section demo">
+      <div class="container">
+        <h2 class="section-title" data-en="Live Demo at Plug and Play China" data-zh="Plug and Play China 现场演示">Live Demo at Plug and Play China</h2>
+        <div class="demo-grid">
+          <div class="demo-images">
+            <img src="assets/faultDetection.jpg" alt="Fault detection dashboard" width="600" height="400">
+            <img src="assets/solarSensWork.jpg" alt="Solar Sense at work" width="600" height="400">
+          </div>
+          <ol class="demo-steps">
+            <li data-en="Live streaming from the module" data-zh="组件端实时数据流">Live streaming from the module</li>
+            <li data-en="Controlled shading event" data-zh="可控遮挡事件">Controlled shading event</li>
+            <li data-en="Instant IV-curve distortion and metric change on dashboard" data-zh="仪表盘即时显示 I-V 曲线畸变与指标变化">Instant IV-curve distortion and metric change on dashboard</li>
+          </ol>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION G — Product Evolution -->
+    <section id="evolution" class="section evolution">
+      <div class="container">
+        <h2 class="section-title" data-en="From lab validation to field deployment—built for scale." data-zh="从实验验证到现场部署——面向规模化落地。">From lab validation to field deployment—built for scale.</h2>
+        <div class="evolution-images">
+          <img src="assets/secondPrototype.jpg" alt="Second prototype" width="500" height="350">
+          <img src="assets/solarSenseOnPV.jpg" alt="Solar Sense on PV module" width="500" height="350">
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION H — Roadmap -->
+    <section id="roadmap" class="section roadmap">
+      <div class="container">
+        <h2 class="section-title" data-en="Roadmap" data-zh="路线图">Roadmap</h2>
+        <div class="timeline">
+          <div class="timeline-phase">
+            <span class="timeline-phase-num" aria-hidden="true">1</span>
+            <p data-en="Research-first deployments (controlled validation)" data-zh="科研场景优先部署（可控验证）">Research-first deployments (controlled validation)</p>
+          </div>
+          <div class="timeline-phase">
+            <span class="timeline-phase-num" aria-hidden="true">2</span>
+            <p data-en="Pilot with installers & O&M partners" data-zh="与安装商/运维伙伴开展试点">Pilot with installers & O&M partners</p>
+          </div>
+          <div class="timeline-phase">
+            <span class="timeline-phase-num" aria-hidden="true">3</span>
+            <p data-en="Scale manufacturing + certification pathway" data-zh="规模化制造 + 认证路径（UL/NEC 等）">Scale manufacturing + certification pathway</p>
+          </div>
+        </div>
+        <p class="roadmap-note" data-en="We de-risk reliability and compliance before regulated mass markets." data-zh="在进入受监管的规模市场前，先完成可靠性与合规的降风险。">We de-risk reliability and compliance before regulated mass markets.</p>
+      </div>
+    </section>
+
+    <!-- SECTION I — Team -->
+    <section id="team" class="section team">
+      <div class="container">
+        <h2 class="section-title" data-en="Team" data-zh="团队">Team</h2>
+        <div class="team-cards">
+          <article class="team-card">
+            <div class="team-photo">
+              <img src="assets/adamaToure.jpg" alt="Adama Toure" width="280" height="280">
+            </div>
+            <h3 class="team-name">Adama Toure</h3>
+            <p class="team-role" data-en="Founder | Renewable Energy Engineer" data-zh="创始人｜可再生能源工程师">Founder | Renewable Energy Engineer</p>
+          </article>
+          <article class="team-card">
+            <div class="team-photo">
+              <img src="assets/jordanHarrisToovy.jpg" alt="Jordan Harris" width="280" height="280">
+            </div>
+            <h3 class="team-name">Jordan Harris</h3>
+            <p class="team-role" data-en="Hardware & Embedded Systems Lead" data-zh="硬件与嵌入式系统负责人">Hardware & Embedded Systems Lead</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION J — What We're Seeking -->
+    <section id="seeking" class="section seeking">
+      <div class="container">
+        <h2 class="section-title" data-en="What We're Seeking" data-zh="我们在寻找">What We're Seeking</h2>
+        <div class="cards three-cols seeking-cards">
+          <article class="card">
+            <h3 class="card-title" data-en="Manufacturing Partners" data-zh="制造合作伙伴">Manufacturing Partners</h3>
+            <ul>
+              <li data-en="EMS / ODM capacity" data-zh="EMS/ODM 产能">EMS / ODM capacity</li>
+              <li data-en="Power electronics expertise" data-zh="电力电子能力">Power electronics expertise</li>
+              <li data-en="DFM + cost-down path" data-zh="DFM 与成本优化路径">DFM + cost-down path</li>
+            </ul>
+          </article>
+          <article class="card">
+            <h3 class="card-title" data-en="Pilot Partners" data-zh="试点伙伴">Pilot Partners</h3>
+            <ul>
+              <li data-en="Research & validation sites" data-zh="科研与验证场地">Research & validation sites</li>
+              <li data-en="Installer trials" data-zh="安装商试点">Installer trials</li>
+              <li data-en="O&M workflow integration" data-zh="运维流程集成">O&M workflow integration</li>
+            </ul>
+          </article>
+          <article class="card">
+            <h3 class="card-title" data-en="Strategic Investors" data-zh="战略投资者">Strategic Investors</h3>
+            <ul>
+              <li data-en="Hard-tech + climate focus" data-zh="硬科技 + 气候方向">Hard-tech + climate focus</li>
+              <li data-en="Scaling support" data-zh="规模化支持">Scaling support</li>
+              <li data-en="Go-to-market partnerships" data-zh="市场拓展合作">Go-to-market partnerships</li>
+            </ul>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION K — Contact -->
+    <section id="contact" class="section contact">
+      <div class="container contact-inner">
+        <h2 class="contact-headline" data-en="Let's build intelligent solar infrastructure together." data-zh="携手共建智能化太阳能基础设施。">Let's build intelligent solar infrastructure together.</h2>
+        <div class="contact-vision">
+          <p class="contact-vision-text" data-en="Solar Sense is a hardware-AI platform for next-generation solar module intelligence." data-zh="Solar Sense 是面向下一代光伏组件智能的硬件-AI 平台。">Solar Sense is a hardware-AI platform for next-generation solar module intelligence.</p>
+          <p class="contact-mission-text" data-en="Our mission: to make solar technology smarter, safer, and more sustainable." data-zh="我们的使命：让太阳能技术更智能、更安全、更可持续。">Our mission: to make solar technology smarter, safer, and more sustainable.</p>
+        </div>
+        <a href="mailto:adama.toure@sept.energy" class="contact-email">adama.toure@sept.energy</a>
+        <a href="mailto:adama.toure@sept.energy" class="btn btn-primary btn-glow btn-lg" data-en="Request a Meeting" data-zh="预约会面">Request a Meeting</a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <p class="footer-copy" data-en="Solar Sense — Make solar smarter, safer, and more sustainable." data-zh="Solar Sense — 让太阳能更智能、更安全、更可持续。">Solar Sense — Make solar smarter, safer, and more sustainable.</p>
+    </div>
+  </footer>
+
+  <script>
+    (function () {
+      var STORAGE_KEY = 'solarsense-lang';
+      var defaultLang = 'en';
+      var isLocal = /^(localhost|127\.0\.0\.1)(:\d+)?$/i.test(window.location.host);
+      var STREAMLIT_DASHBOARD_URL = isLocal ? 'http://localhost:8501' : 'https://pvlivedata.streamlit.app/Live_Dashboard';
+
+      function getLang() {
+        try {
+          return localStorage.getItem(STORAGE_KEY) || defaultLang;
+        } catch (e) {
+          return defaultLang;
+        }
+      }
+
+      function setLang(lang) {
+        try {
+          localStorage.setItem(STORAGE_KEY, lang);
+        } catch (e) {}
+      }
+
+      function applyLang(lang) {
+        var attr = lang === 'zh' ? 'data-zh' : 'data-en';
+        document.querySelectorAll('[' + attr + ']').forEach(function (el) {
+          var value = el.getAttribute(attr);
+          if (value) el.textContent = value;
+        });
+        document.querySelectorAll('.lang-btn').forEach(function (btn) {
+          var isActive = btn.getAttribute('data-lang') === lang;
+          btn.classList.toggle('active', isActive);
+          btn.setAttribute('aria-pressed', isActive);
+        });
+        document.documentElement.lang = lang === 'zh' ? 'zh-CN' : 'en';
+      }
+
+      function initToggle() {
+        var btns = document.querySelectorAll('.lang-btn');
+        btns.forEach(function (btn) {
+          btn.addEventListener('click', function () {
+            var lang = btn.getAttribute('data-lang');
+            setLang(lang);
+            applyLang(lang);
+          });
+        });
+        applyLang(getLang());
+      }
+
+      function initSmoothScroll() {
+        document.querySelectorAll('a[href^="#"]').forEach(function (anchor) {
+          anchor.addEventListener('click', function (e) {
+            var id = this.getAttribute('href');
+            if (id === '#') return;
+            var target = document.querySelector(id);
+            if (target) {
+              e.preventDefault();
+              target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+          });
+        });
+      }
+
+      document.querySelectorAll('a[data-dashboard-link]').forEach(function (a) {
+        a.href = STREAMLIT_DASHBOARD_URL;
+        a.target = '_blank';
+        a.rel = 'noopener noreferrer';
+      });
+
+      initToggle();
+      initSmoothScroll();
+    })();
+  </script>
+</body>
+</html>
