@@ -7,9 +7,11 @@ headless = true
 enableCORS = false
 enableXsrfProtection = true
 
+# Dark + gold theme aligned with Solar Sense landing page (styles.css)
 [theme]
-primaryColor = "#2563eb"
-backgroundColor = "#ffffff"
-secondaryBackgroundColor = "#f0f2f6"
-textColor = "#1f2937"
+base = "dark"
+primaryColor = "#e6b422"
+backgroundColor = "#0d1117"
+secondaryBackgroundColor = "#161b22"
+textColor = "#f0f6fc"
 font = "sans serif"

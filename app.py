@@ -44,10 +44,16 @@ else:
     st.title("Solar Sense")
 st.caption("Live Dashboard — module-level telemetry and IV curve")
 
+# Solar Sense dark + gold theme (aligned with styles.css)
 st.markdown(
     """
     <style>
-    .stApp { max-width: 100%; }
+    .stApp { max-width: 100%; background-color: #0d1117; }
+    [data-testid="stSidebar"] { background-color: #161b22; }
+    [data-testid="stSidebar"] .stMarkdown { color: #f0f6fc; }
+    [data-testid="stMetricValue"] { color: #e6b422; }
+    hr { border-color: #30363d; }
+    .stCaption { color: #8b949e; }
     </style>
     """,
     unsafe_allow_html=True,
