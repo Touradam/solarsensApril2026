@@ -183,38 +183,48 @@ else:
     df_win = df
 
 # ---------------------------------------------------------------------------
-# Main area: time-series (left 2/3) + IV curve (right 1/3)
+# Layout per wireframe: Graph (top) | Table (bottom-left) + IV curve (bottom-right)
 # ---------------------------------------------------------------------------
-col_ts, col_iv = st.columns([2, 1])
 
-with col_ts:
-    st.subheader("Real-time telemetry")
-    if len(df_win) < 2:
-        st.info("Waiting for data...")
+# Top: main time-series graph (full width)
+st.subheader("Real-time telemetry")
+if len(df_win) < 2:
+    st.info("Waiting for data...")
+else:
+    fig_ts = go.Figure()
+    t_rel = (df_win["timestamp_ms"].astype(float) - df_win["timestamp_ms"].min()) / 1000.0
+    fig_ts.add_trace(
+        go.Scatter(x=t_rel, y=df_win["voltage"], name="Voltage (V)", line=dict(width=2))
+    )
+    fig_ts.add_trace(
+        go.Scatter(x=t_rel, y=df_win["current"], name="Current (A)", line=dict(width=2))
+    )
+    fig_ts.add_trace(
+        go.Scatter(x=t_rel, y=df_win["temp"], name="Temperature (C)", line=dict(width=2))
+    )
+    for (ts, label) in st.session_state.events:
+        if df_win["timestamp_ms"].min() <= ts <= df_win["timestamp_ms"].max():
+            x_val = (ts - df_win["timestamp_ms"].min()) / 1000.0
+            fig_ts.add_vline(x=x_val, line_dash="dash", line_color="gray", annotation_text=label or "Event")
+    fig_ts.update_layout(
+        xaxis_title="Time (s)",
+        yaxis_title="Value",
+        margin=dict(l=50, r=20, t=20, b=50),
+        legend=dict(orientation="h", yanchor="bottom", y=1.02),
+        height=380,
+    )
+    st.plotly_chart(fig_ts, use_container_width=True)
+
+# Bottom row: table (left) + IV curve (right)
+col_table, col_iv = st.columns([1, 1])
+
+with col_table:
+    st.subheader("Telemetry table")
+    if len(df) == 0:
+        st.caption("No samples yet.")
     else:
-        fig_ts = go.Figure()
-        t_rel = (df_win["timestamp_ms"].astype(float) - df_win["timestamp_ms"].min()) / 1000.0
-        fig_ts.add_trace(
-            go.Scatter(x=t_rel, y=df_win["voltage"], name="Voltage (V)", line=dict(width=2))
-        )
-        fig_ts.add_trace(
-            go.Scatter(x=t_rel, y=df_win["current"], name="Current (A)", line=dict(width=2))
-        )
-        fig_ts.add_trace(
-            go.Scatter(x=t_rel, y=df_win["temp"], name="Temperature (C)", line=dict(width=2))
-        )
-        for (ts, label) in st.session_state.events:
-            if df_win["timestamp_ms"].min() <= ts <= df_win["timestamp_ms"].max():
-                x_val = (ts - df_win["timestamp_ms"].min()) / 1000.0
-                fig_ts.add_vline(x=x_val, line_dash="dash", line_color="gray", annotation_text=label or "Event")
-        fig_ts.update_layout(
-            xaxis_title="Time (s)",
-            yaxis_title="Value",
-            margin=dict(l=50, r=20, t=20, b=50),
-            legend=dict(orientation="h", yanchor="bottom", y=1.02),
-            height=350,
-        )
-        st.plotly_chart(fig_ts, use_container_width=True)
+        show = df.tail(TABLE_ROWS)[["timestamp_ms", "voltage", "current", "temp"]]
+        st.dataframe(show, use_container_width=True, hide_index=True)
 
 with col_iv:
     st.subheader("IV curve")
@@ -233,19 +243,9 @@ with col_iv:
             xaxis_title="Voltage (V)",
             yaxis_title="Current (A)",
             margin=dict(l=50, r=20, t=20, b=50),
-            height=350,
+            height=320,
         )
         st.plotly_chart(fig_iv, use_container_width=True)
-
-# ---------------------------------------------------------------------------
-# Raw telemetry table (last 20)
-# ---------------------------------------------------------------------------
-st.subheader("Raw telemetry (last 20 samples)")
-if len(df) == 0:
-    st.caption("No samples yet.")
-else:
-    show = df.tail(TABLE_ROWS)[["timestamp_ms", "voltage", "current", "temp"]]
-    st.dataframe(show, use_container_width=True, hide_index=True)
 
 # ---------------------------------------------------------------------------
 # Auto-refresh
