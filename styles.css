@@ -642,6 +642,12 @@ a:hover {
   color: var(--text-secondary);
 }
 
+.solution-figure--svg img {
+  background: #fff;
+  padding: var(--space-md);
+  border-radius: var(--radius-lg);
+}
+
 .section-lead {
   max-width: 65ch;
   margin: calc(var(--space-md) * -1) auto var(--space-2xl);
