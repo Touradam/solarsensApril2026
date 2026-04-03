@@ -237,7 +237,8 @@ a:hover {
 .nav-links {
   display: flex;
   align-items: center;
-  gap: var(--space-xl);
+  flex-wrap: wrap;
+  gap: var(--space-md) var(--space-lg);
 }
 
 .nav-links a {
@@ -446,6 +447,10 @@ a:hover {
   grid-template-columns: repeat(3, 1fr);
 }
 
+.four-cols {
+  grid-template-columns: repeat(2, 1fr);
+}
+
 .card {
   background: var(--bg-card);
   border: 1px solid var(--border);
@@ -605,6 +610,164 @@ a:hover {
   color: var(--text-secondary);
 }
 
+.solution-product-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-xl);
+  align-items: start;
+  margin-top: var(--space-2xl);
+}
+
+.tech-pcb--compact {
+  margin: 0;
+  text-align: center;
+}
+
+.solution-figure {
+  margin: 0;
+  text-align: center;
+}
+
+.solution-figure img {
+  width: 100%;
+  max-width: 560px;
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border);
+  display: block;
+  margin: 0 auto var(--space-md);
+}
+
+.solution-figure figcaption {
+  font-size: 0.9375rem;
+  color: var(--text-secondary);
+}
+
+.section-lead {
+  max-width: 65ch;
+  margin: calc(var(--space-md) * -1) auto var(--space-2xl);
+  text-align: center;
+  font-size: 1rem;
+  color: var(--text-secondary);
+  line-height: 1.65;
+}
+
+.problem-visuals {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-lg);
+  margin-top: var(--space-2xl);
+}
+
+.problem-visuals figure {
+  margin: 0;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-md);
+}
+
+.problem-visuals img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.problem-visuals figcaption {
+  padding: var(--space-sm) var(--space-md);
+  font-size: 0.8125rem;
+  color: var(--text-muted);
+  background: var(--bg-card);
+}
+
+.pricing-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-lg);
+  margin-bottom: var(--space-xl);
+}
+
+.pricing-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-xl);
+  text-align: center;
+}
+
+.pricing-amount {
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: var(--accent-gold);
+  margin: 0 0 var(--space-sm);
+}
+
+.pricing-label {
+  font-size: 0.9375rem;
+  color: var(--text-secondary);
+  margin: 0;
+  line-height: 1.45;
+}
+
+.subsection-title {
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin: var(--space-2xl) 0 var(--space-md);
+  text-align: center;
+}
+
+.revenue-list {
+  list-style: none;
+  margin: 0 auto var(--space-xl);
+  padding: 0;
+  max-width: 36rem;
+}
+
+.revenue-list li {
+  padding: var(--space-sm) 0;
+  padding-left: 1.5em;
+  position: relative;
+  color: var(--text-secondary);
+  font-size: 0.9375rem;
+}
+
+.revenue-list li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0.65em;
+  width: 6px;
+  height: 6px;
+  background: var(--accent-amber);
+  border-radius: 50%;
+}
+
+.traction-list {
+  list-style: none;
+  margin: 0 auto var(--space-xl);
+  padding: 0;
+  max-width: 42rem;
+}
+
+.traction-list li {
+  padding: var(--space-sm) 0;
+  padding-left: 1.5em;
+  position: relative;
+  color: var(--text-secondary);
+  font-size: 0.9375rem;
+}
+
+.traction-list li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0.65em;
+  width: 6px;
+  height: 6px;
+  background: var(--accent-amber);
+  border-radius: 50%;
+}
+
 /* ============================================
    SECTION F — Live Demo
    ============================================ */
@@ -694,6 +857,14 @@ a:hover {
   box-shadow: var(--shadow-md);
 }
 
+.evolution-images--three {
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.evolution-images--three img {
+  max-width: 100%;
+}
+
 /* ============================================
    SECTION H — Roadmap
    ============================================ */
@@ -703,6 +874,10 @@ a:hover {
   grid-template-columns: repeat(3, 1fr);
   gap: var(--space-xl);
   margin-bottom: var(--space-xl);
+}
+
+.timeline.timeline--two {
+  grid-template-columns: repeat(2, 1fr);
 }
 
 .timeline-phase {
@@ -733,6 +908,14 @@ a:hover {
   font-size: 0.9375rem;
   color: var(--text-secondary);
   line-height: 1.5;
+}
+
+.timeline-phase .phase-funding {
+  display: block;
+  margin-top: var(--space-md);
+  font-size: 0.875rem;
+  color: var(--accent-gold);
+  font-weight: 600;
 }
 
 .roadmap-note {
@@ -928,6 +1111,22 @@ a:hover {
   }
 
   .three-cols {
+    grid-template-columns: 1fr;
+  }
+
+  .four-cols {
+    grid-template-columns: 1fr;
+  }
+
+  .pricing-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .problem-visuals {
+    grid-template-columns: 1fr;
+  }
+
+  .solution-product-row {
     grid-template-columns: 1fr;
   }
 
