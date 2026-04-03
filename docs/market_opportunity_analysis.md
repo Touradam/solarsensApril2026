@@ -1,173 +1,15 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Market opportunity &amp; economics | Solar Sense</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css">
-  <link rel="icon" href="assets/SolarSensLogo20260315v1.png" type="image/png">
-  <style>
-    .analysis-page .container { max-width: 900px; }
-    .analysis-hero { padding: var(--section-padding) 0 var(--space-2xl); border-bottom: 1px solid var(--border); }
-    .analysis-hero h1 { font-size: clamp(1.5rem, 4vw, 2rem); margin: 0 0 var(--space-sm); color: var(--text-primary); }
-    .analysis-hero p { color: var(--text-secondary); margin: 0; font-size: 0.95rem; }
-    .analysis-hero .analysis-hero-snapshot { margin-top: var(--space-md); font-size: 0.9rem; color: var(--text-muted); max-width: 48rem; line-height: 1.55; }
-    .markdown-body { padding: var(--space-2xl) 0; }
-    .markdown-body h2 { font-size: 1.35rem; margin: var(--space-3xl) 0 var(--space-lg); color: var(--accent-gold); border-bottom: 1px solid var(--border); padding-bottom: var(--space-sm); }
-    .markdown-body h2:first-child { margin-top: 0; }
-    .markdown-body h3 { font-size: 1.1rem; margin: var(--space-xl) 0 var(--space-md); color: var(--text-primary); }
-    .markdown-body p, .markdown-body li { color: var(--text-secondary); margin-bottom: var(--space-sm); line-height: 1.65; }
-    .markdown-body strong { color: var(--text-primary); }
-    .markdown-body em { color: var(--text-muted); }
-    .markdown-body ul, .markdown-body ol { padding-left: 1.5rem; margin-bottom: var(--space-lg); }
-    .markdown-body hr { border: none; border-top: 1px solid var(--border); margin: var(--space-2xl) 0; }
-    .markdown-body table { width: 100%; border-collapse: collapse; margin: var(--space-lg) 0; font-size: 0.9rem; overflow-x: auto; display: block; }
-    .markdown-body th, .markdown-body td { border: 1px solid var(--border); padding: var(--space-sm) var(--space-md); text-align: left; color: var(--text-secondary); }
-    .markdown-body th { background: var(--bg-card); color: var(--text-primary); font-weight: 600; }
-    .markdown-body tr:nth-child(even) { background: rgba(255,255,255,0.02); }
-    .markdown-body blockquote { border-left: 3px solid var(--accent-gold); margin: var(--space-lg) 0; padding-left: var(--space-lg); color: var(--text-muted); }
-    .markdown-loading { padding: var(--space-3xl); text-align: center; color: var(--text-muted); }
-    .markdown-error { padding: var(--space-lg); background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); color: var(--text-secondary); }
-    .nav-current { color: var(--accent-gold); font-weight: 500; }
-    .charts-section { padding: var(--space-2xl) 0; border-bottom: 1px solid var(--border); opacity: 1; animation: none; }
-    .charts-section h2 { font-size: 1.35rem; margin: 0 0 var(--space-sm); color: var(--accent-gold); }
-    .charts-intro { font-size: 0.9375rem; color: var(--text-secondary); margin: 0 0 var(--space-2xl); }
-    .charts-story { max-width: 720px; }
-    .chart-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: var(--space-lg); }
-    .chart-card h3 { font-size: 0.9375rem; margin: 0 0 var(--space-md); color: var(--text-primary); font-weight: 600; }
-    .chart-card .chart-wrap { position: relative; width: 100%; height: 280px; display: flex; align-items: center; justify-content: center; overflow: hidden; }
-    .chart-card .chart-wrap.tall { height: 300px; }
-    .chart-card .chart-wrap img { max-width: 100%; max-height: 100%; width: auto; height: auto; object-fit: contain; display: block; border-radius: var(--radius-sm); }
-    .story-chart-block { margin-bottom: var(--space-3xl); }
-    .story-chart-block:last-child { margin-bottom: 0; }
-    .story-beat { margin-bottom: var(--space-lg); }
-    .story-headline { font-size: 1.1rem; margin: 0 0 var(--space-sm); color: var(--accent-gold); font-weight: 600; }
-    .story-narrative { font-size: 0.9375rem; color: var(--text-secondary); line-height: 1.65; margin: 0; max-width: 52ch; }
-  </style>
-</head>
-<body class="analysis-page">
-  <header class="nav" role="banner">
-    <div class="nav-inner">
-      <a href="index.html" class="nav-logo">
-        <img src="assets/SolarSensLogo20260315v1.png" alt="Solar Sense" width="152" height="44" loading="eager">
-        <span data-en="Solar Sense" data-zh="Solar Sense">Solar Sense</span>
-      </a>
-      <nav class="nav-links" aria-label="Main navigation">
-        <a href="index.html#problem" data-en="Problem" data-zh="问题">Problem</a>
-        <a href="index.html#technology" data-en="Solution" data-zh="方案">Solution</a>
-        <a href="index.html#demo" data-en="Demo" data-zh="演示">Demo</a>
-        <a href="index.html#evolution" data-en="Product" data-zh="产品">Product</a>
-        <a href="index.html#business" data-en="Business" data-zh="商业">Business</a>
-        <a href="index.html#roadmap" data-en="Strategy" data-zh="策略">Strategy</a>
-        <a href="index.html#advantage" data-en="Advantage" data-zh="优势">Advantage</a>
-        <a href="index.html" data-dashboard-link data-en="Live Demo" data-zh="现场演示">Live Demo</a>
-        <a href="market_analysis.html" class="nav-current" data-en="Market Opportunity" data-zh="市场机遇">Market Opportunity</a>
-        <a href="index.html#team" data-en="Team" data-zh="团队">Team</a>
-        <a href="index.html#contact" data-en="Contact" data-zh="联系">Contact</a>
-      </nav>
-      <div class="nav-actions">
-        <div class="lang-toggle" role="group" aria-label="Language">
-          <button type="button" class="lang-btn active" data-lang="en" aria-pressed="true">EN</button>
-          <button type="button" class="lang-btn" data-lang="zh" aria-pressed="false">中文</button>
-        </div>
-        <a href="index.html#contact" class="btn btn-primary" data-en="Request a Meeting" data-zh="预约会面">Request a Meeting</a>
-      </div>
-    </div>
-  </header>
-
-  <main>
-    <section class="section analysis-hero">
-      <div class="container">
-        <h1 data-en="Solar Sense — Market opportunity" data-zh="Solar Sense — 市场机遇">Solar Sense — Market opportunity</h1>
-        <p data-en="Safety and intelligence for decentralized solar—hardware, machine learning, and panel-level monitoring, fault detection, and active control." data-zh="分布式太阳能的安全与智能——硬件、机器学习，以及组件级监控、故障检测与主动控制。">Safety and intelligence for decentralized solar—hardware, machine learning, and panel-level monitoring, fault detection, and active control.</p>
-        <p class="analysis-hero-snapshot" data-en="Pricing targets: ~$21 production cost, ~$37 residential and commercial retail, ~$200 education and research SKU. Go-to-market funding: ~$860K (Phase 1 — education and research, ~12 months) → ~$3M (Phase 2 — certified residential and C&amp;I scale)." data-zh="定价目标：约 21 美元生产成本、约 37 美元户用/工商业零售、约 200 美元教育与研究版本。市场进入资金：约 86 万美元（第一阶段——教育与研究，约 12 个月）→ 约 300 万美元（第二阶段——认证后户用与工商业规模化）。">Pricing targets: ~$21 production cost, ~$37 residential and commercial retail, ~$200 education and research SKU. Go-to-market funding: ~$860K (Phase 1 — education and research, ~12 months) → ~$3M (Phase 2 — certified residential and C&amp;I scale).</p>
-      </div>
-    </section>
-    <section class="section charts-section">
-      <div class="container">
-        <p class="charts-intro" data-en="Global deployment, panel-level safety and intelligence context, hardware and SaaS economics at the $37 retail anchor, and why modest adoption still implies a large TAM—five charts." data-zh="全球装机、组件级安全与智能背景、以 37 美元零售价为锚的硬件与 SaaS 经济学，以及温和渗透率下仍可支撑可观 TAM——五张图。">Global deployment, panel-level safety and intelligence context, hardware and SaaS economics at the $37 retail anchor, and why modest adoption still implies a large TAM—five charts.</p>
-        <div class="charts-story">
-          <div class="story-chart-block">
-            <div class="story-beat">
-              <h3 class="story-headline" data-en="The market is large and split across segments" data-zh="市场规模大且按场景分布">The market is large and split across segments</h3>
-              <p class="story-narrative" data-en="In 2024, global new solar installations reached 553 GW. Utility-scale accounts for 62%; distributed (residential and C&I) makes up the rest. This mix defines where module-level intelligence can add the most value." data-zh="2024年全球新增光伏装机约553 GW。集中式占62%，分布式（户用与工商业）占其余。这一结构决定了组件级智能可创造最大价值的场景。">In 2024, global new solar installations reached 553 GW. Utility-scale accounts for 62%; distributed (residential and C&I) makes up the rest. This mix defines where module-level intelligence can add the most value.</p>
-            </div>
-            <div class="chart-card">
-              <div class="chart-wrap"><img src="assets/charts/segment.svg" alt="Global deployment by segment (2024, GW)" width="480" height="320" loading="lazy" /></div>
-            </div>
-          </div>
-          <div class="story-chart-block">
-            <div class="story-beat">
-              <h3 class="story-headline" data-en="China leads; global deployment is diversified" data-zh="中国领先，全球装机分布多元">China leads; global deployment is diversified</h3>
-              <p class="story-narrative" data-en="China represents about 60% of 2024 deployment. Europe, the US, India, and the rest of the world add a diversified base. For Solar Sense, this means a clear China opportunity plus multiple pilot and scale markets." data-zh="中国约占2024年装机的60%。欧洲、美国、印度及其他地区构成多元市场。对 Solar Sense 而言，既存在明确的中国机遇，也有多国试点与规模化空间。">China represents about 60% of 2024 deployment. Europe, the US, India, and the rest of the world add a diversified base. For Solar Sense, this means a clear China opportunity plus multiple pilot and scale markets.</p>
-            </div>
-            <div class="chart-card">
-              <div class="chart-wrap"><img src="assets/charts/markets.svg" alt="Top 5 markets by deployment (2024, GW)" width="480" height="320" loading="lazy" /></div>
-            </div>
-          </div>
-          <div class="story-chart-block">
-            <div class="story-beat">
-              <h3 class="story-headline" data-en="Growth is strong—the pipeline is expanding" data-zh="增长强劲，装机 pipeline 持续扩大">Growth is strong—the pipeline is expanding</h3>
-              <p class="story-narrative" data-en="At an assumed 16% CAGR, new installations rise from 553 GW (2024) to about 862 GW (2027). More modules each year mean a growing addressable market for hardware and SaaS." data-zh="在16%年复合增长率假设下，年新增装机从553 GW（2024）增至约862 GW（2027）。每年更多组件意味着硬件与 SaaS 的可触达市场持续扩大。">At an assumed 16% CAGR, new installations rise from 553 GW (2024) to about 862 GW (2027). More modules each year mean a growing addressable market for hardware and SaaS.</p>
-            </div>
-            <div class="chart-card">
-              <div class="chart-wrap"><img src="assets/charts/projection.svg" alt="3-year projection (GW)" width="480" height="320" loading="lazy" /></div>
-            </div>
-          </div>
-          <div class="story-chart-block">
-            <div class="story-beat">
-              <h3 class="story-headline" data-en="Revenue scales with adoption—even low penetration matters" data-zh="收入随渗透率提升而放大，低渗透率亦有意义">Revenue scales with adoption—even low penetration matters</h3>
-              <p class="story-narrative" data-en="At $37 per module, 0.5–1% adoption already implies hundreds of millions in annual revenue (global or China-only). At 2–5%, the opportunity reaches billions. The chart shows why modest, credible adoption targets support a strong TAM story." data-zh="在每组件37美元假设下，0.5%–1%的渗透率即对应数亿美元年收入（全球或仅中国）。2%–5%时机会达数十亿。图表说明为何适度、可实现的渗透率目标即可支撑可观的 TAM 叙事。">At $37 per module, 0.5–1% adoption already implies hundreds of millions in annual revenue (global or China-only). At 2–5%, the opportunity reaches billions. The chart shows why modest, credible adoption targets support a strong TAM story.</p>
-            </div>
-            <div class="chart-card">
-              <div class="chart-wrap tall"><img src="assets/charts/revenue.svg" alt="Revenue scenarios by adoption rate" width="480" height="320" loading="lazy" /></div>
-            </div>
-          </div>
-          <div class="story-chart-block">
-            <div class="story-beat">
-              <h3 class="story-headline" data-en="A realistic path: 1% adoption drives hardware and recurring SaaS" data-zh="现实路径：1%渗透率驱动硬件与 recurring SaaS">A realistic path: 1% adoption drives hardware and recurring SaaS</h3>
-              <p class="story-narrative" data-en="In a 1% adoption scenario, hardware revenue grows with the market each year. SaaS from prior-year installs builds the recurring base; by years 4–5, recurring revenue inflects. This is the story of how hardware plus software creates a durable business." data-zh="在1%渗透率情景下，硬件收入随市场逐年增长；往年安装带来的 SaaS 构筑经常性收入基础，到第4–5年 recurring 收入拐点出现。这正是“硬件+软件”构建可持续业务的故事。">In a 1% adoption scenario, hardware revenue grows with the market each year. SaaS from prior-year installs builds the recurring base; by years 4–5, recurring revenue inflects. This is the story of how hardware plus software creates a durable business.</p>
-            </div>
-            <div class="chart-card">
-              <div class="chart-wrap tall"><img src="assets/charts/stack.svg" alt="5-year revenue stack (1% adoption)" width="480" height="320" loading="lazy" /></div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-    <section class="section">
-      <div class="container">
-        <div id="markdown-content" class="markdown-body">
-          <p class="markdown-loading" data-en="Loading analysis…" data-zh="加载分析中…">Loading analysis…</p>
-        </div>
-      </div>
-    </section>
-  </main>
-
-  <footer class="footer">
-    <div class="container footer-inner">
-      <div class="footer-brand" aria-hidden="true">
-        <img src="assets/SolarSensLogo20260315v1.png" alt="" width="120" height="35" decoding="async">
-      </div>
-      <p class="footer-copy" data-en="Solar Sense — Safer, smarter, more scalable decentralized solar." data-zh="Solar Sense — 更安全、更智能、更可扩展的分布式太阳能。">Solar Sense — Safer, smarter, more scalable decentralized solar.</p>
-    </div>
-  </footer>
-
-  <script type="text/template" id="market-analysis-md">
 # Solar Sense — Market opportunity
 
 **Positioning:** Safety and intelligence layer for decentralized solar—hardware plus machine learning at the module, combining panel-level monitoring, ML-based fault detection, and integrated safety control (e.g. fast shutdown / MOSFET switching).  
-**Mission:** Improve safety and visibility at the panel level; enable scalable distributed energy with diagnostics and control that installers, O&amp;M, and emergency responders can rely on.
+**Mission:** Improve safety and visibility at the panel level; enable scalable distributed energy with diagnostics and control that installers, O&M, and emergency responders can rely on.  
+**Purpose:** Investor-grade analysis; aligned with the public site narrative.
 
 ---
 
 ## Go-to-market and funding (summary)
 
-- **Phase 1 — Education &amp; research (~12 months):** Universities, labs, and training institutions; faster adoption and lower certification barriers; deploy early units, validate technology, generate field data. **Funding ask:** ~**$860K**.
-- **Phase 2 — Residential &amp; commercial:** Rooftop and distributed C&amp;I; **UL / NEC** (or equivalent) alignment, scaled manufacturing, strategic partnerships. **Funding ask:** ~**$3M**.
+- **Phase 1 — Education & research (~12 months):** Universities, labs, and training institutions; faster adoption and lower certification barriers; deploy early units, validate technology, generate field data. **Funding ask:** ~**$860K**.
+- **Phase 2 — Residential & commercial:** Rooftop and distributed C&I; **UL / NEC** (or equivalent) alignment, scaled manufacturing, strategic partnerships. **Funding ask:** ~**$3M**.
 
 **Target price brackets (product):** ~**$21** target production cost; ~**$37** residential/commercial retail (used as hardware ASP in revenue tables below); ~**$200** education and research market SKU.
 
@@ -499,13 +341,81 @@ Overlap across categories is significant; addressable "strategic" set for an edu
 
 ### 6.2 Positioning: Intelligent module infrastructure + safety
 
-Solar Sense targets a **module-level layer** that combines **monitoring**, **ML-based fault detection**, and **active safety control** (e.g. panel-level shutdown)—not monitor-only or shutdown-only point solutions. It delivers real-time V/I/T, IV-curve behavior, and AI-ready diagnostics without requiring full MLPE replacement in every architecture. **Cost:** ~$21 production cost target and ~$37 retail anchor position below many full MLPE add-ons. **Scalability:** Module-level data at scale supports fleet-level digital twin and O&amp;M. **Digital twin:** Pipeline is designed for digital twin and ML; diagnostics are ML-first. **Manufacturing integration:** Quality feedback, traceability, and OEM integration align with smart manufacturing and global OEM needs.
+Solar Sense targets a **module-level layer** that combines **monitoring**, **ML-based fault detection**, and **active safety control** (e.g. panel-level shutdown)—not monitor-only or shutdown-only point solutions. It delivers real-time V/I/T, IV-curve behavior, and AI-ready diagnostics without requiring full MLPE replacement in every architecture. **Cost:** ~$21 production cost target and ~$37 retail anchor position below many full MLPE add-ons. **Scalability:** Module-level data at scale supports fleet-level digital twin and O&M. **Digital twin:** Pipeline is designed for digital twin and ML; diagnostics are ML-first. **Manufacturing integration:** Quality feedback, traceability, and OEM integration align with smart manufacturing and global OEM needs.
 
 ### 6.3 Risks
 
 - **MLPE extension:** Enphase, SolarEdge, or others could extend into deeper diagnostics or IV-level data; differentiation must be maintained through speed, cost, and OEM strategy.
 - **OEM in-house:** Module OEMs could develop in-house module-level intelligence; partnership and value proposition (time-to-market, expertise, flexibility) matter.
 - **Adoption friction:** New hardware on the module requires installer and OEM buy-in; certification and reliability narrative are critical.
+
+---
+
+## Section 7 — Plug and Play China Slide Structure
+
+*Slide recommendations for Chinese industrial investors. Titles in English + Mandarin. Red and gold accents (minimal, professional); manufacturing-forward framing; clear pathway to integration.*
+
+### Slide 1 — Macro Solar Market  
+**全球光伏市场概览**
+
+- 2024 global new installations ~553 GW; China ~330 GW (~60%).
+- Top markets: China, USA, Europe, India, RoW; utility ~62%, distributed ~38%.
+- Growth: 16% CAGR assumed; 3-year projection to ~862 GW (2027).
+- *Design:* One map or bar chart; keep numbers from Section 1 table.
+
+### Slide 2 — Intelligent Module Opportunity  
+**智能组件机遇**
+
+- Problem: safety (rapid shutdown), hidden faults, costly diagnostics.
+- Solution: module-level sensing, IV-curve intelligence, AI-ready diagnostics.
+- Positioning: hardware–AI platform for next-generation solar module intelligence.
+- *Design:* Problem–solution–positioning; align with strategy 1-pager.
+
+### Slide 3 — Revenue Scenarios  
+**收入情景**
+
+- Hardware $37/module; adoption scenarios 0.5%–8%; global, China-only, utility-only.
+- Table or chart from Section 2; stress 0.5–2% as realistic, 5–8% as upside.
+- *Design:* Clean table or grouped bar chart; red/gold for key numbers.
+
+### Slide 4 — SaaS Stack  
+**SaaS 与数字孪生**
+
+- $1.37/module/year; Year 1 TAM ~$1.7 B; 5-year recurring opportunity.
+- 5-year revenue stack (hardware + SaaS); recurring inflection in Years 4–5.
+- Margins: hardware 30–50%, SaaS 70–85%.
+- *Design:* Stacked bar or area chart; inflection point called out.
+
+### Slide 5 — China Manufacturing Leverage  
+**中国制造优势**
+
+- Supply chain and OEM integration; smart manufacturing alignment; quality and traceability.
+- Pathway: pilot → certification → scale; manufacturing preparation capital.
+- *Design:* Manufacturing-forward; pathway diagram; minimal text.
+
+### Slide 6 — 3-Phase Adoption Roadmap  
+**三阶段落地路线图**
+
+- Phase 1: Research-first deployments (controlled validation).
+- Phase 2: Pilot with installers and O&M partners.
+- Phase 3: Scale manufacturing and certification (UL/NEC etc.).
+- De-risk reliability and compliance before regulated mass markets.
+- *Design:* Timeline or three columns; align with strategy 1-pager.
+
+### Slide 7 — Partnership Ask  
+**合作与需求**
+
+- OEM intros (2 module or inverter OEMs / system integrators).
+- One pilot or LOI (C&I, asset owner, or OEM).
+- Hardware-focused investor meeting; certification guidance; ecosystem alignment.
+- *Design:* 3–5 bullets; clear ask; red or gold for CTA.
+
+### Design notes (all slides)
+
+- **Red and gold:** Use sparingly for accents, key numbers, and CTAs; avoid clutter.
+- **Bilingual:** Each slide title in English + Mandarin as above.
+- **Manufacturing-forward:** Emphasize scale path, certification, and China leverage.
+- **Clear pathway:** Every slide should support "how we get to industrialization."
 
 ---
 
@@ -522,7 +432,7 @@ Solar Sense targets a **module-level layer** that combines **monitoring**, **ML-
 ### Go-to-market and funding (document header)
 
 - **Phase 1:** ~$860K for education/research entry (~12 months).
-- **Phase 2:** ~$3M for residential/C&amp;I scale (certification, manufacturing, partnerships).
+- **Phase 2:** ~$3M for residential/C&I scale (certification, manufacturing, partnerships).
 - **Price anchors:** ~$21 production cost target; ~$37 retail (hardware tables); ~$200 education/research SKU (Section 5 scenarios).
 
 ### Revenue and economics (Sections 2–3)
@@ -546,74 +456,3 @@ Solar Sense targets a **module-level layer** that combines **monitoring**, **ML-
 - Research market: strategic wedge, not core TAM; not overstated.
 
 All tables in this document are suitable for export to slides or appendix; sources and assumptions are stated so the analysis can withstand investor scrutiny.
-
-  </script>
-
-    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
-  <script>
-    (function () {
-      var STORAGE_KEY = 'solarsense-lang';
-      var defaultLang = 'en';
-
-      function getLang() {
-        try { return localStorage.getItem(STORAGE_KEY) || defaultLang; } catch (e) { return defaultLang; }
-      }
-      function setLang(lang) {
-        try { localStorage.setItem(STORAGE_KEY, lang); } catch (e) {}
-      }
-      function applyLang(lang) {
-        var attr = lang === 'zh' ? 'data-zh' : 'data-en';
-        document.querySelectorAll('[' + attr + ']').forEach(function (el) {
-          var value = el.getAttribute(attr);
-          if (value) el.textContent = value;
-        });
-        document.querySelectorAll('.lang-btn').forEach(function (btn) {
-          var isActive = btn.getAttribute('data-lang') === lang;
-          btn.classList.toggle('active', isActive);
-          btn.setAttribute('aria-pressed', isActive);
-        });
-        document.documentElement.lang = lang === 'zh' ? 'zh-CN' : 'en';
-      }
-      document.querySelectorAll('.lang-btn').forEach(function (btn) {
-        btn.addEventListener('click', function () {
-          var lang = btn.getAttribute('data-lang');
-          setLang(lang);
-          applyLang(lang);
-        });
-      });
-      applyLang(getLang());
-
-      var dashboardUrl = /^(localhost|127\.0\.0\.1)(:\d+)?$/i.test(window.location.host) ? 'http://localhost:8501' : 'https://pvlivedata.streamlit.app/Live_Dashboard';
-      document.querySelectorAll('a[data-dashboard-link]').forEach(function (a) {
-        a.href = dashboardUrl;
-        a.target = '_blank';
-        a.rel = 'noopener noreferrer';
-      });
-
-      var contentEl = document.getElementById('markdown-content');
-      function renderMd(md) {
-        if (typeof marked !== 'undefined') {
-          marked.setOptions({ gfm: true, breaks: true });
-          contentEl.innerHTML = marked.parse(md);
-        } else {
-          contentEl.innerHTML = '<p class="markdown-error">Markdown renderer not loaded.</p>';
-        }
-      }
-      var embedded = document.getElementById('market-analysis-md');
-      if (embedded && embedded.textContent) {
-        renderMd(embedded.textContent.trim());
-      } else {
-        fetch('docs/market_opportunity_analysis.md')
-          .then(function (r) {
-            if (!r.ok) throw new Error(r.status + ' ' + r.statusText);
-            return r.text();
-          })
-          .then(renderMd)
-          .catch(function (err) {
-            contentEl.innerHTML = '<p class="markdown-error">Could not load analysis. Error: ' + err.message + '.</p>';
-          });
-      }
-    })();
-  </script>
-</body>
-</html>
