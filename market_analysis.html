@@ -1,0 +1,598 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Market Opportunity | Solar Sense</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="icon" href="assets/SolarSensLogo.png" type="image/png">
+  <style>
+    .analysis-page .container { max-width: 900px; }
+    .analysis-hero { padding: var(--section-padding) 0 var(--space-2xl); border-bottom: 1px solid var(--border); }
+    .analysis-hero h1 { font-size: clamp(1.5rem, 4vw, 2rem); margin: 0 0 var(--space-sm); color: var(--text-primary); }
+    .analysis-hero p { color: var(--text-secondary); margin: 0; font-size: 0.95rem; }
+    .markdown-body { padding: var(--space-2xl) 0; }
+    .markdown-body h2 { font-size: 1.35rem; margin: var(--space-3xl) 0 var(--space-lg); color: var(--accent-gold); border-bottom: 1px solid var(--border); padding-bottom: var(--space-sm); }
+    .markdown-body h2:first-child { margin-top: 0; }
+    .markdown-body h3 { font-size: 1.1rem; margin: var(--space-xl) 0 var(--space-md); color: var(--text-primary); }
+    .markdown-body p, .markdown-body li { color: var(--text-secondary); margin-bottom: var(--space-sm); line-height: 1.65; }
+    .markdown-body strong { color: var(--text-primary); }
+    .markdown-body em { color: var(--text-muted); }
+    .markdown-body ul, .markdown-body ol { padding-left: 1.5rem; margin-bottom: var(--space-lg); }
+    .markdown-body hr { border: none; border-top: 1px solid var(--border); margin: var(--space-2xl) 0; }
+    .markdown-body table { width: 100%; border-collapse: collapse; margin: var(--space-lg) 0; font-size: 0.9rem; overflow-x: auto; display: block; }
+    .markdown-body th, .markdown-body td { border: 1px solid var(--border); padding: var(--space-sm) var(--space-md); text-align: left; color: var(--text-secondary); }
+    .markdown-body th { background: var(--bg-card); color: var(--text-primary); font-weight: 600; }
+    .markdown-body tr:nth-child(even) { background: rgba(255,255,255,0.02); }
+    .markdown-body blockquote { border-left: 3px solid var(--accent-gold); margin: var(--space-lg) 0; padding-left: var(--space-lg); color: var(--text-muted); }
+    .markdown-loading { padding: var(--space-3xl); text-align: center; color: var(--text-muted); }
+    .markdown-error { padding: var(--space-lg); background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); color: var(--text-secondary); }
+    .nav-current { color: var(--accent-gold); font-weight: 500; }
+    .charts-section { padding: var(--space-2xl) 0; border-bottom: 1px solid var(--border); opacity: 1; animation: none; }
+    .charts-section h2 { font-size: 1.35rem; margin: 0 0 var(--space-sm); color: var(--accent-gold); }
+    .charts-intro { font-size: 0.9375rem; color: var(--text-secondary); margin: 0 0 var(--space-2xl); }
+    .charts-story { max-width: 720px; }
+    .chart-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: var(--space-lg); }
+    .chart-card h3 { font-size: 0.9375rem; margin: 0 0 var(--space-md); color: var(--text-primary); font-weight: 600; }
+    .chart-card .chart-wrap { position: relative; width: 100%; height: 280px; display: flex; align-items: center; justify-content: center; overflow: hidden; }
+    .chart-card .chart-wrap.tall { height: 300px; }
+    .chart-card .chart-wrap img { max-width: 100%; max-height: 100%; width: auto; height: auto; object-fit: contain; display: block; border-radius: var(--radius-sm); }
+    .story-chart-block { margin-bottom: var(--space-3xl); }
+    .story-chart-block:last-child { margin-bottom: 0; }
+    .story-beat { margin-bottom: var(--space-lg); }
+    .story-headline { font-size: 1.1rem; margin: 0 0 var(--space-sm); color: var(--accent-gold); font-weight: 600; }
+    .story-narrative { font-size: 0.9375rem; color: var(--text-secondary); line-height: 1.65; margin: 0; max-width: 52ch; }
+  </style>
+</head>
+<body class="analysis-page">
+  <header class="nav" role="banner">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo">
+        <img src="assets/SolarSensLogo.png" alt="Solar Sense" width="152" height="44" loading="eager">
+        <span data-en="Solar Sense" data-zh="Solar Sense">Solar Sense</span>
+      </a>
+      <nav class="nav-links" aria-label="Main navigation">
+        <a href="index.html#problem" data-en="Problem" data-zh="问题">Problem</a>
+        <a href="index.html#technology" data-en="Technology" data-zh="技术">Technology</a>
+        <a href="index.html" data-dashboard-link data-en="Live Demo" data-zh="现场演示">Live Demo</a>
+        <a href="market_analysis.html" class="nav-current" data-en="Market Opportunity" data-zh="市场机遇">Market Opportunity</a>
+        <a href="index.html#roadmap" data-en="Roadmap" data-zh="路线图">Roadmap</a>
+        <a href="index.html#team" data-en="Team" data-zh="团队">Team</a>
+        <a href="index.html#contact" data-en="Contact" data-zh="联系">Contact</a>
+      </nav>
+      <div class="nav-actions">
+        <div class="lang-toggle" role="group" aria-label="Language">
+          <button type="button" class="lang-btn active" data-lang="en" aria-pressed="true">EN</button>
+          <button type="button" class="lang-btn" data-lang="zh" aria-pressed="false">中文</button>
+        </div>
+        <a href="index.html#contact" class="btn btn-primary" data-en="Request a Meeting" data-zh="预约会面">Request a Meeting</a>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="section analysis-hero">
+      <div class="container">
+        <h1 data-en="Solar Sense — Market Opportunity" data-zh="Solar Sense — 市场机遇">Solar Sense — Market Opportunity</h1>
+        <p data-en="Hardware–AI platform for next-generation solar module intelligence." data-zh="面向下一代光伏组件智能的硬件-AI 平台。">Hardware–AI platform for next-generation solar module intelligence.</p>
+      </div>
+    </section>
+    <section class="section charts-section">
+      <div class="container">
+        <p class="charts-intro" data-en="Context, opportunity, and path to scale—in five charts." data-zh="背景、机遇与规模化路径，五张图说清。">Context, opportunity, and path to scale—in five charts.</p>
+        <div class="charts-story">
+          <div class="story-chart-block">
+            <div class="story-beat">
+              <h3 class="story-headline" data-en="The market is large and split across segments" data-zh="市场规模大且按场景分布">The market is large and split across segments</h3>
+              <p class="story-narrative" data-en="In 2024, global new solar installations reached 553 GW. Utility-scale accounts for 62%; distributed (residential and C&I) makes up the rest. This mix defines where module-level intelligence can add the most value." data-zh="2024年全球新增光伏装机约553 GW。集中式占62%，分布式（户用与工商业）占其余。这一结构决定了组件级智能可创造最大价值的场景。">In 2024, global new solar installations reached 553 GW. Utility-scale accounts for 62%; distributed (residential and C&I) makes up the rest. This mix defines where module-level intelligence can add the most value.</p>
+            </div>
+            <div class="chart-card">
+              <div class="chart-wrap"><img src="assets/charts/segment.svg" alt="Global deployment by segment (2024, GW)" width="480" height="320" loading="lazy" /></div>
+            </div>
+          </div>
+          <div class="story-chart-block">
+            <div class="story-beat">
+              <h3 class="story-headline" data-en="China leads; global deployment is diversified" data-zh="中国领先，全球装机分布多元">China leads; global deployment is diversified</h3>
+              <p class="story-narrative" data-en="China represents about 60% of 2024 deployment. Europe, the US, India, and the rest of the world add a diversified base. For Solar Sense, this means a clear China opportunity plus multiple pilot and scale markets." data-zh="中国约占2024年装机的60%。欧洲、美国、印度及其他地区构成多元市场。对 Solar Sense 而言，既存在明确的中国机遇，也有多国试点与规模化空间。">China represents about 60% of 2024 deployment. Europe, the US, India, and the rest of the world add a diversified base. For Solar Sense, this means a clear China opportunity plus multiple pilot and scale markets.</p>
+            </div>
+            <div class="chart-card">
+              <div class="chart-wrap"><img src="assets/charts/markets.svg" alt="Top 5 markets by deployment (2024, GW)" width="480" height="320" loading="lazy" /></div>
+            </div>
+          </div>
+          <div class="story-chart-block">
+            <div class="story-beat">
+              <h3 class="story-headline" data-en="Growth is strong—the pipeline is expanding" data-zh="增长强劲，装机 pipeline 持续扩大">Growth is strong—the pipeline is expanding</h3>
+              <p class="story-narrative" data-en="At an assumed 16% CAGR, new installations rise from 553 GW (2024) to about 862 GW (2027). More modules each year mean a growing addressable market for hardware and SaaS." data-zh="在16%年复合增长率假设下，年新增装机从553 GW（2024）增至约862 GW（2027）。每年更多组件意味着硬件与 SaaS 的可触达市场持续扩大。">At an assumed 16% CAGR, new installations rise from 553 GW (2024) to about 862 GW (2027). More modules each year mean a growing addressable market for hardware and SaaS.</p>
+            </div>
+            <div class="chart-card">
+              <div class="chart-wrap"><img src="assets/charts/projection.svg" alt="3-year projection (GW)" width="480" height="320" loading="lazy" /></div>
+            </div>
+          </div>
+          <div class="story-chart-block">
+            <div class="story-beat">
+              <h3 class="story-headline" data-en="Revenue scales with adoption—even low penetration matters" data-zh="收入随渗透率提升而放大，低渗透率亦有意义">Revenue scales with adoption—even low penetration matters</h3>
+              <p class="story-narrative" data-en="At $37 per module, 0.5–1% adoption already implies hundreds of millions in annual revenue (global or China-only). At 2–5%, the opportunity reaches billions. The chart shows why modest, credible adoption targets support a strong TAM story." data-zh="在每组件37美元假设下，0.5%–1%的渗透率即对应数亿美元年收入（全球或仅中国）。2%–5%时机会达数十亿。图表说明为何适度、可实现的渗透率目标即可支撑可观的 TAM 叙事。">At $37 per module, 0.5–1% adoption already implies hundreds of millions in annual revenue (global or China-only). At 2–5%, the opportunity reaches billions. The chart shows why modest, credible adoption targets support a strong TAM story.</p>
+            </div>
+            <div class="chart-card">
+              <div class="chart-wrap tall"><img src="assets/charts/revenue.svg" alt="Revenue scenarios by adoption rate" width="480" height="320" loading="lazy" /></div>
+            </div>
+          </div>
+          <div class="story-chart-block">
+            <div class="story-beat">
+              <h3 class="story-headline" data-en="A realistic path: 1% adoption drives hardware and recurring SaaS" data-zh="现实路径：1%渗透率驱动硬件与 recurring SaaS">A realistic path: 1% adoption drives hardware and recurring SaaS</h3>
+              <p class="story-narrative" data-en="In a 1% adoption scenario, hardware revenue grows with the market each year. SaaS from prior-year installs builds the recurring base; by years 4–5, recurring revenue inflects. This is the story of how hardware plus software creates a durable business." data-zh="在1%渗透率情景下，硬件收入随市场逐年增长；往年安装带来的 SaaS 构筑经常性收入基础，到第4–5年 recurring 收入拐点出现。这正是“硬件+软件”构建可持续业务的故事。">In a 1% adoption scenario, hardware revenue grows with the market each year. SaaS from prior-year installs builds the recurring base; by years 4–5, recurring revenue inflects. This is the story of how hardware plus software creates a durable business.</p>
+            </div>
+            <div class="chart-card">
+              <div class="chart-wrap tall"><img src="assets/charts/stack.svg" alt="5-year revenue stack (1% adoption)" width="480" height="320" loading="lazy" /></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section class="section">
+      <div class="container">
+        <div id="markdown-content" class="markdown-body">
+          <p class="markdown-loading" data-en="Loading analysis…" data-zh="加载分析中…">Loading analysis…</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer-inner">
+      <div class="footer-brand" aria-hidden="true">
+        <img src="assets/SolarSensLogo.png" alt="" width="120" height="35" decoding="async">
+      </div>
+      <p class="footer-copy" data-en="Solar Sense — Make solar smarter, safer, and more sustainable." data-zh="Solar Sense — 让太阳能更智能、更安全、更可持续。">Solar Sense — Make solar smarter, safer, and more sustainable.</p>
+    </div>
+  </footer>
+
+  <script type="text/template" id="market-analysis-md">
+# Solar Sense — Market Opportunity
+
+**Positioning:** Hardware–AI platform for next-generation solar module intelligence.  
+**Mission:** Make solar technology smarter, safer, and more sustainable.
+
+---
+
+## Section 1 — Global Solar Deployment Baseline
+
+### 1.1 Annual global deployment (GW) by segment
+
+*Source: IEA Renewables 2025, IEA-PVPS Snapshot of Global PV Markets 2025 (range 553–601 GW for 2024). Baseline year 2024.*
+
+| Segment | GW (2024) | Share | Note |
+|---------|-----------|-------|------|
+| Utility-scale | 343 | 62% | IEA-PVPS reported share. |
+| Distributed (residential + C&I) | 210 | 38% | Estimated from regional mix and industry reports. |
+| — Residential | 105 | 19% | Assumed 50% of distributed (see Key assumptions). |
+| — Commercial & Industrial | 105 | 19% | Assumed 50% of distributed. |
+| **Total** | **553** | 100% | Conservative end of 553–601 GW range. |
+
+### 1.2 Top 5 geographic markets by deployment (2024)
+
+*Source: IEA-PVPS Snapshot 2025, regional reports.*
+
+| Rank | Market | GW (2024) | Note |
+|------|--------|-----------|------|
+| 1 | China | 330 | Mid of reported 309–357 GW range; ~60% of global. |
+| 2 | USA | 47 | Record deployments; policy and IRA impact. |
+| 3 | Europe (aggregate) | 66 | EU ~66 GW. Top country: Germany 17.2 GW; Spain 8.7; Italy 6.7; France 6; Poland 4.2. |
+| 4 | India | 32 | Strong growth; utility-heavy. |
+| 5 | Emerging / Rest of world | 78 | RoW = Total − (China + USA + Europe + India). |
+
+### 1.3 Annual deployment converted to module count
+
+*Formula: Modules = GW × 10⁹ / W_per_module. Key assumption: average module size (W) applied uniformly.*
+
+| Module size | Modules per GW | Global 2024 (553 GW) | Note |
+|-------------|----------------|----------------------|------|
+| 400 W | 2.50 million | 1,383 million | Sensitivity low (more modules). |
+| **450 W** | **2.22 million** | **1,229 million** | **Baseline.** |
+| 500 W | 2.00 million | 1,106 million | Sensitivity high (fewer modules). |
+
+All revenue and TAM calculations in this document use the **450 W baseline** unless stated otherwise. Sensitivity at 400 W and 500 W can be applied by scaling: multiply revenue or module counts by (400/450) or (500/450) as appropriate for count; revenue scales linearly with module count.
+
+### 1.4 Growth rate and 3-year forward projection
+
+- **CAGR assumption:** 16% (IEA indicates solar to more than double 2025–2030; 16% gives ~2.1× over 5 years). Stated as assumption; actual policy and supply may vary.
+- **3-year forward projection (GW and modules at 450 W):**
+
+| Year | GW (new) | Modules (million, 450 W) | Note |
+|------|----------|---------------------------|------|
+| 2024 (baseline) | 553 | 1,229 | Observed/estimated. |
+| 2025 | 641 | 1,425 | +16% y/y. |
+| 2026 | 743 | 1,652 | +16% y/y. |
+| 2027 | 862 | 1,918 | +16% y/y. |
+
+### 1.5 Key assumptions (Section 1)
+
+- 2024 global new installations = 553 GW (conservative end of IEA-PVPS range).
+- Utility share = 62%; distributed = 38%. Within distributed, residential vs C&I = 50/50 (estimated; not all reports split).
+- China = 330 GW; USA, Europe, India as in table; RoW = residual.
+- Average module size = 450 W baseline; 400 W and 500 W for sensitivity.
+- CAGR = 16% for forward projection (stated assumption).
+
+### 1.6 Sources (Section 1)
+
+- IEA, *Renewables 2025* (executive summary and solar section).
+- IEA-PVPS, *Snapshot of Global PV Markets 2025* (553–601 GW 2024; regional and segment notes).
+- TaiyangNews / IEA Global Energy Review 2025 (553 GW 2024 reference).
+
+---
+
+## Section 2 — Solar Sense Hardware Revenue Scenarios
+
+**Assumption:** $37 per module (hardware ASP).
+
+**Baseline module volume (2024, 450 W):** Global 1,229 million; China 733 million (330 GW); Utility-only 762 million (343 GW).
+
+### 2.1 Revenue table ($ million)
+
+| Adoption | Global | China-only | Utility-scale only |
+|----------|--------|------------|---------------------|
+| 0.5% | 227 | 136 | 141 |
+| 1% | 455 | 271 | 282 |
+| 2% | 910 | 542 | 564 |
+| 3% | 1,364 | 813 | 846 |
+| 5% | 2,273 | 1,355 | 1,410 |
+| 8% | 3,637 | 2,168 | 2,256 |
+
+*Table: Annual revenue ($ million) = modules × adoption % × $37. China and utility-only use same adoption percentages applied to their respective module volumes.*
+
+### 2.2 Graph-ready summary
+
+- **X-axis:** Adoption rate (0.5%, 1%, 2%, 3%, 5%, 8%).
+- **Y-axis:** Revenue ($M).
+- **Series:** Global; China-only; Utility-only.
+- **Headline numbers (Global):** 227 → 455 → 910 → 1,364 → 2,273 → 3,637 $M.
+
+### 2.3 Commentary on realism
+
+- **0.5–2% adoption:** Credible for a new category in a 5–7 year horizon; requires clear OEM or pilot pathway and proof of reliability. Use as base/realistic cases.
+- **3–5%:** Aggressive; implies meaningful share of new installs or a major geography (e.g. China) or segment (e.g. utility) adopting. Position as upside.
+- **8%:** Long-term upside only; not a near-term forecast. Flag as illustrative.
+- **China-only:** Large revenue potential but execution risk (policy, local partners, OEM integration). Good for TAM narrative; stress partnership and manufacturing leverage.
+- **Utility-scale only:** Focused TAM; aligns with large projects and potential utility/OEM partnerships. More credible for first wave than global 5–8%.
+
+---
+
+## Section 3 — SaaS Layer and Digital Twin Economics
+
+**Assumption:** $1.37 per module per year (Starling digital twin subscription).
+
+### 3.1 Year 1 SaaS TAM
+
+- **Addressable modules:** New installations in Year 1 only (conservative) = 1,229 million (2024 baseline).
+- **Year 1 SaaS TAM** = 1,229 × 10⁶ × $1.37 = **$1,684 million** (~$1.7 B).
+- *If addressable = new + prior-year backlog, TAM is higher; assumption here is new installs only for Year 1.*
+
+### 3.2 5-year recurring revenue TAM (cumulative installations)
+
+Cumulative new installations over 5 years (from Section 1 projection): 553 + 641 + 743 + 862 + 1,000 ≈ 3,799 GW → 8,442 million modules.  
+Annual recurring revenue opportunity from that cohort (at steady state, all on subscription) = 8,442 × 10⁶ × $1.37 = **$11,566 million** (~$11.6 B/year).
+
+*Interpretation: If Solar Sense captured 1% of this cohort on SaaS, recurring = ~$116 M/year from that cohort alone.*
+
+### 3.3 Blended hardware + SaaS model (5-year revenue stack)
+
+**Assumption:** Annual new modules addressed (e.g. 1% of annual new installs) grow with market. Margins: hardware 40%, SaaS 78% (mid of 30–50% and 70–85%).
+
+Simplified 5-year stack (1% of annual new modules; hardware one-time, SaaS recurring from prior-year installs):
+
+| Year | New modules (1%, million) | Hardware revenue ($M) | SaaS revenue ($M) | Total revenue ($M) |
+|------|----------------------------|------------------------|-------------------|---------------------|
+| 1 | 12.3 | 455 | 0 | 455 |
+| 2 | 14.2 | 526 | 17 | 543 |
+| 3 | 16.5 | 611 | 39 | 650 |
+| 4 | 19.2 | 710 | 65 | 775 |
+| 5 | 21.9 | 810 | 95 | 905 |
+
+*SaaS in Year t = modules added in Year t−1 × 1% × $1.37. Hardware in Year t = modules in Year t × 1% × $37.*
+
+### 3.4 Gross margin assumptions
+
+- **Hardware:** 30–50% (assume 40% mid). Volume and DFM improve over time.
+- **SaaS:** 70–85% (assume 78% mid). Software and platform economics.
+
+### 3.5 Recurring revenue inflection
+
+- In the 1% adoption scenario above, **annual SaaS revenue exceeds annual hardware revenue** when the installed base on subscription (from prior years) generates more than the current year's hardware revenue. With 16% market growth and 1% capture, this occurs around **Year 4–5** in this simplified model.
+- **Takeaway:** Recurring inflection is achievable within 5 years at low single-digit penetration; timing improves with higher penetration or faster base build.
+
+---
+
+## Section 4 — Why This Market Is Now Possible
+
+### 4.1 Why module-integrated intelligence wasn't adopted historically
+
+- **Cost:** Per-module electronics and connectivity were too expensive relative to module and system cost; BOM and integration complexity discouraged adoption.
+- **Demand:** Limited pull for real-time module-level data; no strong digital twin or AI use case; monitoring was string- or inverter-level.
+- **Warranty and financing:** Asset-level data was not yet a requirement for lenders or insurers; OEMs had less pressure to prove performance at module level.
+- **Grid and standards:** Grid digitization and rapid shutdown were not as widespread; regulatory push for module-level intelligence was weaker.
+
+### 4.2 What has changed
+
+- **AI maturity:** Fault detection, anomaly detection, and digital twin value propositions are now credible; data from the module becomes an input to models that improve O&M and asset valuation.
+- **IoT cost reduction:** Sensing, MCUs, and connectivity have fallen in cost; per-module add-on is economically plausible at target ASPs.
+- **Financing models:** Lenders and insurers increasingly want visibility into asset performance; module-level data supports due diligence and risk pricing.
+- **Warranty and O&M pressures:** Manufacturers and asset owners face warranty claims and O&M cost; early fault detection and diagnostics reduce cost and improve credibility.
+- **Grid digitization:** Module as a grid-interactive or monitored node aligns with smart grid and DER management; rapid shutdown and safety standards create a regulatory hook.
+- **China smart manufacturing:** National focus on quality, traceability, and manufacturing feedback loops creates pull for module-level data in production and field.
+
+### 4.3 Why Solar Sense is entering at the right time
+
+Solar Sense is positioning as an **infrastructure intelligence layer** at the module at a moment when (1) cost of hardware and connectivity allows it, (2) AI and digital twin applications create pull for the data, (3) regulatory and safety drivers (rapid shutdown) support integration, and (4) China and global OEMs are seeking quality and differentiation. The thesis is convergence of enablers, not "first ever"; execution and partnerships matter more than claiming a unique idea.
+
+---
+
+## Section 5 — Educational and Research Market Entry
+
+### 5.1 Estimated addressable institutions
+
+*Assumption: industry and academic database estimates; ranges reflect uncertainty.*
+
+| Segment | Low estimate | Mid estimate | High estimate | Note |
+|---------|---------------|--------------|---------------|------|
+| Universities with solar installations | 500 | 1,500 | 3,000+ | Campus PV, research arrays. |
+| Engineering schools with energy programs | 200 | 400 | 600+ | ABET, QS, THE engineering. |
+| Renewable energy / PV research labs | 100 | 250 | 500+ | Dedicated PV/solar research. |
+
+Overlap across categories is significant; addressable "strategic" set for a Research Edition is narrower (top 50–100 for prioritization).
+
+### 5.2 Market size at $137 per Research Edition device
+
+| Scenario | Institutions | Revenue ($) | Note |
+|----------|--------------|------------|------|
+| Low | 50 | 6,850 | Focused beachhead. |
+| Mid | 200 | 27,400 | Broader research wedge. |
+| High | 500 | 68,500 | Maximum addressable. |
+
+*Assumption: one Research Edition device per institution (or per lab) at $137. Volume discounts or multi-unit deals would change ASP.*
+
+### 5.3 Strategic value beyond revenue
+
+- **Validation:** Real-world deployments in controlled environments; stress-test hardware and software before commercial pilots.
+- **Data diversity:** Multiple climates, configurations, and use cases; improves models and diagnostics.
+- **Credibility:** University and research partnerships strengthen narrative for investors and OEMs.
+- **China collaboration:** Joint research, bilateral programs, and visibility in Chinese academic and industrial circles support PnP China and manufacturing narrative.
+
+### 5.4 Top 50–100 strategic institutions (curated list)
+
+*Prioritized: top engineering universities, energy research leadership, China–US–EU balance, PV/solar research visibility. List is illustrative; not exhaustive.*
+
+| # | Institution | Country | Note |
+|---|-------------|---------|------|
+| 1 | MIT | USA | Energy initiative; PV research. |
+| 2 | Stanford University | USA | Sustainable energy; engineering. |
+| 3 | National Renewable Energy Laboratory (NREL) | USA | PV and grid research. |
+| 4 | University of California, Berkeley | USA | Energy and engineering. |
+| 5 | California Institute of Technology | USA | Engineering; solar. |
+| 6 | Georgia Institute of Technology | USA | PV and energy systems. |
+| 7 | University of Michigan | USA | Energy research. |
+| 8 | Purdue University | USA | Engineering; sustainability. |
+| 9 | University of Texas at Austin | USA | Energy institute. |
+| 10 | Arizona State University | USA | Solar research; sustainability. |
+| 11 | Tsinghua University | China | Energy; PV; top engineering. |
+| 12 | Zhejiang University | China | Engineering; solar. |
+| 13 | Shanghai Jiao Tong University | China | Energy; engineering. |
+| 14 | Huazhong University of Science and Technology | China | Engineering; PV. |
+| 15 | Xi'an Jiaotong University | China | Energy and power. |
+| 16 | Sun Yat-sen University | China | Solar and materials. |
+| 17 | Nanjing University | China | Energy research. |
+| 18 | University of Science and Technology of China | China | Engineering; clean energy. |
+| 19 | Technical University of Munich | Germany | TUM Energy; PV. |
+| 20 | Fraunhofer ISE | Germany | PV research institute. |
+| 21 | Delft University of Technology | Netherlands | PV and energy. |
+| 22 | Imperial College London | UK | Energy; engineering. |
+| 23 | University of Oxford | UK | Energy and environment. |
+| 24 | ETH Zurich | Switzerland | Energy science; PV. |
+| 25 | EPFL | Switzerland | Solar and energy. |
+| 26 | KU Leuven | Belgium | PV and electronics. |
+| 27 | University of New South Wales | Australia | PV; world-leading solar research. |
+| 28 | Australian National University | Australia | Solar and engineering. |
+| 29 | Indian Institute of Technology Bombay | India | Engineering; energy. |
+| 30 | Indian Institute of Technology Delhi | India | Energy research. |
+| 31 | Indian Institute of Technology Madras | India | Solar and sustainability. |
+| 32 | Nanyang Technological University | Singapore | Energy; engineering. |
+| 33 | National University of Singapore | Singapore | Solar and energy. |
+| 34 | Seoul National University | South Korea | Energy engineering. |
+| 35 | KAIST | South Korea | PV and systems. |
+| 36 | University of Tokyo | Japan | Energy and engineering. |
+| 37 | Kyoto University | Japan | Solar and materials. |
+| 38 | University of Toronto | Canada | Energy and sustainability. |
+| 39 | McGill University | Canada | Engineering; energy. |
+| 40 | University of Cambridge | UK | Energy and engineering. |
+| 41 | University of Sheffield | UK | Solar and PV. |
+| 42 | Politecnico di Milano | Italy | Energy and PV. |
+| 43 | Technical University of Denmark (DTU) | Denmark | PV and energy. |
+| 44 | Chalmers University of Technology | Sweden | Energy and PV. |
+| 45 | Uppsala University | Sweden | Solar research. |
+| 46 | Oregon Institute of Technology | USA | Renewable energy; ABET. |
+| 47 | Colorado School of Mines | USA | Energy and materials. |
+| 48 | North Carolina State University | USA | PV and power electronics. |
+| 49 | Penn State University | USA | Energy and engineering. |
+| 50 | Ohio State University | USA | Energy systems. |
+| 51 | University of Florida | USA | Solar and sustainability. |
+| 52 | University of Washington | USA | Clean energy. |
+| 53 | Harvard University | USA | Energy and environment. |
+| 54 | Yale University | USA | Energy studies. |
+| 55 | Princeton University | USA | Andlinger Center; energy. |
+| 56 | Cornell University | USA | Engineering; sustainability. |
+| 57 | Northwestern University | USA | Engineering; energy. |
+| 58 | University of Illinois Urbana-Champaign | USA | Energy and PV. |
+| 59 | University of Colorado Boulder | USA | Renewable energy. |
+| 60 | Boston University | USA | Energy and environment. |
+| 61 | Beihang University | China | Engineering; aerospace/energy. |
+| 62 | Tianjin University | China | Engineering; energy. |
+| 63 | Harbin Institute of Technology | China | Engineering; energy. |
+| 64 | Tongji University | China | Sustainability; engineering. |
+| 65 | Fudan University | China | Engineering; research. |
+| 66 | Peking University | China | Energy and environment. |
+| 67 | RWTH Aachen | Germany | Energy engineering. |
+| 68 | University of Stuttgart | Germany | PV and building energy. |
+| 69 | Forschungszentrum Jülich | Germany | PV research. |
+| 70 | University of Barcelona | Spain | Solar and energy. |
+| 71 | Polytechnic University of Catalonia | Spain | PV and systems. |
+| 72 | University of Lisbon | Portugal | Solar and energy. |
+| 73 | University of Lyon | France | Energy and engineering. |
+| 74 | CentraleSupélec | France | Energy and systems. |
+| 75 | National University of Taiwan | Taiwan | Engineering; PV. |
+| 76 | National Cheng Kung University | Taiwan | Solar and energy. |
+| 77 | King Abdullah University of Science and Technology | Saudi Arabia | Solar and energy. |
+| 78 | University of Cape Town | South Africa | Energy and PV. |
+| 79 | Universidad de Chile | Chile | Solar and energy. |
+| 80 | Universidade de São Paulo | Brazil | Energy and engineering. |
+| 81 | Technion – Israel Institute of Technology | Israel | Solar and engineering. |
+| 82 | University of Waterloo | Canada | Energy and PV. |
+| 83 | McMaster University | Canada | Engineering; energy. |
+| 84 | University of Alberta | Canada | Energy research. |
+| 85 | Monash University | Australia | Solar and materials. |
+| 86 | University of Queensland | Australia | Solar and energy. |
+| 87 | University of Malaya | Malaysia | Energy and engineering. |
+| 88 | Chulalongkorn University | Thailand | Energy and engineering. |
+| 89 | University of the Philippines | Philippines | Solar and energy. |
+| 90 | Vietnam National University | Vietnam | Engineering; energy. |
+| 91 | University of Nairobi | Kenya | Energy and sustainability. |
+| 92 | American University of Beirut | Lebanon | Engineering; energy. |
+| 93 | Universidad Nacional Autónoma de México | Mexico | Solar and energy. |
+| 94 | Universidad de los Andes | Colombia | Energy and engineering. |
+| 95 | Universidad de Buenos Aires | Argentina | Engineering; energy. |
+| 96 | Loughborough University | UK | Energy and engineering. |
+| 97 | University of Exeter | UK | Renewable energy. |
+| 98 | Politecnico di Torino | Italy | Energy and PV. |
+| 99 | Universidad Politécnica de Madrid | Spain | Solar and systems. |
+| 100 | Eindhoven University of Technology | Netherlands | Energy and PV. |
+
+*Sources: QS/THE engineering and energy rankings; public visibility of PV/solar research; geographic balance for China–US–EU and emerging markets.*
+
+---
+
+## Section 6 — Competitive Landscape and Positioning
+
+### 6.1 Comparison table
+
+| Category | Representative players | Limitation | Solar Sense differentiation |
+|----------|-------------------------|------------|-----------------------------|
+| MLPE (microinverter / power optimizer + monitoring) | Enphase, SolarEdge | Power electronics + string/inverter-level monitoring; not full per-module IV-curve or digital twin; higher BOM and integration model. | Module-level sensing and IV-curve intelligence; digital twin pipeline; lower-cost sensing-first architecture; OEM integration and manufacturing feedback. |
+| Drone + IR / thermal imaging | Service providers, inspection vendors | Periodic, not real-time; no continuous module-level telemetry; manual or scheduled campaigns. | Real-time, continuous module-level data; IV behavior and fault signatures; always-on infrastructure layer. |
+| String monitoring | Inverter and SCADA vendors | String- or array-level aggregates only; no module granularity; cannot isolate fault to module. | Module-level granularity; fault isolation and diagnostics at module; scalable to digital twin. |
+| Smart module initiatives | Some OEMs, R&D | Early or limited rollout; often proprietary; not yet a standard intelligence layer. | Open architecture; IV-curve and diagnostics; manufacturing-ready narrative; partnership path for OEMs. |
+
+### 6.2 Positioning: Intelligent Module Infrastructure Layer
+
+Solar Sense creates a **new category**: an intelligence layer at the module that delivers real-time V/I/T, IV-curve behavior, and AI-ready diagnostics without requiring full MLPE replacement. **Cost:** Target $37/module positions below full MLPE add-on in many configurations. **Scalability:** Module-level data at scale supports fleet-level digital twin and O&M. **Digital twin:** Data pipeline is designed for digital twin and ML; today's diagnostic layer is ML-ready. **Manufacturing integration:** Quality feedback, traceability, and OEM integration align with China smart manufacturing and global OEM needs.
+
+### 6.3 Risks
+
+- **MLPE extension:** Enphase, SolarEdge, or others could extend into deeper diagnostics or IV-level data; differentiation must be maintained through speed, cost, and OEM strategy.
+- **OEM in-house:** Module OEMs could develop in-house module-level intelligence; partnership and value proposition (time-to-market, expertise, flexibility) matter.
+- **Adoption friction:** New hardware on the module requires installer and OEM buy-in; certification and reliability narrative are critical.
+
+---
+
+## Document Assumptions and Sources — Summary
+
+### Global deployment (Section 1)
+
+- **2024 global:** 553 GW (IEA / IEA-PVPS range 553–601 GW); source: IEA Renewables 2025, IEA-PVPS Snapshot 2025.
+- **Segment split:** Utility 62% (IEA-PVPS); distributed 38%; residential/C&I 50/50 within distributed (estimated).
+- **Geography:** China 330 GW (mid of range); USA 47; Europe 66; India 32; RoW residual. Sources: IEA-PVPS, regional reports.
+- **Module size:** 450 W baseline; 400 W and 500 W sensitivity.
+- **CAGR:** 16% stated assumption for 3-year projection.
+
+### Revenue and economics (Sections 2–3)
+
+- **Hardware ASP:** $37/module (fixed).
+- **SaaS:** $1.37/module/year (Starling digital twin assumption).
+- **Margins:** Hardware 30–50% (40% mid); SaaS 70–85% (78% mid).
+- **Adoption scenarios:** Illustrative; 0.5–2% stressed as realistic for first 5 years; 5–8% as upside.
+
+### Research market (Section 5)
+
+- **Institution counts:** Ranges from industry/academic estimates; explicitly uncertain.
+- **Research Edition:** $137/device; one unit per institution in size scenarios.
+- **Institution list:** Curated from public rankings and PV/energy visibility; not exhaustive.
+
+### Risks and realism
+
+- Adoption rates: 5–8% global in short term is aggressive; labeled as upside.
+- China-only: large TAM but execution risk; noted in commentary.
+- Hardware margin: volume-dependent; stated as assumption.
+- Research market: strategic wedge, not core TAM; not overstated.
+
+All tables in this document are suitable for export to slides or appendix; sources and assumptions are stated so the analysis can withstand investor scrutiny.
+
+  </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  <script>
+    (function () {
+      var STORAGE_KEY = 'solarsense-lang';
+      var defaultLang = 'en';
+
+      function getLang() {
+        try { return localStorage.getItem(STORAGE_KEY) || defaultLang; } catch (e) { return defaultLang; }
+      }
+      function setLang(lang) {
+        try { localStorage.setItem(STORAGE_KEY, lang); } catch (e) {}
+      }
+      function applyLang(lang) {
+        var attr = lang === 'zh' ? 'data-zh' : 'data-en';
+        document.querySelectorAll('[' + attr + ']').forEach(function (el) {
+          var value = el.getAttribute(attr);
+          if (value) el.textContent = value;
+        });
+        document.querySelectorAll('.lang-btn').forEach(function (btn) {
+          var isActive = btn.getAttribute('data-lang') === lang;
+          btn.classList.toggle('active', isActive);
+          btn.setAttribute('aria-pressed', isActive);
+        });
+        document.documentElement.lang = lang === 'zh' ? 'zh-CN' : 'en';
+      }
+      document.querySelectorAll('.lang-btn').forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          var lang = btn.getAttribute('data-lang');
+          setLang(lang);
+          applyLang(lang);
+        });
+      });
+      applyLang(getLang());
+
+      var dashboardUrl = /^(localhost|127\.0\.0\.1)(:\d+)?$/i.test(window.location.host) ? 'http://localhost:8501' : 'https://pvlivedata.streamlit.app/Live_Dashboard';
+      document.querySelectorAll('a[data-dashboard-link]').forEach(function (a) {
+        a.href = dashboardUrl;
+        a.target = '_blank';
+        a.rel = 'noopener noreferrer';
+      });
+
+      var contentEl = document.getElementById('markdown-content');
+      function renderMd(md) {
+        if (typeof marked !== 'undefined') {
+          marked.setOptions({ gfm: true, breaks: true });
+          contentEl.innerHTML = marked.parse(md);
+        } else {
+          contentEl.innerHTML = '<p class="markdown-error">Markdown renderer not loaded.</p>';
+        }
+      }
+      var embedded = document.getElementById('market-analysis-md');
+      if (embedded && embedded.textContent) {
+        renderMd(embedded.textContent.trim());
+      } else {
+        fetch('docs/market_opportunity_analysis.md')
+          .then(function (r) {
+            if (!r.ok) throw new Error(r.status + ' ' + r.statusText);
+            return r.text();
+          })
+          .then(renderMd)
+          .catch(function (err) {
+            contentEl.innerHTML = '<p class="markdown-error">Could not load analysis. Error: ' + err.message + '.</p>';
+          });
+      }
+    })();
+  </script>
+</body>
+</html>

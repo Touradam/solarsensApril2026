@@ -8,19 +8,21 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
+  <link rel="icon" href="assets/SolarSensLogo.png" type="image/png">
 </head>
 <body>
   <!-- SECTION A — Sticky Nav -->
   <header class="nav" role="banner">
     <div class="nav-inner">
       <a href="#hero" class="nav-logo">
-        <img src="assets/SolarSensLogo1.png" alt="Solar Sense" width="40" height="40">
+        <img src="assets/SolarSensLogo.png" alt="Solar Sense" width="152" height="44" loading="eager">
         <span data-en="Solar Sense" data-zh="Solar Sense">Solar Sense</span>
       </a>
       <nav class="nav-links" aria-label="Main navigation">
         <a href="#problem" data-en="Problem" data-zh="问题">Problem</a>
         <a href="#technology" data-en="Technology" data-zh="技术">Technology</a>
         <a href="#" data-dashboard-link data-en="Live Demo" data-zh="现场演示">Live Demo</a>
+        <a href="market_analysis.html" data-en="Market Opportunity" data-zh="市场机遇">Market Opportunity</a>
         <a href="#roadmap" data-en="Roadmap" data-zh="路线图">Roadmap</a>
         <a href="#team" data-en="Team" data-zh="团队">Team</a>
         <a href="#contact" data-en="Contact" data-zh="联系">Contact</a>
@@ -132,7 +134,7 @@
     <!-- SECTION F — Live Demo -->
     <section id="demo" class="section demo">
       <div class="container">
-        <h2 class="section-title" data-en="Live Demo at Plug and Play China" data-zh="Plug and Play China 现场演示">Live Demo at Plug and Play China</h2>
+        <h2 class="section-title" data-en="Live Demo" data-zh="Plug and Play China 现场演示">Live Demo</h2>
         <div class="demo-grid">
           <div class="demo-images">
             <img src="assets/faultDetection.png" alt="Fault detection dashboard" width="600" height="400">
@@ -250,7 +252,10 @@
   </main>
 
   <footer class="footer">
-    <div class="container">
+    <div class="container footer-inner">
+      <div class="footer-brand" aria-hidden="true">
+        <img src="assets/SolarSensLogo.png" alt="" width="120" height="35" decoding="async">
+      </div>
       <p class="footer-copy" data-en="Solar Sense — Make solar smarter, safer, and more sustainable." data-zh="Solar Sense — 让太阳能更智能、更安全、更可持续。">Solar Sense — Make solar smarter, safer, and more sustainable.</p>
     </div>
   </footer>

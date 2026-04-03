@@ -223,9 +223,15 @@ a:hover {
 }
 
 .nav-logo img {
-  width: 40px;
-  height: 40px;
+  height: 2.5rem;
+  width: auto;
+  max-width: 9.5rem;
+  padding: 0.35rem 0.55rem;
+  background: var(--text-primary);
+  border-radius: var(--radius-sm);
   object-fit: contain;
+  flex-shrink: 0;
+  box-shadow: var(--shadow-sm);
 }
 
 .nav-links {
@@ -871,6 +877,25 @@ a:hover {
 .footer {
   padding: var(--space-xl) 0;
   border-top: 1px solid var(--border);
+}
+
+.footer-inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-md);
+}
+
+.footer-brand img {
+  height: 2rem;
+  width: auto;
+  max-width: 7.5rem;
+  padding: 0.25rem 0.45rem;
+  background: var(--text-primary);
+  border-radius: var(--radius-sm);
+  object-fit: contain;
+  opacity: 0.9;
+  box-shadow: var(--shadow-sm);
 }
 
 .footer-copy {
