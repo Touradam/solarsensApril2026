@@ -863,14 +863,6 @@ a:hover {
   box-shadow: var(--shadow-md);
 }
 
-.evolution-images--three {
-  grid-template-columns: repeat(3, 1fr);
-}
-
-.evolution-images--three img {
-  max-width: 100%;
-}
-
 /* ============================================
    SECTION H — Roadmap
    ============================================ */
