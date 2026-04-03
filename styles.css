@@ -227,7 +227,7 @@ a:hover {
   width: auto;
   max-width: 9.5rem;
   padding: 0.35rem 0.55rem;
-  background: var(--text-primary);
+  background: #fff;
   border-radius: var(--radius-sm);
   object-fit: contain;
   flex-shrink: 0;
@@ -891,10 +891,10 @@ a:hover {
   width: auto;
   max-width: 7.5rem;
   padding: 0.25rem 0.45rem;
-  background: var(--text-primary);
+  background: #fff;
   border-radius: var(--radius-sm);
   object-fit: contain;
-  opacity: 0.9;
+  opacity: 0.95;
   box-shadow: var(--shadow-sm);
 }
 
