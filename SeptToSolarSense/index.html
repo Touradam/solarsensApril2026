@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="SEPT introduces Solar Sense—safety and intelligence for decentralized solar. Follow the visual story, then explore business model details on Solar Sense.">
+  <title>SEPT | Solar Sense — Safety &amp; intelligence for decentralized energy</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,600;0,9..40,700;1,9..40,400&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0b0f14;
+      --surface: #121a22;
+      --border: #243042;
+      --text: #e8eef5;
+      --muted: #9fb0c3;
+      --accent: #3dd6c6;
+      --accent-dim: rgba(61, 214, 198, 0.15);
+      --radius: 14px;
+      --max: 920px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: "DM Sans", system-ui, sans-serif;
+      background: radial-gradient(1200px 600px at 10% -10%, rgba(61, 214, 198, 0.08), transparent),
+        radial-gradient(900px 500px at 90% 0%, rgba(59, 130, 246, 0.06), transparent),
+        var(--bg);
+      color: var(--text);
+      line-height: 1.55;
+      font-size: 1.05rem;
+    }
+
+    a {
+      color: var(--accent);
+      text-decoration-thickness: 1px;
+      text-underline-offset: 3px;
+    }
+
+    a:hover {
+      color: #63e9dc;
+    }
+
+    header.site {
+      border-bottom: 1px solid var(--border);
+      background: rgba(11, 15, 20, 0.85);
+      backdrop-filter: blur(10px);
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+
+    .wrap {
+      max-width: var(--max);
+      margin: 0 auto;
+      padding: 1rem 1.25rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+    }
+
+    .brand img {
+      height: 40px;
+      width: auto;
+      display: block;
+    }
+
+    .brand-sub {
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--muted);
+    }
+
+    nav.jump {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      font-size: 0.92rem;
+    }
+
+    nav.jump a {
+      color: var(--muted);
+      text-decoration: none;
+    }
+
+    nav.jump a:hover {
+      color: var(--text);
+    }
+
+    main {
+      padding-bottom: 4rem;
+    }
+
+    .hero {
+      padding: 2.5rem 1.25rem 2rem;
+      max-width: var(--max);
+      margin: 0 auto;
+    }
+
+    .hero h1 {
+      font-size: clamp(1.75rem, 4vw, 2.35rem);
+      line-height: 1.15;
+      margin: 0 0 1rem;
+      font-weight: 700;
+    }
+
+    .hero-lead {
+      color: var(--muted);
+      max-width: 62ch;
+      margin: 0 0 1.5rem;
+      font-size: 1.08rem;
+    }
+
+    .hero-logos {
+      display: flex;
+      align-items: center;
+      gap: 1.25rem;
+      flex-wrap: wrap;
+      padding: 1rem 1.25rem;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+    }
+
+    .hero-logos img {
+      max-height: 52px;
+      width: auto;
+    }
+
+    .story {
+      max-width: var(--max);
+      margin: 0 auto;
+      padding: 0 1.25rem;
+      display: flex;
+      flex-direction: column;
+      gap: 2.5rem;
+    }
+
+    article.panel {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+      scroll-margin-top: 72px;
+    }
+
+    article.panel figure {
+      margin: 0;
+      background: #070a0e;
+      border-bottom: 1px solid var(--border);
+    }
+
+    article.panel img,
+    article.panel object {
+      display: block;
+      width: 100%;
+      height: auto;
+      vertical-align: middle;
+    }
+
+    article.panel .panel-body {
+      padding: 1.35rem 1.35rem 1.5rem;
+    }
+
+    article.panel h2 {
+      margin: 0 0 0.65rem;
+      font-size: 1.35rem;
+      font-weight: 700;
+    }
+
+    article.panel p {
+      margin: 0;
+      color: var(--muted);
+    }
+
+    .cta-strip {
+      max-width: var(--max);
+      margin: 3rem auto 0;
+      padding: 0 1.25rem;
+    }
+
+    .cta-card {
+      border-radius: var(--radius);
+      padding: 2rem 1.5rem;
+      background: linear-gradient(135deg, var(--accent-dim), rgba(59, 130, 246, 0.08));
+      border: 1px solid var(--border);
+      text-align: center;
+    }
+
+    .cta-card h2 {
+      margin: 0 0 0.75rem;
+      font-size: 1.45rem;
+    }
+
+    .cta-card p {
+      margin: 0 auto 1.35rem;
+      max-width: 52ch;
+      color: var(--muted);
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      padding: 0.85rem 1.35rem;
+      border-radius: 999px;
+      font-weight: 600;
+      font-size: 1rem;
+      text-decoration: none;
+      background: var(--accent);
+      color: #04201c;
+      border: none;
+      cursor: pointer;
+      transition: transform 0.15s ease, box-shadow 0.15s ease;
+    }
+
+    .btn:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 8px 28px rgba(61, 214, 198, 0.35);
+      color: #021511;
+    }
+
+    .btn:focus-visible {
+      outline: 2px solid var(--accent);
+      outline-offset: 3px;
+    }
+
+    footer.fineprint {
+      max-width: var(--max);
+      margin: 2.5rem auto 0;
+      padding: 0 1.25rem 3rem;
+      font-size: 0.88rem;
+      color: var(--muted);
+    }
+
+    footer.fineprint a {
+      color: var(--muted);
+    }
+
+    .csv-note {
+      margin-top: 1rem;
+      padding-top: 1rem;
+      border-top: 1px solid var(--border);
+    }
+  </style>
+</head>
+<body>
+  <header class="site">
+    <div class="wrap">
+      <div class="brand">
+        <img src="assets/sept-logo.png" alt="SEPT" width="120" height="40">
+        <span class="brand-sub">Solar Sense story</span>
+      </div>
+      <nav class="jump" aria-label="On-page navigation">
+        <a href="#story">Story</a>
+        <a href="#business-model">Business model</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <h1>Safety and intelligence for decentralized energy resources</h1>
+      <p class="hero-lead">
+        SEPT is building the infrastructure layer for smarter decentralized systems.
+        <strong style="color: var(--text); font-weight: 600;">Solar Sense</strong> is our first product line—panel-level measurement,
+        machine-learning diagnostics, and integrated safety paths—so solar can scale without sacrificing visibility or control at the module.
+      </p>
+      <div class="hero-logos" role="group" aria-label="SEPT and Solar Sense marks">
+        <img src="assets/sept-logo.png" alt="SEPT logo">
+        <img src="assets/solar-sense-logo.png" alt="Solar Sense logo">
+      </div>
+    </section>
+
+    <section id="story" class="story" aria-label="Solar Sense presentation story">
+      <article class="panel" id="energy-transition">
+        <figure>
+          <img src="assets/energy-transition.png" alt="Energy transition and decentralized solar growth context" loading="lazy">
+        </figure>
+        <div class="panel-body">
+          <h2>Why decentralized energy needs a new layer</h2>
+          <p>As PV scales globally, systems operate at high DC voltages across millions of sites. Visibility and control must exist at the module level—not only at the inverter or string.</p>
+        </div>
+      </article>
+
+      <article class="panel" id="problem-voltage">
+        <figure>
+          <img src="assets/residential-pv-600v.jpg" alt="Rooftop solar array illustrating distributed PV context" loading="lazy">
+        </figure>
+        <div class="panel-body">
+          <h2>High DC exposure and field risk</h2>
+          <p>Residential and commercial arrays regularly operate at hundreds of volts DC. Without granular visibility and shutdown paths, hazards persist for installers, O&amp;M crews, and emergency responders.</p>
+        </div>
+      </article>
+
+      <article class="panel" id="problem-visibility">
+        <figure>
+          <img src="assets/pv-maintenance-crew.png" alt="Solar maintenance technicians on a rooftop array" loading="lazy">
+        </figure>
+        <div class="panel-body">
+          <h2>Operations without pinpoint diagnostics</h2>
+          <p>Most fleets are monitored coarsely. Finding the failing module takes longer—wasting energy, accelerating degradation, and raising maintenance cost.</p>
+        </div>
+      </article>
+
+      <article class="panel" id="rapid-shutdown">
+        <figure>
+          <img src="assets/rapid-shutdown-map.png" alt="Map of rapid shutdown adoption across solar markets" loading="lazy">
+        </figure>
+        <div class="panel-body">
+          <h2>Rapid shutdown and module-level expectations</h2>
+          <p>Regulators and fire-safety stakeholders are pushing module-level visibility and shutdown worldwide—raising the bar for MLPE, monitoring, and emergency behavior.</p>
+        </div>
+      </article>
+
+      <article class="panel" id="solution-overview">
+        <figure>
+          <img src="assets/digital-twin.png" alt="Solar Sense digital twin and system overview graphic" loading="lazy">
+        </figure>
+        <div class="panel-body">
+          <h2>Digital twin and system insight</h2>
+          <p>Solar Sense ties physics-aware modeling with field telemetry so operators see performance and anomalies in context—not just raw streams.</p>
+        </div>
+      </article>
+
+      <article class="panel" id="solution-ml">
+        <figure>
+          <img src="assets/neural-network.png" alt="Neural network approach to PV fault detection" loading="lazy">
+        </figure>
+        <div class="panel-body">
+          <h2>Machine learning fault detection</h2>
+          <p>Models trained on PV behavior help distinguish shading, hotspots, electrical anomalies, and early degradation—supporting predictive maintenance beyond fixed thresholds.</p>
+        </div>
+      </article>
+
+      <article class="panel" id="solution-faults">
+        <figure>
+          <img src="assets/fault-detection.png" alt="Fault detection visualization for PV strings and modules" loading="lazy">
+        </figure>
+        <div class="panel-body">
+          <h2>From signals to actionable faults</h2>
+          <p>Detection outputs roll up into maintenance-ready indicators so teams spend less time hunting issues and more time fixing them.</p>
+        </div>
+      </article>
+
+      <article class="panel" id="ecosystem">
+        <figure>
+          <img src="assets/sept-ecosystem.svg" alt="SEPT ecosystem diagram showing module-level intelligence in the PV stack" loading="lazy">
+        </figure>
+        <div class="panel-body">
+          <h2>Where Solar Sense sits in the PV ecosystem</h2>
+          <p>Module-level intelligence complements optimizers, inverters, and rapid shutdown gear—sense, detect, and control at the panel within the broader SEPT architecture.</p>
+        </div>
+      </article>
+
+      <article class="panel" id="architecture">
+        <figure>
+          <img src="assets/solarsense-diagram.png" alt="Solar Sense system diagram" loading="lazy">
+        </figure>
+        <div class="panel-body">
+          <h2>System perspective</h2>
+          <p>End-to-end view of sensing, processing, and integration paths as Solar Sense connects measurement, ML, and safety switching into deployable hardware.</p>
+        </div>
+      </article>
+
+      <article class="panel" id="hardware">
+        <figure>
+          <img src="assets/module-hardware.png" alt="Solar Sense module-level hardware render" loading="lazy">
+        </figure>
+        <div class="panel-body">
+          <h2>Product form factor</h2>
+          <p>Compact, cable-integrated hardware designed for panel-level deployment, manufacturability, and cost-down iterations toward volume.</p>
+        </div>
+      </article>
+
+      <article class="panel" id="market">
+        <figure>
+          <img src="assets/global-pv-markets.png" alt="Snapshot chart of global PV markets" loading="lazy">
+        </figure>
+        <div class="panel-body">
+          <h2>Global PV momentum</h2>
+          <p>Distributed solar continues to expand across regions and segments—creating sustained demand for safer, smarter module-level platforms.</p>
+        </div>
+      </article>
+
+      <article class="panel" id="traction">
+        <figure>
+          <img src="assets/first-prototype.png" alt="Early Solar Sense prototype hardware" loading="lazy">
+        </figure>
+        <div class="panel-body">
+          <h2>Lab-to-field progression</h2>
+          <p>Functional prototypes, internal lab capability, and pilot directions anchor the path from validation toward broader deployment.</p>
+        </div>
+      </article>
+
+      <article class="panel" id="team">
+        <figure>
+          <img src="assets/adama-toure.png" alt="Adama Toure portrait" loading="lazy">
+        </figure>
+        <div class="panel-body">
+          <h2>Leadership</h2>
+          <p>Co-founders bridging renewable energy engineering, hardware, and embedded systems for climate-critical infrastructure.</p>
+        </div>
+      </article>
+
+      <article class="panel" id="team-hardware">
+        <figure>
+          <img src="assets/jordan-harris-toovy.png" alt="Jordan Harris-Toovy portrait" loading="lazy">
+        </figure>
+        <div class="panel-body">
+          <h2>Embedded systems leadership</h2>
+          <p>Hardware lab leadership advancing prototypes, measurement rigs, and integration for next-generation Solar Sense devices.</p>
+        </div>
+      </article>
+    </section>
+
+    <section class="cta-strip" id="business-model" aria-labelledby="biz-heading">
+      <div class="cta-card">
+        <h2 id="biz-heading">Explore the Solar Sense business model</h2>
+        <p>
+          Continue on our detailed Solar Sense site for pricing brackets, revenue streams, market-entry strategy, and partnership pathways—built for readers evaluating deployment and collaboration.
+        </p>
+        <a class="btn" href="https://touradam.github.io/solarsensApril2026/" target="_blank" rel="noopener noreferrer">
+          Learn more about Solar Sense
+        </a>
+      </div>
+    </section>
+
+    <footer class="fineprint">
+      <p>
+        Visual narrative aligned with the Solar Sense presentation materials; imagery sourced from SEPT asset library.
+        Contact: <a href="mailto:adama.toure@sept.energy">adama.toure@sept.energy</a>
+      </p>
+      <p class="csv-note">
+        Machine-readable outline of this page (same sequence and copy): <a href="story.csv" download>story.csv</a>
+      </p>
+    </footer>
+  </main>
+</body>
+</html>
