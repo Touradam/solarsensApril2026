@@ -3,22 +3,22 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Solar Sense presentation—aligned with SolarSensePresentation.pdf: safer smarter rooftop solar with sensors and machine learning. SEPT product context and link to full Solar Sense site.">
-  <title>SEPT | Solar Sense — Safer smarter rooftop solar</title>
+  <meta name="description" content="SEPT introduces Solar Sense—sensor and machine learning for safer, smarter rooftop solar. Explore product detail, strategy, and partnerships on Solar Sense.">
+  <title>SEPT | Solar Sense</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,600;0,9..40,700;1,9..40,400&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700&display=swap" rel="stylesheet">
   <style>
     :root {
-      --bg: #0b0f14;
-      --surface: #121a22;
+      --bg: #0a0e13;
+      --surface: #111820;
       --border: #243042;
       --text: #e8eef5;
-      --muted: #9fb0c3;
+      --muted: #95a8bd;
       --accent: #3dd6c6;
-      --accent-dim: rgba(61, 214, 198, 0.15);
-      --radius: 14px;
-      --max: 920px;
+      --accent-dim: rgba(61, 214, 198, 0.12);
+      --radius: 16px;
+      --max: 960px;
     }
 
     * {
@@ -28,12 +28,13 @@
     body {
       margin: 0;
       font-family: "DM Sans", system-ui, sans-serif;
-      background: radial-gradient(1200px 600px at 10% -10%, rgba(61, 214, 198, 0.08), transparent),
-        radial-gradient(900px 500px at 90% 0%, rgba(59, 130, 246, 0.06), transparent),
+      background:
+        radial-gradient(ellipse 900px 480px at 15% -5%, rgba(61, 214, 198, 0.09), transparent 55%),
+        radial-gradient(ellipse 700px 400px at 95% 15%, rgba(59, 130, 246, 0.06), transparent 50%),
         var(--bg);
       color: var(--text);
       line-height: 1.55;
-      font-size: 1.05rem;
+      font-size: 1.0625rem;
     }
 
     a {
@@ -43,22 +44,22 @@
     }
 
     a:hover {
-      color: #63e9dc;
+      color: #6ae4d7;
     }
 
     header.site {
       border-bottom: 1px solid var(--border);
-      background: rgba(11, 15, 20, 0.85);
-      backdrop-filter: blur(10px);
+      background: rgba(10, 14, 19, 0.88);
+      backdrop-filter: blur(12px);
       position: sticky;
       top: 0;
-      z-index: 10;
+      z-index: 20;
     }
 
     .wrap {
       max-width: var(--max);
       margin: 0 auto;
-      padding: 1rem 1.25rem;
+      padding: 0.9rem 1.25rem;
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -69,33 +70,49 @@
     .brand {
       display: flex;
       align-items: center;
-      gap: 0.75rem;
-      font-weight: 700;
-      letter-spacing: 0.02em;
+      gap: 0.65rem;
+      text-decoration: none;
+      color: inherit;
     }
 
     .brand img {
-      height: 40px;
+      height: 38px;
       width: auto;
       display: block;
     }
 
-    .brand-sub {
-      font-size: 0.85rem;
+    .brand-text {
+      display: flex;
+      flex-direction: column;
+      gap: 0.1rem;
+      line-height: 1.15;
+    }
+
+    .brand-name {
+      font-weight: 700;
+      font-size: 1.05rem;
+      letter-spacing: 0.02em;
+    }
+
+    .brand-tag {
+      font-size: 0.78rem;
       font-weight: 600;
       color: var(--muted);
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
     }
 
     nav.jump {
       display: flex;
-      gap: 1rem;
+      gap: 1.1rem;
       flex-wrap: wrap;
-      font-size: 0.92rem;
+      font-size: 0.9rem;
     }
 
     nav.jump a {
       color: var(--muted);
       text-decoration: none;
+      font-weight: 500;
     }
 
     nav.jump a:hover {
@@ -103,38 +120,181 @@
     }
 
     main {
-      padding-bottom: 4rem;
+      padding-bottom: 3.5rem;
     }
 
-    .deck-source {
+    /* Intro hero */
+    .intro {
       max-width: var(--max);
       margin: 0 auto;
-      padding: 1rem 1.25rem 0;
-      font-size: 0.82rem;
-      color: var(--muted);
+      padding: 2.75rem 1.25rem 2.25rem;
+      scroll-margin-top: 72px;
     }
 
-    .deck {
+    .intro-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 2rem;
+      align-items: center;
+    }
+
+    @media (min-width: 820px) {
+      .intro-grid {
+        grid-template-columns: 1.05fr 0.95fr;
+        gap: 2.5rem;
+      }
+    }
+
+    .intro-kicker {
+      display: inline-block;
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 0.65rem;
+    }
+
+    .intro h1 {
+      margin: 0 0 1rem;
+      font-size: clamp(1.85rem, 4.2vw, 2.45rem);
+      font-weight: 700;
+      line-height: 1.12;
+      letter-spacing: -0.02em;
+    }
+
+    .intro-lead {
+      margin: 0 0 1.25rem;
+      color: var(--muted);
+      font-size: 1.08rem;
+      max-width: 48ch;
+    }
+
+    .intro-body {
+      margin: 0;
+      color: var(--text);
+      font-size: 1.05rem;
+      max-width: 52ch;
+      font-weight: 500;
+    }
+
+    .intro-logos {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 1.25rem;
+      padding: 1.5rem;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+    }
+
+    .intro-logos-row {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .intro-logos-row img:first-child {
+      height: 44px;
+      width: auto;
+    }
+
+    .intro-logos-row img:last-child {
+      height: 40px;
+      width: auto;
+    }
+
+    .intro-logos-caption {
+      margin: 0;
+      font-size: 0.88rem;
+      color: var(--muted);
+      line-height: 1.45;
+      max-width: 36ch;
+    }
+
+    .intro-cta {
+      margin-top: 1.75rem;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 0.75rem 1.25rem;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0.72rem 1.35rem;
+      border-radius: 999px;
+      font-weight: 600;
+      font-size: 0.98rem;
+      text-decoration: none;
+      border: none;
+      cursor: pointer;
+      transition: transform 0.15s ease, box-shadow 0.15s ease;
+    }
+
+    .btn-primary {
+      background: var(--accent);
+      color: #04201c;
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 10px 32px rgba(61, 214, 198, 0.35);
+      color: #021511;
+    }
+
+    .btn-ghost {
+      background: transparent;
+      color: var(--muted);
+      border: 1px solid var(--border);
+    }
+
+    .btn-ghost:hover {
+      color: var(--text);
+      border-color: var(--muted);
+    }
+
+    .btn:focus-visible {
+      outline: 2px solid var(--accent);
+      outline-offset: 3px;
+    }
+
+    /* Sections */
+    .section {
       max-width: var(--max);
       margin: 0 auto;
       padding: 2rem 1.25rem;
       scroll-margin-top: 72px;
     }
 
-    .deck-card {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 2rem 1.5rem;
+    .section-head {
+      margin-bottom: 1.35rem;
     }
 
-    .deck-card h2 {
-      margin: 0 0 1.25rem;
-      font-size: 0.78rem;
-      font-weight: 600;
+    .section-eyebrow {
+      margin: 0 0 0.35rem;
+      font-size: 0.75rem;
+      font-weight: 700;
       letter-spacing: 0.14em;
       text-transform: uppercase;
       color: var(--muted);
+    }
+
+    .section-title {
+      margin: 0;
+      font-size: 1.35rem;
+      font-weight: 700;
+    }
+
+    .panel {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.75rem 1.5rem;
     }
 
     .deck-lines {
@@ -142,58 +302,55 @@
       padding: 0;
       list-style: none;
       font-weight: 700;
-      font-size: clamp(1.35rem, 3.8vw, 2rem);
-      line-height: 1.2;
+      font-size: clamp(1.32rem, 3.5vw, 1.85rem);
+      line-height: 1.18;
     }
 
     .deck-lines li {
-      margin: 0 0 0.35rem;
-    }
-
-    .deck-lines .deck-muted {
-      font-weight: 600;
-      font-size: clamp(1.05rem, 2.6vw, 1.35rem);
-      color: var(--muted);
+      margin: 0 0 0.3rem;
     }
 
     .deck-lines .deck-hyphen {
       font-weight: 600;
-      font-size: clamp(1.6rem, 4vw, 2.25rem);
-      line-height: 0.9;
-      margin: 0.15rem 0;
+      font-size: clamp(1.45rem, 3.8vw, 2rem);
+      line-height: 0.85;
+      margin: 0.12rem 0;
     }
 
     .deck-body {
-      margin: 1.75rem 0 0;
+      margin: 1.5rem 0 0;
       max-width: 52ch;
-      font-size: 1.08rem;
+      font-size: 1.05rem;
       color: var(--muted);
       font-weight: 500;
     }
 
     .deck-stack {
-      margin: 1.25rem 0 0;
+      margin: 1.15rem 0 0;
       padding: 0;
       list-style: none;
-      font-size: 1.15rem;
+      font-size: 1.12rem;
       font-weight: 600;
-      color: var(--text);
     }
 
     .deck-stack li {
-      margin: 0 0 0.35rem;
+      margin: 0 0 0.3rem;
     }
 
     .deck-solution {
-      margin: 1.75rem 0 0;
+      margin: 1.35rem 0 0;
       max-width: 62ch;
-      font-size: 1.08rem;
+      font-size: 1.05rem;
       color: var(--muted);
     }
 
+    .deck-solution:first-of-type {
+      margin-top: 0;
+    }
+
     .deck-closing {
-      margin: 1.25rem 0 0;
-      font-size: 1.2rem;
+      margin: 1.35rem 0 0;
+      font-size: 1.18rem;
       font-weight: 700;
       color: var(--text);
     }
@@ -210,137 +367,122 @@
       display: block;
       width: 100%;
       height: auto;
-      vertical-align: middle;
     }
 
     .deck-visual figcaption {
       padding: 0.65rem 0.85rem;
-      font-size: 0.85rem;
+      font-size: 0.82rem;
       color: var(--muted);
       border-top: 1px solid var(--border);
     }
 
-    .sept-bridge {
+    /* Final CTA */
+    .cta-final {
       max-width: var(--max);
       margin: 0 auto;
-      padding: 0 1.25rem 2rem;
-    }
-
-    .sept-card {
-      padding: 1.5rem 1.35rem;
-      border-radius: var(--radius);
-      border: 1px solid var(--border);
-      background: rgba(18, 26, 34, 0.65);
-    }
-
-    .sept-card h3 {
-      margin: 0 0 0.65rem;
-      font-size: 1.05rem;
-      font-weight: 700;
-    }
-
-    .sept-card p {
-      margin: 0;
-      color: var(--muted);
-      max-width: 65ch;
-    }
-
-    .cta-strip {
-      max-width: var(--max);
-      margin: 0 auto;
-      padding: 0 1.25rem;
+      padding: 1rem 1.25rem 0;
     }
 
     .cta-card {
       border-radius: var(--radius);
-      padding: 2rem 1.5rem;
-      background: linear-gradient(135deg, var(--accent-dim), rgba(59, 130, 246, 0.08));
-      border: 1px solid var(--border);
+      padding: 2.25rem 1.75rem;
       text-align: center;
+      background: linear-gradient(145deg, var(--accent-dim), rgba(59, 130, 246, 0.07));
+      border: 1px solid var(--border);
     }
 
     .cta-card h2 {
-      margin: 0 0 0.75rem;
-      font-size: 1.45rem;
+      margin: 0 0 0.65rem;
+      font-size: clamp(1.35rem, 3vw, 1.65rem);
+      font-weight: 700;
     }
 
     .cta-card p {
-      margin: 0 auto 1.35rem;
-      max-width: 52ch;
+      margin: 0 auto 1.4rem;
+      max-width: 46ch;
       color: var(--muted);
+      font-size: 1.02rem;
     }
 
-    .btn {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 0.5rem;
-      padding: 0.85rem 1.35rem;
-      border-radius: 999px;
-      font-weight: 600;
-      font-size: 1rem;
-      text-decoration: none;
-      background: var(--accent);
-      color: #04201c;
-      border: none;
-      cursor: pointer;
-      transition: transform 0.15s ease, box-shadow 0.15s ease;
-    }
-
-    .btn:hover {
-      transform: translateY(-1px);
-      box-shadow: 0 8px 28px rgba(61, 214, 198, 0.35);
-      color: #021511;
-    }
-
-    .btn:focus-visible {
-      outline: 2px solid var(--accent);
-      outline-offset: 3px;
+    .cta-card .btn-primary {
+      padding: 0.85rem 1.65rem;
+      font-size: 1.02rem;
     }
 
     footer.fineprint {
       max-width: var(--max);
-      margin: 2.5rem auto 0;
-      padding: 0 1.25rem 3rem;
-      font-size: 0.88rem;
+      margin: 2.75rem auto 0;
+      padding: 0 1.25rem 2.5rem;
+      font-size: 0.84rem;
       color: var(--muted);
+      line-height: 1.5;
     }
 
     footer.fineprint a {
       color: var(--muted);
     }
 
-    .csv-note {
-      margin-top: 1rem;
-      padding-top: 1rem;
-      border-top: 1px solid var(--border);
+    footer.fineprint strong {
+      color: var(--text);
+      font-weight: 600;
     }
   </style>
 </head>
 <body>
   <header class="site">
     <div class="wrap">
-      <div class="brand">
-        <img src="assets/sept-logo.png" alt="SEPT" width="120" height="40">
-        <span class="brand-sub">Solar Sense</span>
-      </div>
-      <nav class="jump" aria-label="On-page navigation">
-        <a href="#slide-1">Slide 1</a>
-        <a href="#slide-2">Slide 2</a>
-        <a href="#business-model">Business model</a>
+      <a class="brand" href="#intro" aria-label="SEPT — Solar Sense (top of page)">
+        <img src="assets/sept-logo.png" alt="" width="120" height="40" decoding="async" aria-hidden="true">
+        <span class="brand-text">
+          <span class="brand-name">SEPT</span>
+          <span class="brand-tag">Solar Sense</span>
+        </span>
+      </a>
+      <nav class="jump" aria-label="Page sections">
+        <a href="#intro">Intro</a>
+        <a href="#vision">Vision</a>
+        <a href="#impact">Impact</a>
+        <a href="#explore">Explore</a>
       </nav>
     </div>
   </header>
 
-  <p class="deck-source">
-    On-page copy matches <strong style="color: var(--text); font-weight: 600;">SolarSensePresentation.pdf</strong> / <strong style="color: var(--text); font-weight: 600;">SolarSensePresentation.pptx</strong> (two slides). Same wording and punctuation as the deck file—then SEPT context and an optional supporting photo under slide 2.
-  </p>
-
   <main>
-    <section class="deck" id="slide-1" aria-labelledby="slide1-heading">
-      <div class="deck-card">
-        <h2 id="slide1-heading">Slide 1</h2>
-        <ul class="deck-lines" aria-label="Slide 1 headline lines">
+    <section class="intro" id="intro" aria-labelledby="intro-heading">
+      <div class="intro-grid">
+        <div>
+          <span class="intro-kicker">Decentralized energy</span>
+          <h1 id="intro-heading">SEPT builds smarter, safer power at the edge of the grid.</h1>
+          <p class="intro-lead">
+            We are an energy technology company focused on decentralized resources—where visibility, control, and safety must exist down to the module, not only at the substation.
+          </p>
+          <p class="intro-body">
+            <strong style="font-weight: 700;">Solar Sense</strong> is SEPT’s first product line: sensor and machine-learning technology for rooftop and distributed solar—so every panel can be monitored, diagnosed, and protected in real time.
+          </p>
+          <div class="intro-cta">
+            <a class="btn btn-primary" href="#vision">See the vision</a>
+            <a class="btn btn-ghost" href="#explore">Jump to full Solar Sense site</a>
+          </div>
+        </div>
+        <aside class="intro-logos" aria-label="SEPT and Solar Sense">
+          <div class="intro-logos-row">
+            <img src="assets/sept-logo.png" alt="SEPT logo">
+            <img src="assets/solar-sense-logo.png" alt="Solar Sense logo">
+          </div>
+          <p class="intro-logos-caption">
+            SEPT is the company; Solar Sense is our flagship platform for panel-level intelligence and safety on decentralized PV.
+          </p>
+        </aside>
+      </div>
+    </section>
+
+    <section class="section" id="vision" aria-labelledby="vision-heading">
+      <div class="section-head">
+        <p class="section-eyebrow">Solar Sense</p>
+        <h2 class="section-title" id="vision-heading">What we’re building</h2>
+      </div>
+      <div class="panel">
+        <ul class="deck-lines" aria-label="Vision headline">
           <li>Safer</li>
           <li>Smarter</li>
           <li>Easier to monitor</li>
@@ -355,22 +497,22 @@
         <p class="deck-body">
           As the electric power shifts from centralized power plants to millions of rooftop systems, the industry needs better way to make these systems
         </p>
-        <div class="hero-logos" style="margin-top: 1.75rem; display: flex; align-items: center; gap: 1rem; flex-wrap: wrap;">
-          <img src="assets/solar-sense-logo.png" alt="Solar Sense logo" style="max-height: 48px; width: auto;">
-        </div>
       </div>
     </section>
 
-    <section class="deck" id="slide-2" aria-labelledby="slide2-heading">
-      <div class="deck-card">
-        <h2 id="slide2-heading">Slide 2</h2>
-        <p class="deck-solution" style="margin-top: 0;">
+    <section class="section" id="impact" aria-labelledby="impact-heading">
+      <div class="section-head">
+        <p class="section-eyebrow">Why it matters</p>
+        <h2 class="section-title" id="impact-heading">Safety and intelligence on every rooftop</h2>
+      </div>
+      <div class="panel">
+        <p class="deck-solution">
           This create a serious safety risk for
         </p>
-        <p class="deck-solution" style="margin-top: 1rem;">
+        <p class="deck-solution">
           Residential and commercial solar systems operate at dangerous DC voltages
         </p>
-        <ul class="deck-stack" aria-label="Stakeholders named on slide 2">
+        <ul class="deck-stack" aria-label="People we protect">
           <li>Firefighters</li>
           <li>Maintenance crew</li>
           <li>Building occupants</li>
@@ -382,39 +524,30 @@
           Join us in making rooftop solar smarter and safer
         </p>
         <figure class="deck-visual">
-          <img src="assets/residential-pv-600v.jpg" alt="Residential rooftop solar installation (supporting imagery—not text on the PDF slides)" width="960" height="540" loading="lazy">
-          <figcaption>Supporting imagery for dangerous rooftop DC context (not part of the two-slide PDF text).</figcaption>
+          <img src="assets/residential-pv-600v.jpg" alt="Residential rooftop solar array" width="960" height="540" loading="lazy" decoding="async">
+          <figcaption>Distributed PV at meaningful DC voltages—context for module-level safety and intelligence.</figcaption>
         </figure>
       </div>
     </section>
 
-    <section class="sept-bridge" id="sept-context" aria-labelledby="sept-heading">
-      <div class="sept-card">
-        <h3 id="sept-heading">SEPT and Solar Sense</h3>
-        <p>
-          <strong style="color: var(--text); font-weight: 600;">Solar Sense</strong> is SEPT’s first product line—focused on the safety and intelligence of decentralized energy resources—carrying this rooftop story into hardware, sensing, and machine learning deployment.
-        </p>
-      </div>
-    </section>
-
-    <section class="cta-strip" id="business-model" aria-labelledby="biz-heading">
+    <section class="cta-final" id="explore" aria-labelledby="explore-heading">
       <div class="cta-card">
-        <h2 id="biz-heading">Explore the Solar Sense business model</h2>
+        <h2 id="explore-heading">Explore Solar Sense</h2>
         <p>
-          Pricing, revenue streams, market strategy, and partnerships are summarized on our Solar Sense site—continue there after this deck-aligned overview.
+          Product depth, lab tour, business model, market strategy, and partnership paths live on our dedicated Solar Sense site—continue there when you are ready to go further.
         </p>
-        <a class="btn" href="https://touradam.github.io/solarsensApril2026/" target="_blank" rel="noopener noreferrer">
-          Learn more about Solar Sense
+        <a class="btn btn-primary" href="https://touradam.github.io/solarsensApril2026/" target="_blank" rel="noopener noreferrer">
+          Open Solar Sense
         </a>
       </div>
     </section>
 
     <footer class="fineprint">
       <p>
-        Deck-aligned text exported for spreadsheets: <a href="story.csv" download>story.csv</a>
+        Core messaging above matches <strong>SolarSensePresentation.pdf</strong> / <strong>SolarSensePresentation.pptx</strong>. Structured export: <a href="story.csv" download>story.csv</a>
       </p>
-      <p class="csv-note">
-        Contact: <a href="mailto:adama.toure@sept.energy">adama.toure@sept.energy</a>
+      <p style="margin-top: 0.75rem;">
+        <a href="mailto:adama.toure@sept.energy">adama.toure@sept.energy</a>
       </p>
     </footer>
   </main>
