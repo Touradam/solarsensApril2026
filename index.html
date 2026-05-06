@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
   <title>Solar Sense | Safety and intelligence for decentralized solar energy systems</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -166,12 +167,11 @@
         <div class="demo-video">
           <div class="demo-video-inner">
             <iframe
-              src="https://www.youtube.com/embed/JXRQAuoAy8Y"
+              id="demo-youtube"
               title="Tour of Solar Sense Lab"
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
               referrerpolicy="strict-origin-when-cross-origin"
-              allowfullscreen
-              loading="lazy"></iframe>
+              allowfullscreen></iframe>
           </div>
           <p class="demo-video-caption">
             <a href="https://youtu.be/JXRQAuoAy8Y" target="_blank" rel="noopener noreferrer" data-en="Open on YouTube" data-zh="在 YouTube 打开">Open on YouTube</a>
@@ -404,6 +404,23 @@
         });
       }
 
+      /** YouTube Error 153: player needs referrers + embedding origin (see developers.google.com/youtube/terms). */
+      function initDemoYoutube() {
+        var iframe = document.getElementById('demo-youtube');
+        if (!iframe) return;
+        var videoId = 'JXRQAuoAy8Y';
+        var base = 'https://www.youtube-nocookie.com/embed/' + videoId;
+        var params = ['rel=0', 'modestbranding=1', 'playsinline=1'];
+        try {
+          var o = window.location.origin;
+          if (o && /^https?:\/\//i.test(o)) {
+            params.push('origin=' + encodeURIComponent(o));
+          }
+        } catch (err) {}
+        iframe.src = base + '?' + params.join('&');
+      }
+
+      initDemoYoutube();
       initToggle();
       initSmoothScroll();
     })();
