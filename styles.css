@@ -1081,6 +1081,21 @@ a:hover {
   margin: 0;
 }
 
+.footer-links {
+  margin: 0;
+  font-size: 0.875rem;
+  text-align: center;
+}
+
+.footer-links a {
+  color: var(--accent-amber);
+  text-decoration: none;
+}
+
+.footer-links a:hover {
+  text-decoration: underline;
+}
+
 /* ============================================
    Responsive
    ============================================ */
