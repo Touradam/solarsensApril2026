@@ -58,12 +58,11 @@
       <nav class="nav-links" aria-label="Main navigation">
         <a href="index.html#problem" data-en="Problem" data-zh="问题">Problem</a>
         <a href="index.html#technology" data-en="Solution" data-zh="方案">Solution</a>
-        <a href="index.html#demo" data-en="Demo" data-zh="演示">Demo</a>
+        <a href="index.html#demo" data-en="Lab tour" data-zh="实验室参观">Lab tour</a>
         <a href="index.html#evolution" data-en="Product" data-zh="产品">Product</a>
         <a href="index.html#business" data-en="Business" data-zh="商业">Business</a>
         <a href="index.html#roadmap" data-en="Strategy" data-zh="策略">Strategy</a>
         <a href="index.html#advantage" data-en="Advantage" data-zh="优势">Advantage</a>
-        <a href="index.html" data-dashboard-link data-en="Live Demo" data-zh="现场演示">Live Demo</a>
         <a href="market_analysis.html" class="nav-current" data-en="Market Opportunity" data-zh="市场机遇">Market Opportunity</a>
         <a href="index.html#team" data-en="Team" data-zh="团队">Team</a>
         <a href="index.html#contact" data-en="Contact" data-zh="联系">Contact</a>
@@ -567,13 +566,6 @@ All tables in this document are suitable for export to slides or appendix; sourc
         });
       });
       applyLang(getLang());
-
-      var dashboardUrl = /^(localhost|127\.0\.0\.1)(:\d+)?$/i.test(window.location.host) ? 'http://localhost:8501' : 'https://pvlivedata.streamlit.app/Live_Dashboard';
-      document.querySelectorAll('a[data-dashboard-link]').forEach(function (a) {
-        a.href = dashboardUrl;
-        a.target = '_blank';
-        a.rel = 'noopener noreferrer';
-      });
 
       var contentEl = document.getElementById('markdown-content');
       function renderMd(md) {
