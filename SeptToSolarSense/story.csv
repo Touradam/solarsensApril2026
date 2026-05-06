@@ -1,19 +1,42 @@
-slide,line_order,text
-1,1,Safer
-1,2,Smarter
-1,3,Easier to monitor
-1,4,And Easier to maintain
-1,5,Transform each solar panel into
-1,6,An intelligent
-1,7,Controllable
-1,8,Safety
-1,9,"-"
-1,10,award
-1,11,"As the electric power shifts from centralized power plants to millions of rooftop systems, the industry needs better way to make these systems"
-2,1,This create a serious safety risk for
-2,2,Residential and commercial solar systems operate at dangerous DC voltages
-2,3,Firefighters
-2,4,Maintenance crew
-2,5,Building occupants
-2,6,"We develop sensor and machine learning technology that makes rooftop solar panels smart and safe by detecting faults in real time and enabling rapid shutdown to protect firefighters, maintenance crews, and building occupants."
-2,7,Join us in making rooftop solar smarter and safer
+section,order,role,headline,body,image,link
+intro,1,eyebrow,SEPT,,,
+intro,2,h1,"SEPT develops technologies that make decentralized energy systems safer, smarter, and more sustainable.",,,
+intro,3,body,,"Solar Sense is the first product line, focused on solar safety, NEC rapid shutdown compliance, and intelligent module-level monitoring.",,
+intro,4,chip,Decentralized,,,
+intro,5,chip,Intelligent,,,
+intro,6,chip,Safer,,,
+intro,7,cta-primary,Meet Solar Sense,,,#solar-sense
+intro,8,cta-ghost,Open Solar Sense site,,,#explore
+intro,9,hero-image,Sunset rooftop community,,hero-rooftop-sunset.png,
+shift,1,eyebrow,The energy shift,,,
+shift,2,h2,From central plants to millions of rooftops.,,,
+shift,3,lead,,"Electric power is moving away from a handful of centralized plants toward millions of distributed installations. To keep this new grid reliable and safe, the industry needs a smarter way to monitor, diagnose, and protect every panel — not just every plant.",,
+shift,4,image,Coastline of homes with rooftop solar at sunset,,energy-transition.png,
+solar-sense,1,eyebrow,Our first product line,,,
+solar-sense,2,h2,Introducing Solar Sense.,,,
+solar-sense,3,lead,,"A sensor and machine-learning platform engineered to make rooftop solar safer, smarter, easier to monitor, and easier to maintain.",,
+solar-sense,4,body,,"Solar Sense transforms each solar panel into an intelligent, controllable, safety-aware node — detecting faults in real time and enabling rapid shutdown when it matters most.",,
+solar-sense,5,brand-image,Solar Sense logo,,solar-sense-logo.png,
+solar-sense,6,brand-image,Solar Sense mark,,solar-sense-mark.png,
+solar-sense,7,hero-image,Solar Sense module render,,solarsense-glow.png,
+pillars,1,eyebrow,What it does,,,
+pillars,2,h2,"Four jobs, one panel-level platform.",,,
+pillars,3,lead,,"Solar Sense brings together what the industry has tried to solve in pieces — sensing, diagnostics, safety, and architecture — into a single device class designed for distributed solar.",,
+pillars,4,pillar,Panel-level intelligence,"Voltage, current, and temperature measured at every module — granular visibility, not just system-level averages.",,
+pillars,5,pillar,Real-time fault detection,"Machine-learning models identify shading, hotspots, electrical anomalies, and early degradation as they happen.",,
+pillars,6,pillar,Integrated safety control,"Built-in switching enables rapid shutdown — protecting firefighters, technicians, and building occupants on demand.",,
+pillars,7,pillar,Scalable module architecture,"One device per panel, designed for residential, commercial, and research installations alike.",,
+why,1,eyebrow,Why it matters,,,
+why,2,h2,Rooftop solar runs at dangerous voltages.,,,
+why,3,body,,"Residential and commercial solar systems operate at dangerous DC voltages — and even when the grid is down, panels keep producing electricity. That creates a serious safety risk for the people closest to the system.",,
+why,4,body,,"Solar Sense closes that gap with sensor and machine-learning technology that makes rooftop solar smart and safe — detecting faults in real time and enabling rapid shutdown to protect the people on every rooftop.",,
+why,5,closing,Join us in making rooftop solar smarter and safer.,,,
+why,6,visual,600V danger over rooftop,,danger-600v.jpeg,
+why,7,stake,Firefighters,Rapid shutdown gives emergency responders a safe path to the roof.,firefighters.png,
+why,8,stake,Maintenance crew,Panel-level diagnostics turn guesswork into targeted faster work.,maintenance-crew.png,
+why,9,stake,Building occupants,Safer rooftop solar for the people who live and work under it every day.,family-home.png,
+explore,1,eyebrow,Go deeper,,,
+explore,2,h2,Explore the full Solar Sense story.,,,
+explore,3,body,,"Product detail, lab tour, business model, and partnership pathways live on our dedicated Solar Sense site — continue there when you are ready to go further.",,
+explore,4,cta-primary,Open Solar Sense,,,https://touradam.github.io/solarsensApril2026/
+explore,5,cta-ghost,Email SEPT,,,mailto:adama.toure@sept.energy

@@ -3,102 +3,106 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="SEPT introduces Solar Sense—sensor and machine learning for safer, smarter rooftop solar. Explore product detail, strategy, and partnerships on Solar Sense.">
+  <meta name="description" content="SEPT develops technologies for safer, smarter, more sustainable decentralized energy. Solar Sense — NEC rapid shutdown compliance and intelligent module-level monitoring. Learn more on Solar Sense.">
   <title>SEPT | Solar Sense</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="icon" href="assets/solar-sense-logo.png" type="image/png">
   <style>
     :root {
       --bg: #0a0e13;
-      --surface: #111820;
+      --bg-alt: #0d141c;
+      --surface: #121a23;
+      --surface-2: #182332;
       --border: #243042;
-      --text: #e8eef5;
+      --text: #eef3f9;
       --muted: #95a8bd;
       --accent: #3dd6c6;
+      --accent-2: #f6a96a;
       --accent-dim: rgba(61, 214, 198, 0.12);
+      --warm-dim: rgba(246, 169, 106, 0.10);
       --radius: 16px;
-      --max: 960px;
+      --max: 1080px;
     }
 
-    * {
-      box-sizing: border-box;
-    }
+    * { box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
 
     body {
       margin: 0;
-      font-family: "DM Sans", system-ui, sans-serif;
-      background:
-        radial-gradient(ellipse 900px 480px at 15% -5%, rgba(61, 214, 198, 0.09), transparent 55%),
-        radial-gradient(ellipse 700px 400px at 95% 15%, rgba(59, 130, 246, 0.06), transparent 50%),
-        var(--bg);
+      font-family: "Inter", system-ui, -apple-system, sans-serif;
+      background: var(--bg);
       color: var(--text);
       line-height: 1.55;
       font-size: 1.0625rem;
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
     }
 
-    a {
-      color: var(--accent);
-      text-decoration-thickness: 1px;
-      text-underline-offset: 3px;
-    }
+    a { color: var(--accent); text-decoration-thickness: 1px; text-underline-offset: 3px; }
+    a:hover { color: #6ae4d7; }
 
-    a:hover {
-      color: #6ae4d7;
-    }
+    img { max-width: 100%; height: auto; display: block; }
 
+    /* ========================= header ========================= */
     header.site {
-      border-bottom: 1px solid var(--border);
-      background: rgba(10, 14, 19, 0.88);
-      backdrop-filter: blur(12px);
       position: sticky;
       top: 0;
-      z-index: 20;
+      z-index: 30;
+      background: rgba(10, 14, 19, 0.85);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
     }
 
-    .wrap {
+    .nav {
       max-width: var(--max);
       margin: 0 auto;
-      padding: 0.9rem 1.25rem;
+      padding: 0.85rem 1.25rem;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 1rem;
+      gap: 0.75rem 1.25rem;
       flex-wrap: wrap;
+    }
+
+    .nav-end {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem 1.1rem;
+      flex-wrap: wrap;
+      justify-content: flex-end;
     }
 
     .brand {
       display: flex;
       align-items: center;
-      gap: 0.65rem;
+      gap: 0.6rem;
       text-decoration: none;
       color: inherit;
+      min-width: 0;
     }
 
-    .brand img {
-      height: 38px;
-      width: auto;
-      display: block;
-    }
+    .brand img { height: 32px; width: auto; flex-shrink: 0; }
 
     .brand-text {
       display: flex;
       flex-direction: column;
-      gap: 0.1rem;
-      line-height: 1.15;
+      line-height: 1.1;
     }
 
     .brand-name {
-      font-weight: 700;
-      font-size: 1.05rem;
-      letter-spacing: 0.02em;
+      font-weight: 800;
+      letter-spacing: 0.04em;
+      font-size: 1rem;
     }
 
     .brand-tag {
-      font-size: 0.78rem;
+      font-size: 0.72rem;
       font-weight: 600;
       color: var(--muted);
-      letter-spacing: 0.06em;
+      letter-spacing: 0.14em;
       text-transform: uppercase;
     }
 
@@ -106,7 +110,11 @@
       display: flex;
       gap: 1.1rem;
       flex-wrap: wrap;
-      font-size: 0.9rem;
+      font-size: 0.92rem;
+    }
+
+    @media (max-width: 980px) {
+      nav.jump { display: none; }
     }
 
     nav.jump a {
@@ -115,142 +123,43 @@
       font-weight: 500;
     }
 
-    nav.jump a:hover {
-      color: var(--text);
-    }
+    nav.jump a:hover { color: var(--text); }
 
-    main {
-      padding-bottom: 3.5rem;
-    }
+    .nav-cta { display: flex; align-items: center; gap: 0.6rem; }
 
-    /* Intro hero */
-    .intro {
-      max-width: var(--max);
-      margin: 0 auto;
-      padding: 2.75rem 1.25rem 2.25rem;
-      scroll-margin-top: 72px;
-    }
-
-    .intro-grid {
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 2rem;
-      align-items: center;
-    }
-
-    @media (min-width: 820px) {
-      .intro-grid {
-        grid-template-columns: 1.05fr 0.95fr;
-        gap: 2.5rem;
-      }
-    }
-
-    .intro-kicker {
-      display: inline-block;
-      font-size: 0.75rem;
-      font-weight: 700;
-      letter-spacing: 0.16em;
-      text-transform: uppercase;
-      color: var(--accent);
-      margin-bottom: 0.65rem;
-    }
-
-    .intro h1 {
-      margin: 0 0 1rem;
-      font-size: clamp(1.85rem, 4.2vw, 2.45rem);
-      font-weight: 700;
-      line-height: 1.12;
-      letter-spacing: -0.02em;
-    }
-
-    .intro-lead {
-      margin: 0 0 1.25rem;
-      color: var(--muted);
-      font-size: 1.08rem;
-      max-width: 48ch;
-    }
-
-    .intro-body {
-      margin: 0;
-      color: var(--text);
-      font-size: 1.05rem;
-      max-width: 52ch;
-      font-weight: 500;
-    }
-
-    .intro-logos {
-      display: flex;
-      flex-direction: column;
-      align-items: flex-start;
-      gap: 1.25rem;
-      padding: 1.5rem;
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-    }
-
-    .intro-logos-row {
-      display: flex;
-      align-items: center;
-      gap: 1rem;
-      flex-wrap: wrap;
-    }
-
-    .intro-logos-row img:first-child {
-      height: 44px;
-      width: auto;
-    }
-
-    .intro-logos-row img:last-child {
-      height: 40px;
-      width: auto;
-    }
-
-    .intro-logos-caption {
-      margin: 0;
-      font-size: 0.88rem;
-      color: var(--muted);
-      line-height: 1.45;
-      max-width: 36ch;
-    }
-
-    .intro-cta {
-      margin-top: 1.75rem;
-      display: flex;
-      flex-wrap: wrap;
-      align-items: center;
-      gap: 0.75rem 1.25rem;
-    }
-
+    /* ========================= buttons ========================= */
     .btn {
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      padding: 0.72rem 1.35rem;
+      gap: 0.5rem;
+      padding: 0.75rem 1.4rem;
       border-radius: 999px;
       font-weight: 600;
       font-size: 0.98rem;
       text-decoration: none;
-      border: none;
+      border: 1px solid transparent;
       cursor: pointer;
-      transition: transform 0.15s ease, box-shadow 0.15s ease;
+      transition: transform 0.15s ease, box-shadow 0.2s ease, background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+      white-space: nowrap;
     }
 
     .btn-primary {
       background: var(--accent);
       color: #04201c;
+      box-shadow: 0 4px 18px rgba(61, 214, 198, 0.18);
     }
 
     .btn-primary:hover {
       transform: translateY(-1px);
-      box-shadow: 0 10px 32px rgba(61, 214, 198, 0.35);
+      box-shadow: 0 10px 32px rgba(61, 214, 198, 0.4);
       color: #021511;
     }
 
     .btn-ghost {
       background: transparent;
       color: var(--muted);
-      border: 1px solid var(--border);
+      border-color: var(--border);
     }
 
     .btn-ghost:hover {
@@ -258,298 +167,680 @@
       border-color: var(--muted);
     }
 
-    .btn:focus-visible {
-      outline: 2px solid var(--accent);
-      outline-offset: 3px;
-    }
+    .btn:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
 
-    /* Sections */
+    .btn .arrow { transition: transform 0.2s ease; }
+    .btn:hover .arrow { transform: translateX(3px); }
+
+    /* ========================= section base ========================= */
     .section {
       max-width: var(--max);
       margin: 0 auto;
-      padding: 2rem 1.25rem;
-      scroll-margin-top: 72px;
-    }
-
-    .section-head {
-      margin-bottom: 1.35rem;
+      padding: 5rem 1.25rem;
+      scroll-margin-top: 80px;
     }
 
     .section-eyebrow {
-      margin: 0 0 0.35rem;
+      display: inline-block;
+      margin: 0 0 0.65rem;
       font-size: 0.75rem;
       font-weight: 700;
-      letter-spacing: 0.14em;
+      letter-spacing: 0.16em;
       text-transform: uppercase;
-      color: var(--muted);
+      color: var(--accent);
     }
 
     .section-title {
-      margin: 0;
-      font-size: 1.35rem;
-      font-weight: 700;
+      margin: 0 0 1rem;
+      font-size: clamp(1.65rem, 3.4vw, 2.25rem);
+      font-weight: 800;
+      line-height: 1.15;
+      letter-spacing: -0.02em;
     }
 
-    .panel {
+    .section-lead {
+      margin: 0;
+      max-width: 60ch;
+      color: var(--muted);
+      font-size: 1.08rem;
+    }
+
+    .band {
+      background: var(--bg-alt);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+
+    /* ========================= hero ========================= */
+    .hero {
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::before,
+    .hero::after {
+      content: "";
+      position: absolute;
+      pointer-events: none;
+      filter: blur(60px);
+      opacity: 0.85;
+      animation: glowDrift 9s ease-in-out infinite alternate;
+    }
+
+    .hero::before {
+      width: 520px; height: 520px;
+      left: -160px; top: -120px;
+      background: radial-gradient(closest-side, var(--warm-dim), transparent 70%);
+    }
+
+    .hero::after {
+      width: 460px; height: 460px;
+      right: -140px; top: -60px;
+      background: radial-gradient(closest-side, var(--accent-dim), transparent 70%);
+      animation-delay: -3s;
+    }
+
+    @keyframes glowDrift {
+      from { transform: translateY(0); opacity: 0.7; }
+      to   { transform: translateY(20px); opacity: 1; }
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 2.5rem;
+      align-items: center;
+    }
+
+    @media (min-width: 880px) {
+      .hero-grid { grid-template-columns: 1.05fr 0.95fr; gap: 3rem; }
+    }
+
+    .hero h1 {
+      margin: 0 0 1.1rem;
+      font-size: clamp(2.05rem, 4.6vw, 3.05rem);
+      font-weight: 800;
+      line-height: 1.08;
+      letter-spacing: -0.025em;
+    }
+
+    .hero-body {
+      margin: 0 0 1.75rem;
+      font-size: 1.05rem;
+      max-width: 52ch;
+    }
+
+    .hero-body strong { font-weight: 700; }
+
+    .chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin: 0 0 1.75rem;
+      padding: 0;
+      list-style: none;
+    }
+
+    .chips li {
+      font-size: 0.82rem;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      padding: 0.4rem 0.8rem;
+      border-radius: 999px;
       background: var(--surface);
       border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 1.75rem 1.5rem;
-    }
-
-    .deck-lines {
-      margin: 0;
-      padding: 0;
-      list-style: none;
-      font-weight: 700;
-      font-size: clamp(1.32rem, 3.5vw, 1.85rem);
-      line-height: 1.18;
-    }
-
-    .deck-lines li {
-      margin: 0 0 0.3rem;
-    }
-
-    .deck-lines .deck-hyphen {
-      font-weight: 600;
-      font-size: clamp(1.45rem, 3.8vw, 2rem);
-      line-height: 0.85;
-      margin: 0.12rem 0;
-    }
-
-    .deck-body {
-      margin: 1.5rem 0 0;
-      max-width: 52ch;
-      font-size: 1.05rem;
-      color: var(--muted);
-      font-weight: 500;
-    }
-
-    .deck-stack {
-      margin: 1.15rem 0 0;
-      padding: 0;
-      list-style: none;
-      font-size: 1.12rem;
-      font-weight: 600;
-    }
-
-    .deck-stack li {
-      margin: 0 0 0.3rem;
-    }
-
-    .deck-solution {
-      margin: 1.35rem 0 0;
-      max-width: 62ch;
-      font-size: 1.05rem;
-      color: var(--muted);
-    }
-
-    .deck-solution:first-of-type {
-      margin-top: 0;
-    }
-
-    .deck-closing {
-      margin: 1.35rem 0 0;
-      font-size: 1.18rem;
-      font-weight: 700;
       color: var(--text);
     }
 
-    .deck-visual {
-      margin-top: 1.5rem;
-      border-radius: calc(var(--radius) - 4px);
+    .hero-ctas {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+    }
+
+    .hero-frame {
+      position: relative;
+      margin: 0;
+      border-radius: var(--radius);
       overflow: hidden;
       border: 1px solid var(--border);
-      background: #070a0e;
+      background: #000;
+      box-shadow: 0 30px 60px rgba(0, 0, 0, 0.45);
     }
 
-    .deck-visual img {
-      display: block;
+    .hero-frame img {
       width: 100%;
-      height: auto;
+      height: 100%;
+      object-fit: cover;
+      aspect-ratio: 16 / 11;
     }
 
-    .deck-visual figcaption {
-      padding: 0.65rem 0.85rem;
-      font-size: 0.82rem;
+    .hero-frame::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      background:
+        linear-gradient(180deg, transparent 60%, rgba(10, 14, 19, 0.55) 100%);
+    }
+
+    /* ========================= shift band ========================= */
+    .shift-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 2rem;
+      align-items: center;
+    }
+
+    @media (min-width: 880px) {
+      .shift-grid { grid-template-columns: 0.85fr 1.15fr; gap: 3rem; }
+    }
+
+    .shift-image {
+      margin: 0;
+      border-radius: var(--radius);
+      overflow: hidden;
+      border: 1px solid var(--border);
+      background: #000;
+    }
+
+    .shift-image img {
+      width: 100%;
+      aspect-ratio: 16 / 10;
+      object-fit: cover;
+    }
+
+    /* ========================= solar sense intro ========================= */
+    .ss-intro-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 2.5rem;
+      align-items: center;
+    }
+
+    @media (min-width: 880px) {
+      .ss-intro-grid { grid-template-columns: 1fr 1fr; gap: 3.5rem; }
+    }
+
+    .ss-brand-row {
+      display: flex;
+      align-items: center;
+      gap: 1.25rem;
+      margin: 0 0 1.5rem;
+    }
+
+    .ss-brand-row img {
+      height: 48px;
+      width: auto;
+    }
+
+    .ss-brand-row .ss-mark { height: 56px; }
+
+    .ss-image {
+      margin: 0;
+      border-radius: var(--radius);
+      overflow: hidden;
+      border: 1px solid var(--border);
+      background: radial-gradient(circle at 50% 50%, rgba(61, 214, 198, 0.18), transparent 70%), #060a0f;
+      padding: 1rem;
+    }
+
+    .ss-image img {
+      width: 100%;
+      max-height: 460px;
+      object-fit: contain;
+    }
+
+    /* ========================= pillars ========================= */
+    .pillars {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 1.1rem;
+      margin-top: 2.25rem;
+    }
+
+    @media (min-width: 1000px) {
+      .pillars { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+    }
+
+    @media (max-width: 540px) {
+      .pillars { grid-template-columns: 1fr; }
+    }
+
+    .pillar {
+      position: relative;
+      padding: 1.5rem 1.35rem 1.5rem;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      background: var(--surface);
+      transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .pillar:hover {
+      transform: translateY(-2px);
+      border-color: rgba(61, 214, 198, 0.45);
+      box-shadow: 0 18px 40px rgba(0, 0, 0, 0.35);
+    }
+
+    .pillar-num {
+      font-family: "Inter", sans-serif;
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin: 0 0 0.5rem;
+    }
+
+    .pillar h3 {
+      margin: 0 0 0.5rem;
+      font-size: 1.1rem;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+    }
+
+    .pillar p {
+      margin: 0;
       color: var(--muted);
+      font-size: 0.96rem;
+    }
+
+    /* ========================= why it matters ========================= */
+    .why-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 2.25rem;
+      align-items: stretch;
+    }
+
+    @media (min-width: 880px) {
+      .why-grid { grid-template-columns: 1.05fr 0.95fr; gap: 2.75rem; }
+    }
+
+    .why-visual {
+      position: relative;
+      margin: 0;
+      border-radius: var(--radius);
+      overflow: hidden;
+      border: 1px solid var(--border);
+      background: #000;
+    }
+
+    .why-visual img {
+      width: 100%;
+      aspect-ratio: 16 / 10;
+      object-fit: cover;
+    }
+
+    .why-visual figcaption {
+      position: absolute;
+      left: 0; right: 0; bottom: 0;
+      padding: 0.85rem 1rem;
+      font-size: 0.86rem;
+      color: rgba(255, 255, 255, 0.85);
+      background: linear-gradient(180deg, transparent, rgba(0, 0, 0, 0.65));
+      letter-spacing: 0.01em;
+    }
+
+    .why-text p { margin: 0 0 1rem; color: var(--muted); }
+    .why-text p strong { color: var(--text); font-weight: 600; }
+
+    .why-closing {
+      margin-top: 0.75rem;
+      padding: 1rem 1.1rem;
+      border-left: 3px solid var(--accent);
+      background: var(--accent-dim);
+      border-radius: 0 var(--radius) var(--radius) 0;
+      color: var(--text) !important;
+      font-weight: 600;
+    }
+
+    .stake-cards {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 1.1rem;
+      margin-top: 2rem;
+    }
+
+    @media (max-width: 720px) {
+      .stake-cards { grid-template-columns: 1fr; }
+    }
+
+    .stake {
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+      background: var(--surface);
+      display: flex;
+      flex-direction: column;
+      transition: transform 0.2s ease, border-color 0.2s ease;
+    }
+
+    .stake:hover {
+      transform: translateY(-2px);
+      border-color: rgba(61, 214, 198, 0.4);
+    }
+
+    .stake-photo {
+      aspect-ratio: 4 / 3;
+      overflow: hidden;
+      background: #000;
+    }
+
+    .stake-photo img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .stake-body {
+      padding: 1rem 1.1rem 1.2rem;
+    }
+
+    .stake-body h4 {
+      margin: 0 0 0.35rem;
+      font-size: 1rem;
+      font-weight: 700;
+    }
+
+    .stake-body p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.92rem;
+    }
+
+    /* ========================= explore CTA ========================= */
+    .explore-card {
+      margin: 0 auto;
+      max-width: 760px;
+      padding: 2.75rem 1.75rem;
+      text-align: center;
+      border-radius: calc(var(--radius) + 4px);
+      border: 1px solid var(--border);
+      background:
+        radial-gradient(ellipse at 50% 0%, var(--accent-dim), transparent 60%),
+        var(--surface);
+      box-shadow: 0 28px 60px rgba(0, 0, 0, 0.4);
+    }
+
+    .explore-card h2 {
+      margin: 0 0 0.75rem;
+      font-size: clamp(1.5rem, 3.2vw, 1.95rem);
+      font-weight: 800;
+      letter-spacing: -0.02em;
+    }
+
+    .explore-card p {
+      margin: 0 auto 1.6rem;
+      max-width: 50ch;
+      color: var(--muted);
+      font-size: 1.05rem;
+    }
+
+    .explore-actions {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 0.75rem;
+    }
+
+    .explore-actions .btn-primary {
+      padding: 0.9rem 1.7rem;
+      font-size: 1.02rem;
+    }
+
+    /* ========================= footer ========================= */
+    footer.site {
+      max-width: var(--max);
+      margin: 0 auto;
+      padding: 2.25rem 1.25rem 3rem;
+      color: var(--muted);
+      font-size: 0.88rem;
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 1rem;
       border-top: 1px solid var(--border);
     }
 
-    /* Final CTA */
-    .cta-final {
-      max-width: var(--max);
-      margin: 0 auto;
-      padding: 1rem 1.25rem 0;
+    footer.site a { color: var(--muted); }
+    footer.site a:hover { color: var(--text); }
+
+    /* ========================= motion ========================= */
+    .reveal {
+      opacity: 0;
+      transform: translateY(14px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
     }
 
-    .cta-card {
-      border-radius: var(--radius);
-      padding: 2.25rem 1.75rem;
-      text-align: center;
-      background: linear-gradient(145deg, var(--accent-dim), rgba(59, 130, 246, 0.07));
-      border: 1px solid var(--border);
+    .reveal.is-in {
+      opacity: 1;
+      transform: none;
     }
 
-    .cta-card h2 {
-      margin: 0 0 0.65rem;
-      font-size: clamp(1.35rem, 3vw, 1.65rem);
-      font-weight: 700;
+    @media (prefers-reduced-motion: reduce) {
+      .reveal { opacity: 1; transform: none; transition: none; }
+      .hero::before, .hero::after { animation: none; }
+      html { scroll-behavior: auto; }
     }
 
-    .cta-card p {
-      margin: 0 auto 1.4rem;
-      max-width: 46ch;
-      color: var(--muted);
-      font-size: 1.02rem;
-    }
-
-    .cta-card .btn-primary {
-      padding: 0.85rem 1.65rem;
-      font-size: 1.02rem;
-    }
-
-    footer.fineprint {
-      max-width: var(--max);
-      margin: 2.75rem auto 0;
-      padding: 0 1.25rem 2.5rem;
-      font-size: 0.84rem;
-      color: var(--muted);
-      line-height: 1.5;
-    }
-
-    footer.fineprint a {
-      color: var(--muted);
-    }
-
-    footer.fineprint strong {
-      color: var(--text);
-      font-weight: 600;
+    /* ========================= small screens ========================= */
+    @media (max-width: 720px) {
+      .section { padding: 3.5rem 1.25rem; }
     }
   </style>
 </head>
 <body>
   <header class="site">
-    <div class="wrap">
-      <a class="brand" href="#intro" aria-label="SEPT — Solar Sense (top of page)">
-        <img src="assets/sept-logo.png" alt="" width="120" height="40" decoding="async" aria-hidden="true">
+    <div class="nav">
+      <a class="brand" href="#intro" aria-label="SEPT — top of page">
+        <img src="assets/sept-logo.png" alt="" aria-hidden="true">
         <span class="brand-text">
           <span class="brand-name">SEPT</span>
           <span class="brand-tag">Solar Sense</span>
         </span>
       </a>
-      <nav class="jump" aria-label="Page sections">
-        <a href="#intro">Intro</a>
-        <a href="#vision">Vision</a>
-        <a href="#impact">Impact</a>
-        <a href="#explore">Explore</a>
-      </nav>
+      <div class="nav-end">
+        <nav class="jump" aria-label="Page sections">
+          <a href="#shift">Energy shift</a>
+          <a href="#solar-sense">Solar Sense</a>
+          <a href="#pillars">Pillars</a>
+          <a href="#why">Why it matters</a>
+        </nav>
+        <a class="btn btn-primary" href="#explore">Explore Solar Sense<span class="arrow" aria-hidden="true">&rarr;</span></a>
+      </div>
     </div>
   </header>
 
   <main>
-    <section class="intro" id="intro" aria-labelledby="intro-heading">
-      <div class="intro-grid">
-        <div>
-          <span class="intro-kicker">Decentralized energy</span>
-          <h1 id="intro-heading">SEPT builds smarter, safer power at the edge of the grid.</h1>
-          <p class="intro-lead">
-            We are an energy technology company focused on decentralized resources—where visibility, control, and safety must exist down to the module, not only at the substation.
+    <!-- ========== HERO / SEPT INTRO ========== -->
+    <section class="section hero" id="intro" aria-labelledby="intro-h">
+      <div class="hero-grid">
+        <div class="reveal">
+          <p class="section-eyebrow">SEPT</p>
+          <h1 id="intro-h">
+            SEPT develops technologies that make decentralized energy systems safer, smarter, and more sustainable.
+          </h1>
+          <p class="hero-body">
+            Solar Sense is the <strong>first product line</strong>, focused on <strong>solar safety, NEC rapid shutdown compliance, and intelligent module-level monitoring.</strong>
           </p>
-          <p class="intro-body">
-            <strong style="font-weight: 700;">Solar Sense</strong> is SEPT’s first product line: sensor and machine-learning technology for rooftop and distributed solar—so every panel can be monitored, diagnosed, and protected in real time.
-          </p>
-          <div class="intro-cta">
-            <a class="btn btn-primary" href="#vision">See the vision</a>
-            <a class="btn btn-ghost" href="#explore">Jump to full Solar Sense site</a>
+          <ul class="chips" aria-label="Focus areas">
+            <li>Decentralized</li>
+            <li>Intelligent</li>
+            <li>Safer</li>
+          </ul>
+          <div class="hero-ctas">
+            <a class="btn btn-primary" href="#solar-sense">Meet Solar Sense<span class="arrow" aria-hidden="true">&rarr;</span></a>
+            <a class="btn btn-ghost" href="#explore">Open Solar Sense site</a>
           </div>
         </div>
-        <aside class="intro-logos" aria-label="SEPT and Solar Sense">
-          <div class="intro-logos-row">
-            <img src="assets/sept-logo.png" alt="SEPT logo">
-            <img src="assets/solar-sense-logo.png" alt="Solar Sense logo">
-          </div>
-          <p class="intro-logos-caption">
-            SEPT is the company; Solar Sense is our flagship platform for panel-level intelligence and safety on decentralized PV.
-          </p>
-        </aside>
-      </div>
-    </section>
-
-    <section class="section" id="vision" aria-labelledby="vision-heading">
-      <div class="section-head">
-        <p class="section-eyebrow">Solar Sense</p>
-        <h2 class="section-title" id="vision-heading">What we’re building</h2>
-      </div>
-      <div class="panel">
-        <ul class="deck-lines" aria-label="Vision headline">
-          <li>Safer</li>
-          <li>Smarter</li>
-          <li>Easier to monitor</li>
-          <li>And Easier to maintain</li>
-          <li>Transform each solar panel into</li>
-          <li>An intelligent</li>
-          <li>Controllable</li>
-          <li>Safety</li>
-          <li class="deck-hyphen" aria-hidden="true">-</li>
-          <li>award</li>
-        </ul>
-        <p class="deck-body">
-          As the electric power shifts from centralized power plants to millions of rooftop systems, the industry needs better way to make these systems
-        </p>
-      </div>
-    </section>
-
-    <section class="section" id="impact" aria-labelledby="impact-heading">
-      <div class="section-head">
-        <p class="section-eyebrow">Why it matters</p>
-        <h2 class="section-title" id="impact-heading">Safety and intelligence on every rooftop</h2>
-      </div>
-      <div class="panel">
-        <p class="deck-solution">
-          This create a serious safety risk for
-        </p>
-        <p class="deck-solution">
-          Residential and commercial solar systems operate at dangerous DC voltages
-        </p>
-        <ul class="deck-stack" aria-label="People we protect">
-          <li>Firefighters</li>
-          <li>Maintenance crew</li>
-          <li>Building occupants</li>
-        </ul>
-        <p class="deck-solution">
-          We develop sensor and machine learning technology that makes rooftop solar panels smart and safe by detecting faults in real time and enabling rapid shutdown to protect firefighters, maintenance crews, and building occupants.
-        </p>
-        <p class="deck-closing">
-          Join us in making rooftop solar smarter and safer
-        </p>
-        <figure class="deck-visual">
-          <img src="assets/residential-pv-600v.jpg" alt="Residential rooftop solar array" width="960" height="540" loading="lazy" decoding="async">
-          <figcaption>Distributed PV at meaningful DC voltages—context for module-level safety and intelligence.</figcaption>
+        <figure class="hero-frame reveal" aria-hidden="false">
+          <img src="assets/hero-rooftop-sunset.png" alt="Sunset over a community of rooftops carrying solar panels" width="1280" height="880" loading="eager" decoding="async" fetchpriority="high">
         </figure>
       </div>
     </section>
 
-    <section class="cta-final" id="explore" aria-labelledby="explore-heading">
-      <div class="cta-card">
-        <h2 id="explore-heading">Explore Solar Sense</h2>
-        <p>
-          Product depth, lab tour, business model, market strategy, and partnership paths live on our dedicated Solar Sense site—continue there when you are ready to go further.
-        </p>
-        <a class="btn btn-primary" href="https://touradam.github.io/solarsensApril2026/" target="_blank" rel="noopener noreferrer">
-          Open Solar Sense
-        </a>
+    <!-- ========== ENERGY SHIFT ========== -->
+    <section class="section band" id="shift" aria-labelledby="shift-h">
+      <div class="shift-grid">
+        <figure class="shift-image reveal">
+          <img src="assets/energy-transition.png" alt="Coastline of homes with rooftop solar at sunset, light streaking across the community" loading="lazy" decoding="async">
+        </figure>
+        <div class="reveal">
+          <p class="section-eyebrow">The energy shift</p>
+          <h2 class="section-title" id="shift-h">From central plants to millions of rooftops.</h2>
+          <p class="section-lead">
+            Electric power is moving away from a handful of centralized plants toward millions of distributed installations. To keep this new grid reliable and safe, the industry needs a smarter way to monitor, diagnose, and protect every panel — not just every plant.
+          </p>
+        </div>
       </div>
     </section>
 
-    <footer class="fineprint">
-      <p>
-        Core messaging above matches <strong>SolarSensePresentation.pdf</strong> / <strong>SolarSensePresentation.pptx</strong>. Structured export: <a href="story.csv" download>story.csv</a>
+    <!-- ========== SOLAR SENSE INTRO ========== -->
+    <section class="section" id="solar-sense" aria-labelledby="ss-h">
+      <div class="ss-intro-grid">
+        <div class="reveal">
+          <p class="section-eyebrow">Our first product line</p>
+          <h2 class="section-title" id="ss-h">Introducing Solar Sense.</h2>
+          <div class="ss-brand-row" aria-label="Solar Sense brand">
+            <img src="assets/solar-sense-logo.png" alt="Solar Sense logo">
+            <img src="assets/solar-sense-mark.png" alt="" aria-hidden="true" class="ss-mark">
+          </div>
+          <p class="section-lead" style="margin-bottom: 1rem;">
+            A sensor and machine-learning platform engineered to make rooftop solar safer, smarter, easier to monitor, and easier to maintain.
+          </p>
+          <p class="section-lead">
+            Solar Sense transforms each solar panel into an intelligent, controllable, safety-aware node — detecting faults in real time and enabling rapid shutdown when it matters most.
+          </p>
+        </div>
+        <figure class="ss-image reveal">
+          <img src="assets/solarsense-glow.png" alt="Solar Sense module render with a soft glow on a panel surface" loading="lazy" decoding="async">
+        </figure>
+      </div>
+    </section>
+
+    <!-- ========== PILLARS ========== -->
+    <section class="section band" id="pillars" aria-labelledby="pillars-h">
+      <p class="section-eyebrow">What it does</p>
+      <h2 class="section-title" id="pillars-h">Four jobs, one panel-level platform.</h2>
+      <p class="section-lead">
+        Solar Sense brings together what the industry has tried to solve in pieces — sensing, diagnostics, safety, and architecture — into a single device class designed for distributed solar.
       </p>
-      <p style="margin-top: 0.75rem;">
-        <a href="mailto:adama.toure@sept.energy">adama.toure@sept.energy</a>
-      </p>
-    </footer>
+      <div class="pillars" role="list">
+        <article class="pillar reveal" role="listitem">
+          <p class="pillar-num">01</p>
+          <h3>Panel-level intelligence</h3>
+          <p>Voltage, current, and temperature measured at every module — granular visibility, not just system-level averages.</p>
+        </article>
+        <article class="pillar reveal" role="listitem">
+          <p class="pillar-num">02</p>
+          <h3>Real-time fault detection</h3>
+          <p>Machine-learning models identify shading, hotspots, electrical anomalies, and early degradation as they happen.</p>
+        </article>
+        <article class="pillar reveal" role="listitem">
+          <p class="pillar-num">03</p>
+          <h3>Integrated safety control</h3>
+          <p>Built-in switching enables rapid shutdown — protecting firefighters, technicians, and building occupants on demand.</p>
+        </article>
+        <article class="pillar reveal" role="listitem">
+          <p class="pillar-num">04</p>
+          <h3>Scalable module architecture</h3>
+          <p>One device per panel, designed for residential, commercial, and research installations alike.</p>
+        </article>
+      </div>
+    </section>
+
+    <!-- ========== WHY IT MATTERS ========== -->
+    <section class="section" id="why" aria-labelledby="why-h">
+      <p class="section-eyebrow">Why it matters</p>
+      <h2 class="section-title" id="why-h">Rooftop solar runs at dangerous voltages.</h2>
+      <div class="why-grid">
+        <figure class="why-visual reveal">
+          <img src="assets/danger-600v.jpeg" alt="Rooftop solar array with 600V illustrated as electrical danger across the panels" loading="lazy" decoding="async">
+          <figcaption>Residential and commercial systems can operate at 600V DC and beyond.</figcaption>
+        </figure>
+        <div class="why-text reveal">
+          <p>
+            Residential and commercial solar systems operate at <strong>dangerous DC voltages</strong> — and even when the grid is down, panels keep producing electricity. That creates a serious safety risk for the people closest to the system.
+          </p>
+          <p>
+            Solar Sense closes that gap with sensor and machine-learning technology that makes rooftop solar smart and safe — detecting faults in real time and enabling rapid shutdown to protect the people on every rooftop.
+          </p>
+          <p class="why-closing">
+            Join us in making rooftop solar smarter and safer.
+          </p>
+        </div>
+      </div>
+
+      <div class="stake-cards" aria-label="Who Solar Sense protects">
+        <article class="stake reveal">
+          <div class="stake-photo"><img src="assets/firefighters.png" alt="Two firefighters in full gear walking from a scene"></div>
+          <div class="stake-body">
+            <h4>Firefighters</h4>
+            <p>Rapid shutdown gives emergency responders a safe path to the roof.</p>
+          </div>
+        </article>
+        <article class="stake reveal">
+          <div class="stake-photo"><img src="assets/maintenance-crew.png" alt="Maintenance technician cleaning a rooftop solar array"></div>
+          <div class="stake-body">
+            <h4>Maintenance crew</h4>
+            <p>Panel-level diagnostics turn guesswork into targeted, faster work.</p>
+          </div>
+        </article>
+        <article class="stake reveal">
+          <div class="stake-photo"><img src="assets/family-home.png" alt="Family standing in front of a home with a rooftop solar array"></div>
+          <div class="stake-body">
+            <h4>Building occupants</h4>
+            <p>Safer rooftop solar for the people who live and work under it every day.</p>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- ========== EXPLORE CTA ========== -->
+    <section class="section" id="explore" aria-labelledby="explore-h">
+      <div class="explore-card reveal">
+        <p class="section-eyebrow">Go deeper</p>
+        <h2 id="explore-h">Explore the full Solar Sense story.</h2>
+        <p>
+          Product detail, lab tour, business model, and partnership pathways live on our dedicated Solar Sense site — continue there when you are ready to go further.
+        </p>
+        <div class="explore-actions">
+          <a class="btn btn-primary" href="https://touradam.github.io/solarsensApril2026/" target="_blank" rel="noopener noreferrer">
+            Open Solar Sense<span class="arrow" aria-hidden="true">&rarr;</span>
+          </a>
+          <a class="btn btn-ghost" href="mailto:adama.toure@sept.energy">Email SEPT</a>
+        </div>
+      </div>
+    </section>
   </main>
+
+  <footer class="site">
+    <span>SEPT &middot; Solar Sense</span>
+    <span>
+      <a href="story.csv" download>Content outline (CSV)</a>
+      &nbsp;&middot;&nbsp;
+      <a href="mailto:adama.toure@sept.energy">adama.toure@sept.energy</a>
+    </span>
+  </footer>
+
+  <script>
+    (function () {
+      var nodes = document.querySelectorAll('.reveal');
+      if (!('IntersectionObserver' in window)) {
+        nodes.forEach(function (n) { n.classList.add('is-in'); });
+        return;
+      }
+      var io = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('is-in');
+            io.unobserve(entry.target);
+          }
+        });
+      }, { rootMargin: '0px 0px -8% 0px', threshold: 0.05 });
+      nodes.forEach(function (n) { io.observe(n); });
+    })();
+  </script>
 </body>
 </html>
