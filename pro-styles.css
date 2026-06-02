@@ -386,6 +386,39 @@
   font-weight: 700;
 }
 
+/* Platform Pricing */
+.platform-pricing {
+  margin-top: var(--space-3xl);
+  padding: var(--space-2xl);
+  background: var(--bg-card);
+  border: 2px solid var(--accent-amber);
+  border-radius: var(--radius-lg);
+  text-align: center;
+}
+
+.pricing-info h3 {
+  font-size: 1.25rem;
+  color: var(--text-primary);
+  margin: 0 0 var(--space-md);
+  font-weight: 600;
+}
+
+.pricing-value {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: var(--accent-gold);
+  margin: var(--space-md) 0;
+  line-height: 1;
+}
+
+.pricing-description {
+  font-size: 1rem;
+  color: var(--text-secondary);
+  max-width: 48em;
+  margin: var(--space-lg) auto 0;
+  line-height: 1.65;
+}
+
 /* China Section */
 .pro-china {
   background: linear-gradient(180deg, transparent 0%, rgba(212, 160, 18, 0.03) 100%);
