@@ -7,7 +7,7 @@
   <title>Solar Sense Pro | Market Entry & Growth Strategy</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=Outfit:wght@500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
   <link rel="stylesheet" href="pro-styles.css">
   <link rel="icon" href="assets/SolarSensLogo20260315v1.png" type="image/png">
@@ -41,6 +41,10 @@
   <main>
     <!-- Hero Section -->
     <section id="hero" class="section pro-hero">
+      <div class="hero-fx" aria-hidden="true">
+        <div class="hero-spotlight"></div>
+        <canvas class="hero-particles"></canvas>
+      </div>
       <div class="container">
         <div class="pro-hero-content">
           <h1 class="pro-hero-title">Solar Sense Pro</h1>
@@ -721,5 +725,6 @@
       initSmoothScroll();
     })();
   </script>
+  <script src="assets/motion.js" defer></script>
 </body>
 </html>

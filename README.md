@@ -1,19 +1,30 @@
-# Solar Sense — Live Dashboard
+# Solar Sense Website
 
-Real-time module-level telemetry and IV-curve dashboard (simulated or serial). Ready for Streamlit Cloud deployment.
+Static marketing site (GitHub Pages) and Streamlit live dashboard.
 
-## Run locally
+## Website (GitHub Pages)
+
+Open `index.html` locally or deploy via GitHub Pages (workflow in `.github/workflows/`).
+
+Pages: `index.html`, `journey.html`, `market_analysis.html`, `solarsense-pro.html`
+
+## Live dashboard (Streamlit)
 
 ```bash
 pip install -r requirements.txt
 streamlit run app.py
 ```
 
-## Deploy on Streamlit Community Cloud
+Deploy on [Streamlit Community Cloud](https://share.streamlit.io): repo `main`, entry file `app.py`.
 
-1. Push this repo to GitHub.
-2. Go to [share.streamlit.io](https://share.streamlit.io), sign in with GitHub.
-3. New app: select this repo, branch `main`, main file path **app.py**.
-4. Click Deploy. Streamlit runs `streamlit run app.py` by default.
+Optional logo: `assets/SolarSensLogo1.png`
 
-Optional: add your Solar Sense logo as `assets/SolarSensLogo1.png` or `image asset/SolarSensLogo1.png` so the dashboard header shows it.
+## Repo layout
+
+| Path | Purpose |
+|------|---------|
+| `*.html`, `styles.css`, `pro-styles.css` | Static site |
+| `assets/` | Images and `motion.js` used by the site |
+| `app.py`, `data/` | Streamlit dashboard |
+| `docs/market_opportunity_analysis.md` | Market analysis source (also embedded in page) |
+| `Archive/` | Local-only retired files (gitignored) |

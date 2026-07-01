@@ -23,3 +23,20 @@ Thumbs.db
 # Local env
 .env
 .env.local
+
+# Archive — retired / duplicate files kept locally only
+Archive/
+
+# Legacy site (archived)
+SeptToSolarSense/
+
+# Dev container (archived)
+.devcontainer/
+
+# Internal docs (archived; market_opportunity_analysis.md stays tracked)
+docs/DESIGN.md
+docs/NARRATIVE_CONSISTENCY_ANALYSIS.md
+docs/SOLAR_SENSE_PRO_PAGE.md
+
+# Non-web raw media
+*.HEIC

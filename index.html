@@ -7,7 +7,7 @@
   <title>Solar Sense | Safety and intelligence for decentralized solar energy systems</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=Outfit:wght@500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
   <link rel="icon" href="assets/SolarSensLogo20260315v1.png" type="image/png">
 </head>
@@ -44,8 +44,13 @@
 
   <main>
     <section id="hero" class="section hero">
+      <div class="hero-fx" aria-hidden="true">
+        <div class="hero-spotlight"></div>
+        <canvas class="hero-particles"></canvas>
+      </div>
       <div class="container hero-inner">
         <div class="hero-text">
+          <p class="eyebrow hero-eyebrow" data-en="Panel intelligence platform" data-zh="组件级智能平台">Panel intelligence platform</p>
           <h1 class="hero-title" data-en="The safety and intelligence layer for decentralized solar energy systems." data-zh="面向分布式太阳能系统的安全与智能层。">The safety and intelligence layer for decentralized solar energy systems.</h1>
           <p class="hero-mission" data-en="As solar scales from centralized plants to millions of rooftop and distributed installations, panel-level safety, visibility, and control become critical. Our vision: transform every solar panel into an intelligent, monitored, and controllable energy node." data-zh="随着太阳能从集中式电站走向数百万户用与分布式装机，组件级的安全、可见与可控至关重要。我们的愿景：让每一块光伏组件成为可感知、可监控、可协同的能源节点。">As solar scales from centralized plants to millions of rooftop and distributed installations, panel-level safety, visibility, and control become critical. Our vision: transform every solar panel into an intelligent, monitored, and controllable energy node.</p>
           <p class="hero-sub" data-en="Solar Sense is a hardware and machine learning platform: panel-level voltage, current, and temperature; ML-based fault detection; and integrated safety switching—built to scale across residential, commercial, and research systems." data-zh="Solar Sense 是硬件与机器学习平台：组件级电压、电流与温度；基于机器学习的故障检测；以及集成安全开关——面向户用、工商业与科研场景规模化部署。">Solar Sense is a hardware and machine learning platform: panel-level voltage, current, and temperature; ML-based fault detection; and integrated safety switching—built to scale across residential, commercial, and research systems.</p>
@@ -68,20 +73,21 @@
       </div>
     </section>
 
-    <section id="problem" class="section problem">
+    <section id="problem" class="section problem reveal">
       <div class="container">
+        <p class="eyebrow eyebrow--center" data-en="Why it matters" data-zh="为何重要">Why it matters</p>
         <h2 class="section-title" data-en="The Problem" data-zh="核心问题">The Problem</h2>
         <p class="section-lead" data-en="Decentralized solar is growing fast—but safety, visibility, and control have not kept pace at the panel level." data-zh="分布式光伏快速增长，但组件级的安全、可见性与控制能力仍显不足。">Decentralized solar is growing fast—but safety, visibility, and control have not kept pace at the panel level.</p>
-        <div class="cards three-cols">
-          <article class="card">
+        <div class="cards three-cols reveal-stagger">
+          <article class="card reveal-item">
             <h3 class="card-title" data-en="Safety risks in decentralized solar" data-zh="分布式场景下的安全风险">Safety risks in decentralized solar</h3>
             <p class="card-desc" data-en="Residential and commercial systems often operate at 600V–1,000V DC. When shading, wiring issues, degradation, or hotspots occur, hazards persist for installers, O&M crews, and firefighters—even when the grid is down, panels can continue producing electricity." data-zh="户用与工商业系统常在 600V–1000V 直流下运行。出现遮挡、接线问题、老化或热斑时，安装商、运维与消防员仍面临风险——即使电网断电，组件仍可能持续发电。">Residential and commercial systems often operate at 600V–1,000V DC. When shading, wiring issues, degradation, or hotspots occur, hazards persist for installers, O&M crews, and firefighters—even when the grid is down, panels can continue producing electricity.</p>
           </article>
-          <article class="card">
+          <article class="card reveal-item">
             <h3 class="card-title" data-en="Lack of panel-level visibility" data-zh="缺乏组件级可见性">Lack of panel-level visibility</h3>
             <p class="card-desc" data-en="Most deployments are monitored at system or string level. Teams cannot pinpoint which panel is failing—leading to undetected faults, energy losses, accelerated degradation, and higher maintenance costs." data-zh="多数系统仅在电站或组串层面监控，难以定位故障组件——导致隐性故障、发电损失、加速老化与更高的运维成本。">Most deployments are monitored at system or string level. Teams cannot pinpoint which panel is failing—leading to undetected faults, energy losses, accelerated degradation, and higher maintenance costs.</p>
           </article>
-          <article class="card">
+          <article class="card reveal-item">
             <h3 class="card-title" data-en="Industry gap" data-zh="行业空白">Industry gap</h3>
             <p class="card-desc" data-en="The market still lacks a low-cost, scalable solution that combines panel-level monitoring, real-time fault detection, and active safety control in one platform." data-zh="市场仍缺乏低成本、可规模化、同时具备组件级监控、实时故障检测与主动安全控制的方案。">The market still lacks a low-cost, scalable solution that combines panel-level monitoring, real-time fault detection, and active safety control in one platform.</p>
           </article>
@@ -99,7 +105,7 @@
       </div>
     </section>
 
-    <section id="compliance" class="section compliance">
+    <section id="compliance" class="section compliance reveal">
       <div class="container">
         <h2 class="section-title" data-en="Rapid shutdown is going global" data-zh="快速关断正在走向全球">Rapid shutdown is going global</h2>
         <p class="section-lead" data-en="Regulators and fire-safety stakeholders are pushing module-level visibility and shutdown—creating room for smarter, safer panel intelligence." data-zh="监管机构与消防相关方正推动组件级可见性与关断——为更智能、更安全的组件级方案创造空间。">Regulators and fire-safety stakeholders are pushing module-level visibility and shutdown—creating room for smarter, safer panel intelligence.</p>
@@ -116,7 +122,7 @@
       </div>
     </section>
 
-    <section id="technology" class="section technology">
+    <section id="technology" class="section technology reveal">
       <div class="container">
         <h2 class="section-title" data-en="The Solution — Solar Sense" data-zh="方案 — Solar Sense">The Solution — Solar Sense</h2>
         <p class="section-lead" data-en="A hardware and machine learning platform that delivers panel-level intelligence, predictive diagnostics, and integrated safety." data-zh="硬件与机器学习平台，实现组件级智能、预测性诊断与集成安全。">A hardware and machine learning platform that delivers panel-level intelligence, predictive diagnostics, and integrated safety.</p>
@@ -128,20 +134,20 @@
             <img src="assets/pv-neural-net.png" alt="Neural network approach to PV fault detection" width="600" height="400" loading="lazy">
           </div>
         </div>
-        <div class="cards four-cols capability-cards">
-          <article class="card">
+        <div class="cards four-cols capability-cards reveal-stagger">
+          <article class="card reveal-item">
             <h3 class="card-title" data-en="Panel-level intelligence" data-zh="组件级智能">Panel-level intelligence</h3>
             <p class="card-desc" data-en="Each device measures voltage, current, and temperature for real-time insight into individual panel performance." data-zh="单台设备测量电压、电流与温度，实时掌握每一块组件的表现。">Each device measures voltage, current, and temperature for real-time insight into individual panel performance.</p>
           </article>
-          <article class="card">
+          <article class="card reveal-item">
             <h3 class="card-title" data-en="Machine learning fault detection" data-zh="机器学习故障检测">Machine learning fault detection</h3>
             <p class="card-desc" data-en="Detects shading, hotspots, electrical anomalies, and early-stage degradation—supporting predictive maintenance and less downtime." data-zh="识别遮挡、热斑、电气异常与早期退化，支持预测性维护并减少停机。">Detects shading, hotspots, electrical anomalies, and early-stage degradation—supporting predictive maintenance and less downtime.</p>
           </article>
-          <article class="card">
+          <article class="card reveal-item">
             <h3 class="card-title" data-en="Integrated safety control (MOSFET)" data-zh="集成安全控制（MOSFET）">Integrated safety control (MOSFET)</h3>
             <p class="card-desc" data-en="Switching to shut down a panel quickly, reduce voltage in emergencies, and improve safety for firefighters and technicians." data-zh="通过开关实现快速组件关断、紧急降压，提升消防员与技术员安全。">Switching to shut down a panel quickly, reduce voltage in emergencies, and improve safety for firefighters and technicians.</p>
           </article>
-          <article class="card">
+          <article class="card reveal-item">
             <h3 class="card-title" data-en="Scalable architecture" data-zh="可扩展架构">Scalable architecture</h3>
             <p class="card-desc" data-en="Designed for module-level deployment across residential, commercial, and research systems in decentralized energy architectures." data-zh="面向组件级部署，适配户用、工商业与科研等分布式能源架构。">Designed for module-level deployment across residential, commercial, and research systems in decentralized energy architectures.</p>
           </article>
@@ -159,7 +165,7 @@
       </div>
     </section>
 
-    <section id="demo" class="section demo">
+    <section id="demo" class="section demo reveal">
       <div class="container">
         <h2 class="section-title" data-en="Tour of Solar Sense Lab" data-zh="Solar Sense 实验室参观">Tour of Solar Sense Lab</h2>
         <div class="demo-intro">
@@ -182,7 +188,7 @@
       </div>
     </section>
 
-    <section id="evolution" class="section evolution">
+    <section id="evolution" class="section evolution reveal">
       <div class="container">
         <h2 class="section-title" data-en="Product design" data-zh="产品设计">Product design</h2>
         <p class="section-lead" data-en="Solar Sense is a compact, cable-integrated device installed at the panel level—low-cost hardware, straightforward integration, wireless or wired data, and a path to mass production." data-zh="Solar Sense 为安装在组件侧的紧凑、线缆集成设备——低成本硬件、易集成、无线或有线数据，并具备量产路径。">Solar Sense is a compact, cable-integrated device installed at the panel level—low-cost hardware, straightforward integration, wireless or wired data, and a path to mass production.</p>
@@ -193,7 +199,7 @@
       </div>
     </section>
 
-    <section id="business" class="section business">
+    <section id="business" class="section business reveal">
       <div class="container">
         <h2 class="section-title" data-en="Business model" data-zh="商业模式">Business model</h2>
         <p class="section-lead" data-en="Target pricing brackets and multiple revenue paths as the platform matures." data-zh="目标价位区间与随平台成熟的多条收入路径。">Target pricing brackets and multiple revenue paths as the platform matures.</p>
@@ -220,7 +226,7 @@
       </div>
     </section>
 
-    <section id="roadmap" class="section roadmap">
+    <section id="roadmap" class="section roadmap reveal">
       <div class="container">
         <h2 class="section-title" data-en="Market entry strategy" data-zh="市场进入策略">Market entry strategy</h2>
         <div class="timeline timeline--two">
@@ -246,23 +252,23 @@
       </div>
     </section>
 
-    <section id="advantage" class="section advantage">
+    <section id="advantage" class="section advantage reveal">
       <div class="container">
         <h2 class="section-title" data-en="Competitive advantage" data-zh="竞争优势">Competitive advantage</h2>
-        <div class="cards four-cols">
-          <article class="card">
+        <div class="cards four-cols reveal-stagger">
+          <article class="card reveal-item">
             <h3 class="card-title" data-en="Low cost at scale" data-zh="规模化低成本">Low cost at scale</h3>
             <p class="card-desc" data-en="Architecture and integration choices aim for affordability so large fleets of panels can be instrumented economically." data-zh="架构与集成面向可负担性，使大规模组件布点经济可行。">Architecture and integration choices aim for affordability so large fleets of panels can be instrumented economically.</p>
           </article>
-          <article class="card">
+          <article class="card reveal-item">
             <h3 class="card-title" data-en="Safety plus intelligence" data-zh="安全与智能一体">Safety plus intelligence</h3>
             <p class="card-desc" data-en="Unlike monitor-only or shutdown-only approaches, Solar Sense combines monitoring, ML-based fault detection, and active control." data-zh="不同于仅监控或仅关断方案，Solar Sense 将监控、机器学习检测与主动控制结合。">Unlike monitor-only or shutdown-only approaches, Solar Sense combines monitoring, ML-based fault detection, and active control.</p>
           </article>
-          <article class="card">
+          <article class="card reveal-item">
             <h3 class="card-title" data-en="Machine learning, not rules only" data-zh="机器学习，而非仅靠规则">Machine learning, not rules only</h3>
             <p class="card-desc" data-en="Adaptive models move beyond fixed thresholds to support predictive and evolving diagnostics." data-zh="自适应模型超越固定阈值，支持预测性与持续演进的诊断。">Adaptive models move beyond fixed thresholds to support predictive and evolving diagnostics.</p>
           </article>
-          <article class="card">
+          <article class="card reveal-item">
             <h3 class="card-title" data-en="Built for decentralized energy" data-zh="为分布式能源而生">Built for decentralized energy</h3>
             <p class="card-desc" data-en="Purpose-built for rooftop solar, distributed grids, and microgrids—not a retrofit of central-plant thinking." data-zh="面向屋顶光伏、分布式电网与微电网——而非集中式电站思维的简单移植。">Purpose-built for rooftop solar, distributed grids, and microgrids—not a retrofit of central-plant thinking.</p>
           </article>
@@ -270,7 +276,7 @@
       </div>
     </section>
 
-    <section id="team" class="section team">
+    <section id="team" class="section team reveal">
       <div class="container">
         <h2 class="section-title" data-en="Team" data-zh="团队">Team</h2>
         <div class="team-cards">
@@ -296,12 +302,12 @@
       </div>
     </section>
 
-    <section id="seeking" class="section seeking">
+    <section id="seeking" class="section seeking reveal">
       <div class="container">
         <h2 class="section-title" data-en="Funding and partnerships" data-zh="融资与合作">Funding and partnerships</h2>
         <p class="section-lead" data-en="Current raise: $860K for education and research market entry; $3M roadmap for residential and commercial scale. We are seeking research institutions, pilot partners, manufacturing partners, and strategic investors who share the vision of safer, smarter, more scalable solar." data-zh="当前融资：约 86 万美元用于教育与研究市场切入；约 300 万美元用于户用与工商业规模化。我们寻找科研机构、试点伙伴、制造伙伴与战略投资者，共同推动更安全、更智能、更可扩展的太阳能。">Current raise: $860K for education and research market entry; $3M roadmap for residential and commercial scale. We are seeking research institutions, pilot partners, manufacturing partners, and strategic investors who share the vision of safer, smarter, more scalable solar.</p>
-        <div class="cards three-cols seeking-cards">
-          <article class="card">
+        <div class="cards three-cols seeking-cards reveal-stagger">
+          <article class="card reveal-item">
             <h3 class="card-title" data-en="Research and manufacturing" data-zh="科研与制造">Research and manufacturing</h3>
             <ul>
               <li data-en="Universities and validation labs" data-zh="高校与验证实验室">Universities and validation labs</li>
@@ -309,7 +315,7 @@
               <li data-en="DFM and cost-down collaboration" data-zh="可制造性与降本协作">DFM and cost-down collaboration</li>
             </ul>
           </article>
-          <article class="card">
+          <article class="card reveal-item">
             <h3 class="card-title" data-en="Pilot partners" data-zh="试点伙伴">Pilot partners</h3>
             <ul>
               <li data-en="Training institutions and teaching arrays" data-zh="培训机构与教学电站">Training institutions and teaching arrays</li>
@@ -317,7 +323,7 @@
               <li data-en="O&amp;M workflow integration" data-zh="运维流程集成">O&amp;M workflow integration</li>
             </ul>
           </article>
-          <article class="card">
+          <article class="card reveal-item">
             <h3 class="card-title" data-en="Strategic investors" data-zh="战略投资者">Strategic investors</h3>
             <ul>
               <li data-en="Hard-tech and climate focus" data-zh="硬科技与气候方向">Hard-tech and climate focus</li>
@@ -329,7 +335,7 @@
       </div>
     </section>
 
-    <section id="contact" class="section contact">
+    <section id="contact" class="section contact reveal">
       <div class="container contact-inner">
         <h2 class="contact-headline" data-en="Mission" data-zh="使命">Mission</h2>
         <div class="contact-vision">
@@ -434,5 +440,6 @@
       initSmoothScroll();
     })();
   </script>
+  <script src="assets/motion.js" defer></script>
 </body>
 </html>
