@@ -40,3 +40,6 @@ docs/SOLAR_SENSE_PRO_PAGE.md
 
 # Non-web raw media
 *.HEIC
+
+# Local build tooling (chart generator; output SVGs are tracked)
+tools/

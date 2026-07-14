@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 320" role="img" font-family="'DM Sans', system-ui, sans-serif">
+  <defs>
+    <linearGradient id="goldBar" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#e2c887"/>
+      <stop offset="1" stop-color="#9a7b3c"/>
+    </linearGradient>
+    <linearGradient id="goldBarH" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#9a7b3c"/>
+      <stop offset="1" stop-color="#e2c887"/>
+    </linearGradient>
+    <linearGradient id="areaFill" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#c4a35a" stop-opacity="0.45"/>
+      <stop offset="1" stop-color="#c4a35a" stop-opacity="0.02"/>
+    </linearGradient>
+  </defs>
+  <text x="24" y="30" font-family="'DM Sans', system-ui, sans-serif" font-size="15" font-weight="600" fill="#eceae4">Three-year deployment projection</text>
+  <text x="24" y="48" font-family="'DM Sans', system-ui, sans-serif" font-size="11" fill="#9c9a94">New installs, GW  |  16% CAGR assumption</text>
+  <line x1="56" y1="204.7" x2="452" y2="204.7" stroke="rgba(255,255,255,0.06)" stroke-width="1"/>
+  <text x="46" y="208.7" text-anchor="end" font-size="10" fill="#6b6963">300</text>
+  <line x1="56" y1="141.3" x2="452" y2="141.3" stroke="rgba(255,255,255,0.06)" stroke-width="1"/>
+  <text x="46" y="145.3" text-anchor="end" font-size="10" fill="#6b6963">600</text>
+  <line x1="56" y1="78.0" x2="452" y2="78.0" stroke="rgba(255,255,255,0.06)" stroke-width="1"/>
+  <text x="46" y="82.0" text-anchor="end" font-size="10" fill="#6b6963">900</text>
+  <path d="M 56.0 268 L 56.0 151.3 L 188.0 132.7 L 320.0 111.1 L 452.0 86.0 L 452.0 268 Z" fill="url(#areaFill)"/>
+  <path d="M 56.0 151.3 L 188.0 132.7 L 320.0 111.1 L 452.0 86.0" fill="none" stroke="#e2c887" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+  <circle cx="56.0" cy="151.3" r="4.5" fill="#e2c887" stroke="#0c0c0f" stroke-width="1.5"/>
+  <text x="56.0" y="139.3" text-anchor="middle" font-size="11.5" font-weight="600" fill="#eceae4">553</text>
+  <text x="56.0" y="288" text-anchor="middle" font-size="11.5" fill="#9c9a94">2024</text>
+  <circle cx="188.0" cy="132.7" r="4.5" fill="#e2c887" stroke="#0c0c0f" stroke-width="1.5"/>
+  <text x="188.0" y="120.7" text-anchor="middle" font-size="11.5" font-weight="600" fill="#eceae4">641</text>
+  <text x="188.0" y="288" text-anchor="middle" font-size="11.5" fill="#9c9a94">2025</text>
+  <circle cx="320.0" cy="111.1" r="4.5" fill="#e2c887" stroke="#0c0c0f" stroke-width="1.5"/>
+  <text x="320.0" y="99.1" text-anchor="middle" font-size="11.5" font-weight="600" fill="#eceae4">743</text>
+  <text x="320.0" y="288" text-anchor="middle" font-size="11.5" fill="#9c9a94">2026</text>
+  <circle cx="452.0" cy="86.0" r="4.5" fill="#e2c887" stroke="#0c0c0f" stroke-width="1.5"/>
+  <text x="452.0" y="74.0" text-anchor="middle" font-size="11.5" font-weight="600" fill="#eceae4">862</text>
+  <text x="452.0" y="288" text-anchor="middle" font-size="11.5" fill="#9c9a94">2027</text>
+</svg>
