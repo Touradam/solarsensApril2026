@@ -1431,11 +1431,11 @@ h1, h2, h3, h4, h5, h6,
   width: auto;
   max-width: 7.5rem;
   padding: 0.25rem 0.45rem;
-  background: #fff;
-  border-radius: var(--radius-sm);
+  background: transparent;
+  border: none;
   object-fit: contain;
   opacity: 0.95;
-  box-shadow: var(--shadow-sm);
+  filter: drop-shadow(0 3px 8px rgba(0, 0, 0, 0.35));
 }
 
 .footer-copy {
