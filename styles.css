@@ -1460,26 +1460,35 @@ h1, h2, h3, h4, h5, h6,
   text-decoration: underline;
 }
 
-/* Compact full-width link panel on tablets */
-@media (min-width: 640px) and (max-width: 900px) {
+/* Full-width swipeable link strip on tablets and phones */
+@media (max-width: 900px) {
+  .nav-inner {
+    flex-wrap: wrap;
+    row-gap: var(--space-sm);
+  }
+
   .nav-links {
     display: flex;
     order: 3;
     width: 100%;
-    justify-content: center;
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    overflow-x: auto;
+    overscroll-behavior-inline: contain;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+    padding-bottom: 0.15rem;
+    -webkit-mask-image: linear-gradient(to right, transparent 0, #000 14px, #000 calc(100% - 14px), transparent 100%);
+    mask-image: linear-gradient(to right, transparent 0, #000 14px, #000 calc(100% - 14px), transparent 100%);
   }
 
-  .nav-inner {
-    flex-wrap: wrap;
+  .nav-links a {
+    flex: 0 0 auto;
+    white-space: nowrap;
   }
 }
 
 @media (max-width: 639px) {
-  .nav-inner {
-    flex-wrap: wrap;
-    gap: var(--space-sm);
-  }
-
   .nav-actions {
     width: 100%;
     justify-content: space-between;
