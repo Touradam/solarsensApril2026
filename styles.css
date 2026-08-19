@@ -1071,7 +1071,9 @@ h1, h2, h3, h4, h5, h6,
 .team-card,
 .timeline-phase,
 .timeline-card,
-.journey-stat {
+.journey-stat,
+.chart-card,
+.metric-card {
   position: relative;
   overflow: hidden;
 }
@@ -1081,7 +1083,9 @@ h1, h2, h3, h4, h5, h6,
 .team-card::before,
 .timeline-phase::before,
 .timeline-card::before,
-.journey-stat::before {
+.journey-stat::before,
+.chart-card::before,
+.metric-card::before {
   content: '';
   position: absolute;
   inset: 0;
@@ -1101,7 +1105,9 @@ h1, h2, h3, h4, h5, h6,
 .team-card::after,
 .timeline-phase::after,
 .timeline-card::after,
-.journey-stat::after {
+.journey-stat::after,
+.chart-card::after,
+.metric-card::after {
   content: '';
   position: absolute;
   inset: 0;
@@ -1127,12 +1133,16 @@ h1, h2, h3, h4, h5, h6,
 .timeline-phase:hover::before,
 .timeline-card:hover::before,
 .journey-stat:hover::before,
+.chart-card:hover::before,
+.metric-card:hover::before,
 .card:hover::after,
 .pricing-card:hover::after,
 .team-card:hover::after,
 .timeline-phase:hover::after,
 .timeline-card:hover::after,
-.journey-stat:hover::after {
+.journey-stat:hover::after,
+.chart-card:hover::after,
+.metric-card:hover::after {
   opacity: 1;
 }
 

@@ -314,7 +314,7 @@
   /* 3D tilt + cursor-tracked glow coordinates (CSS paints the spotlight). */
   function initTilt() {
     var tiltEls = document.querySelectorAll(
-      '[data-tilt], .card, .team-card, .pricing-card, .timeline-phase, .timeline-card, .journey-stat'
+      '[data-tilt], .card, .team-card, .pricing-card, .timeline-phase, .timeline-card, .journey-stat, .chart-card, .metric-card'
     );
 
     tiltEls.forEach(function (el) {
@@ -442,23 +442,47 @@
     map.forEach(function (item) { observer.observe(item.section); });
   }
 
-  /* Count up numeric figures (pricing, journey stats) when they enter view. */
+  /* Count up numeric figures (pricing, journey stats, metric cards) in view. */
   function initCounters() {
-    var els = document.querySelectorAll('.pricing-amount, .journey-stat-num');
+    var els = document.querySelectorAll('.pricing-amount, .journey-stat-num, [data-count]');
     if (!els.length || !('IntersectionObserver' in window)) return;
 
     var items = [];
     els.forEach(function (el) {
+      if (el.hasAttribute('data-count')) {
+        var target = parseFloat(el.getAttribute('data-count'));
+        if (isNaN(target)) return;
+        items.push({
+          el: el,
+          prefix: el.getAttribute('data-prefix') || '',
+          suffix: el.getAttribute('data-suffix') || '',
+          decimals: parseInt(el.getAttribute('data-decimals') || '0', 10),
+          target: target
+        });
+        return;
+      }
       var match = el.textContent.match(/^([^\d]*)(\d+)([^\d]*)$/);
       if (!match) return;
       items.push({
         el: el,
         prefix: match[1],
         target: parseInt(match[2], 10),
-        suffix: match[3]
+        suffix: match[3],
+        decimals: 0
       });
     });
     if (!items.length) return;
+
+    function format(item, value) {
+      var num;
+      if (item.decimals > 0) {
+        num = value.toFixed(item.decimals);
+      } else {
+        num = Math.round(value);
+        if (num >= 1000) num = num.toLocaleString('en-US');
+      }
+      return item.prefix + num + item.suffix;
+    }
 
     function animate(item) {
       var duration = 1200;
@@ -468,12 +492,12 @@
         if (!start) start = ts;
         var t = Math.min((ts - start) / duration, 1);
         var eased = 1 - Math.pow(1 - t, 3);
-        item.el.textContent = item.prefix + Math.round(item.target * eased) + item.suffix;
+        item.el.textContent = format(item, item.target * eased);
         if (t < 1) requestAnimationFrame(step);
       }
 
       if (reduced) {
-        item.el.textContent = item.prefix + item.target + item.suffix;
+        item.el.textContent = format(item, item.target);
         return;
       }
       requestAnimationFrame(step);
