@@ -938,6 +938,77 @@ h1, h2, h3, h4, h5, h6,
   margin: 0;
 }
 
+/* Cursor spotlight glow — coordinates fed by motion.js */
+.card,
+.pricing-card,
+.team-card,
+.timeline-phase,
+.timeline-card,
+.journey-stat {
+  position: relative;
+  overflow: hidden;
+}
+
+.card::before,
+.pricing-card::before,
+.team-card::before,
+.timeline-phase::before,
+.timeline-card::before,
+.journey-stat::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: radial-gradient(
+    340px circle at var(--glow-x, 50%) var(--glow-y, -20%),
+    rgba(196, 163, 90, 0.13),
+    transparent 65%
+  );
+  opacity: 0;
+  transition: opacity var(--duration-normal) var(--ease-standard);
+  pointer-events: none;
+}
+
+.card::after,
+.pricing-card::after,
+.team-card::after,
+.timeline-phase::after,
+.timeline-card::after,
+.journey-stat::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1px;
+  background: radial-gradient(
+    190px circle at var(--glow-x, 50%) var(--glow-y, -20%),
+    rgba(226, 200, 135, 0.55),
+    transparent 70%
+  );
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  opacity: 0;
+  transition: opacity var(--duration-normal) var(--ease-standard);
+  pointer-events: none;
+}
+
+.card:hover::before,
+.pricing-card:hover::before,
+.team-card:hover::before,
+.timeline-phase:hover::before,
+.timeline-card:hover::before,
+.journey-stat:hover::before,
+.card:hover::after,
+.pricing-card:hover::after,
+.team-card:hover::after,
+.timeline-phase:hover::after,
+.timeline-card:hover::after,
+.journey-stat:hover::after {
+  opacity: 1;
+}
+
 /* Compliance */
 .compliance-layout {
   display: grid;

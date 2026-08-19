@@ -311,20 +311,53 @@
     });
   }
 
+  /* 3D tilt + cursor-tracked glow coordinates (CSS paints the spotlight). */
   function initTilt() {
-    if (reduced) return;
-    var tiltEls = document.querySelectorAll('[data-tilt], .card, .team-card, .pricing-card, .timeline-phase');
+    var tiltEls = document.querySelectorAll(
+      '[data-tilt], .card, .team-card, .pricing-card, .timeline-phase, .timeline-card, .journey-stat'
+    );
 
     tiltEls.forEach(function (el) {
       el.addEventListener('mousemove', function (e) {
         var rect = el.getBoundingClientRect();
-        var x = (e.clientX - rect.left) / rect.width - 0.5;
-        var y = (e.clientY - rect.top) / rect.height - 0.5;
-        el.style.transform = 'perspective(800px) rotateX(' + (-y * 4) + 'deg) rotateY(' + (x * 4) + 'deg) translateY(-4px)';
+        var px = e.clientX - rect.left;
+        var py = e.clientY - rect.top;
+        el.style.setProperty('--glow-x', px + 'px');
+        el.style.setProperty('--glow-y', py + 'px');
+        if (reduced) return;
+        var x = px / rect.width - 0.5;
+        var y = py / rect.height - 0.5;
+        el.style.transform =
+          'perspective(900px) rotateX(' + (-y * 5) + 'deg) rotateY(' + (x * 5) +
+          'deg) translateY(-4px)';
       });
 
       el.addEventListener('mouseleave', function () {
         el.style.transform = '';
+      });
+    });
+  }
+
+  /* Primary CTAs gently gravitate toward the cursor. */
+  function initMagneticButtons() {
+    if (reduced) return;
+    if (window.matchMedia('(hover: none)').matches) return;
+
+    document.querySelectorAll('.btn-primary').forEach(function (btn) {
+      var strength = 0.22;
+      var max = 7;
+
+      btn.addEventListener('mousemove', function (e) {
+        var rect = btn.getBoundingClientRect();
+        var dx = e.clientX - (rect.left + rect.width / 2);
+        var dy = e.clientY - (rect.top + rect.height / 2);
+        var tx = Math.max(-max, Math.min(max, dx * strength));
+        var ty = Math.max(-max, Math.min(max, dy * strength));
+        btn.style.transform = 'translate(' + tx.toFixed(1) + 'px, ' + ty.toFixed(1) + 'px)';
+      });
+
+      btn.addEventListener('mouseleave', function () {
+        btn.style.transform = '';
       });
     });
   }
@@ -349,5 +382,6 @@
   initNeuralMesh();
   initHeroDepth();
   initTilt();
+  initMagneticButtons();
   initFocusRings();
 })();
