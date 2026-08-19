@@ -362,6 +362,135 @@
     });
   }
 
+  /* Scroll progress bar, nav auto-hide, back-to-top — one throttled listener. */
+  function initScrollUI() {
+    var nav = document.querySelector('.nav');
+
+    var progress = document.createElement('div');
+    progress.className = 'scroll-progress';
+    progress.setAttribute('aria-hidden', 'true');
+    document.body.appendChild(progress);
+
+    var top = document.createElement('button');
+    top.type = 'button';
+    top.className = 'back-to-top';
+    top.setAttribute('aria-label', 'Back to top');
+    top.innerHTML = '<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 19V5"/><path d="m5 12 7-7 7 7"/></svg>';
+    document.body.appendChild(top);
+
+    top.addEventListener('click', function () {
+      window.scrollTo({ top: 0, behavior: reduced ? 'auto' : 'smooth' });
+    });
+
+    var lastY = window.scrollY;
+    var ticking = false;
+
+    function update() {
+      ticking = false;
+      var y = window.scrollY;
+      var max = document.documentElement.scrollHeight - window.innerHeight;
+      var ratio = max > 0 ? y / max : 0;
+      progress.style.transform = 'scaleX(' + ratio.toFixed(4) + ')';
+
+      top.classList.toggle('is-visible', y > 600);
+
+      if (nav) {
+        var goingDown = y > lastY && y > 220;
+        nav.classList.toggle('nav--hidden', goingDown);
+      }
+      lastY = y;
+    }
+
+    window.addEventListener('scroll', function () {
+      if (!ticking) {
+        ticking = true;
+        requestAnimationFrame(update);
+      }
+    }, { passive: true });
+
+    update();
+  }
+
+  /* Highlight the nav link for the section currently in view. */
+  function initScrollspy() {
+    var links = Array.prototype.slice.call(
+      document.querySelectorAll('.nav-links a[href^="#"]')
+    );
+    if (!links.length || !('IntersectionObserver' in window)) return;
+
+    var map = [];
+    links.forEach(function (link) {
+      var section = document.querySelector(link.getAttribute('href'));
+      if (section) map.push({ link: link, section: section });
+    });
+    if (!map.length) return;
+
+    function setActive(activeLink) {
+      links.forEach(function (link) {
+        link.classList.toggle('nav-current', link === activeLink);
+      });
+    }
+
+    var observer = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (!entry.isIntersecting) return;
+        var hit = map.filter(function (item) { return item.section === entry.target; })[0];
+        if (hit) setActive(hit.link);
+      });
+    }, { rootMargin: '-35% 0px -55% 0px' });
+
+    map.forEach(function (item) { observer.observe(item.section); });
+  }
+
+  /* Count up numeric figures (pricing, journey stats) when they enter view. */
+  function initCounters() {
+    var els = document.querySelectorAll('.pricing-amount, .journey-stat-num');
+    if (!els.length || !('IntersectionObserver' in window)) return;
+
+    var items = [];
+    els.forEach(function (el) {
+      var match = el.textContent.match(/^([^\d]*)(\d+)([^\d]*)$/);
+      if (!match) return;
+      items.push({
+        el: el,
+        prefix: match[1],
+        target: parseInt(match[2], 10),
+        suffix: match[3]
+      });
+    });
+    if (!items.length) return;
+
+    function animate(item) {
+      var duration = 1200;
+      var start = null;
+
+      function step(ts) {
+        if (!start) start = ts;
+        var t = Math.min((ts - start) / duration, 1);
+        var eased = 1 - Math.pow(1 - t, 3);
+        item.el.textContent = item.prefix + Math.round(item.target * eased) + item.suffix;
+        if (t < 1) requestAnimationFrame(step);
+      }
+
+      if (reduced) {
+        item.el.textContent = item.prefix + item.target + item.suffix;
+        return;
+      }
+      requestAnimationFrame(step);
+    }
+
+    var observer = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (!entry.isIntersecting) return;
+        observer.unobserve(entry.target);
+        var item = items.filter(function (i) { return i.el === entry.target; })[0];
+        if (item) animate(item);
+      });
+    }, { threshold: 0.6 });
+
+    items.forEach(function (item) { observer.observe(item.el); });
+  }
+
   function initFocusRings() {
     /* CSS handles focus-visible; ensure keyboard users see sections after nav */
     document.querySelectorAll('a[href^="#"]').forEach(function (link) {
@@ -383,5 +512,8 @@
   initHeroDepth();
   initTilt();
   initMagneticButtons();
+  initScrollUI();
+  initScrollspy();
+  initCounters();
   initFocusRings();
 })();
