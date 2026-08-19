@@ -391,6 +391,7 @@
           btn.setAttribute('aria-pressed', isActive);
         });
         document.documentElement.lang = lang === 'zh' ? 'zh-CN' : 'en';
+        document.dispatchEvent(new CustomEvent('solarsense:langchange'));
       }
 
       function initToggle() {
