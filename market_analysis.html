@@ -11,12 +11,72 @@
   <link rel="icon" href="assets/SolarSensLogo20260315v1.png" type="image/png">
   <style>
     .analysis-page .container { max-width: 900px; }
-    .analysis-hero { padding: var(--section-padding) 0 var(--space-2xl); border-bottom: 1px solid var(--border); }
-    .analysis-hero h1 { font-size: clamp(1.5rem, 4vw, 2rem); margin: 0 0 var(--space-sm); color: var(--text-primary); }
+    .analysis-hero { position: relative; overflow: hidden; padding: var(--section-padding) 0 var(--space-2xl); border-bottom: 1px solid var(--border); }
+    .analysis-hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      background:
+        radial-gradient(ellipse 55% 65% at 88% -10%, rgba(196, 163, 90, 0.09), transparent 60%);
+    }
+    .analysis-hero .container { position: relative; }
+    .analysis-hero h1 { font-size: clamp(1.75rem, 4vw, 2.35rem); margin: 0 0 var(--space-sm); color: var(--text-primary); letter-spacing: -0.025em; }
     .analysis-hero p { color: var(--text-secondary); margin: 0; font-size: 0.95rem; }
     .analysis-hero .analysis-hero-snapshot { margin-top: var(--space-md); font-size: 0.9rem; color: var(--text-muted); max-width: 48rem; line-height: 1.55; }
+    .metrics-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: var(--space-md);
+      margin-top: var(--space-xl);
+      list-style: none;
+      padding: 0;
+    }
+    @media (min-width: 768px) {
+      .metrics-grid { grid-template-columns: repeat(4, 1fr); }
+    }
+    .metric-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: var(--space-lg);
+      box-shadow: var(--shadow-sm);
+      transform-style: preserve-3d;
+      will-change: transform;
+      transition:
+        border-color var(--duration-normal) var(--ease-standard),
+        box-shadow var(--duration-normal) var(--ease-standard);
+    }
+    .metric-card:hover { border-color: var(--border-gold); box-shadow: var(--shadow-md); }
+    .metric-num {
+      font-family: var(--font-display);
+      font-size: clamp(1.5rem, 3vw, 1.9rem);
+      font-weight: 800;
+      color: var(--gold-light);
+      letter-spacing: -0.02em;
+      line-height: 1.1;
+      margin: 0 0 var(--space-xs);
+      font-variant-numeric: tabular-nums;
+    }
+    .metric-label { font-size: 0.8125rem; color: var(--text-dim); margin: 0; line-height: 1.45; }
     .markdown-body { padding: var(--space-2xl) 0; }
-    .markdown-body h2 { font-size: 1.35rem; margin: var(--space-3xl) 0 var(--space-lg); color: var(--accent-gold); border-bottom: 1px solid var(--border); padding-bottom: var(--space-sm); }
+    .markdown-body h2 {
+      font-size: 1.35rem;
+      margin: var(--space-3xl) 0 var(--space-lg);
+      color: var(--accent-gold);
+      border-bottom: 1px solid var(--border);
+      padding-bottom: var(--space-sm);
+      position: relative;
+    }
+    .markdown-body h2::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      bottom: -1px;
+      width: 4rem;
+      height: 1px;
+      background: linear-gradient(90deg, var(--gold), transparent);
+    }
     .markdown-body h2:first-child { margin-top: 0; }
     .markdown-body h3 { font-size: 1.1rem; margin: var(--space-xl) 0 var(--space-md); color: var(--text-primary); }
     .markdown-body p, .markdown-body li { color: var(--text-secondary); margin-bottom: var(--space-sm); line-height: 1.65; }
@@ -24,26 +84,94 @@
     .markdown-body em { color: var(--text-muted); }
     .markdown-body ul, .markdown-body ol { padding-left: 1.5rem; margin-bottom: var(--space-lg); }
     .markdown-body hr { border: none; border-top: 1px solid var(--border); margin: var(--space-2xl) 0; }
-    .markdown-body table { width: 100%; border-collapse: collapse; margin: var(--space-lg) 0; font-size: 0.9rem; overflow-x: auto; display: block; }
-    .markdown-body th, .markdown-body td { border: 1px solid var(--border); padding: var(--space-sm) var(--space-md); text-align: left; color: var(--text-secondary); }
-    .markdown-body th { background: var(--bg-card); color: var(--text-primary); font-weight: 600; }
+    .markdown-body table {
+      width: 100%;
+      border-collapse: separate;
+      border-spacing: 0;
+      margin: var(--space-lg) 0;
+      font-size: 0.9rem;
+      overflow-x: auto;
+      display: block;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      background: rgba(24, 24, 31, 0.45);
+      box-shadow: var(--shadow-sm);
+    }
+    .markdown-body th, .markdown-body td { border: none; border-bottom: 1px solid var(--border); padding: var(--space-sm) var(--space-md); text-align: left; color: var(--text-secondary); }
+    .markdown-body th {
+      background: linear-gradient(135deg, rgba(196, 163, 90, 0.12), rgba(196, 163, 90, 0.04));
+      color: var(--gold-light);
+      font-weight: 600;
+      border-bottom: 1px solid var(--border-gold);
+      white-space: nowrap;
+    }
+    .markdown-body tbody tr:last-child td { border-bottom: none; }
     .markdown-body tr:nth-child(even) { background: rgba(255,255,255,0.02); }
+    .markdown-body tbody tr { transition: background var(--duration-fast) var(--ease-standard); }
+    .markdown-body tbody tr:hover { background: rgba(196, 163, 90, 0.06); }
     .markdown-body blockquote { border-left: 3px solid var(--accent-gold); margin: var(--space-lg) 0; padding-left: var(--space-lg); color: var(--text-muted); }
     .markdown-loading { padding: var(--space-3xl); text-align: center; color: var(--text-muted); }
     .markdown-error { padding: var(--space-lg); background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); color: var(--text-secondary); }
     .charts-section { padding: var(--space-2xl) 0; border-bottom: 1px solid var(--border); opacity: 1; animation: none; }
     .charts-section h2 { font-size: 1.35rem; margin: 0 0 var(--space-sm); color: var(--accent-gold); }
     .charts-intro { font-size: 0.9375rem; color: var(--text-secondary); margin: 0 0 var(--space-2xl); }
-    .charts-story { max-width: 720px; }
-    .chart-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: var(--space-lg); }
+    .charts-story { max-width: 720px; counter-reset: beat; }
+    .chart-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: var(--space-lg);
+      transform-style: preserve-3d;
+      will-change: transform;
+      transition:
+        border-color var(--duration-normal) var(--ease-standard),
+        box-shadow var(--duration-normal) var(--ease-standard);
+    }
+    .chart-card:hover { border-color: var(--border-gold); box-shadow: var(--shadow-md); }
     .chart-card h3 { font-size: 0.9375rem; margin: 0 0 var(--space-md); color: var(--text-primary); font-weight: 600; }
     .chart-card .chart-wrap { position: relative; width: 100%; height: 280px; display: flex; align-items: center; justify-content: center; overflow: hidden; }
     .chart-card .chart-wrap.tall { height: 300px; }
-    .chart-card .chart-wrap img { max-width: 100%; max-height: 100%; width: auto; height: auto; object-fit: contain; display: block; border-radius: var(--radius-sm); }
+    .chart-card .chart-wrap img {
+      max-width: 100%; max-height: 100%; width: auto; height: auto; object-fit: contain; display: block;
+      border-radius: var(--radius-sm);
+      transition: transform var(--duration-slow) var(--ease-standard);
+    }
+    .chart-card:hover .chart-wrap img { transform: scale(1.03); }
     .story-chart-block { margin-bottom: var(--space-3xl); }
     .story-chart-block:last-child { margin-bottom: 0; }
     .story-beat { margin-bottom: var(--space-lg); }
-    .story-headline { font-size: 1.1rem; margin: 0 0 var(--space-sm); color: var(--accent-gold); font-weight: 600; }
+    .story-headline {
+      position: relative;
+      font-size: 1.1rem;
+      margin: 0 0 var(--space-sm);
+      color: var(--accent-gold);
+      font-weight: 600;
+      padding-left: 2.75rem;
+      min-height: 2rem;
+      display: flex;
+      align-items: center;
+    }
+    .story-headline::before {
+      counter-increment: beat;
+      content: counter(beat, decimal-leading-zero);
+      position: absolute;
+      left: 0;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 2rem;
+      height: 2rem;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-display);
+      font-size: 0.8125rem;
+      font-weight: 700;
+      color: var(--gold-light);
+      border: 1px solid var(--border-gold);
+      border-radius: 9px;
+      background: rgba(196, 163, 90, 0.07);
+      box-shadow: 0 0 12px rgba(196, 163, 90, 0.1);
+    }
     .story-narrative { font-size: 0.9375rem; color: var(--text-secondary); line-height: 1.65; margin: 0; max-width: 52ch; }
   </style>
 </head>
@@ -81,16 +209,35 @@
   <main>
     <section class="section analysis-hero">
       <div class="container">
+        <p class="eyebrow" data-en="Market intelligence" data-zh="市场情报">Market intelligence</p>
         <h1 data-en="Solar Sense — Market opportunity" data-zh="Solar Sense — 市场机遇">Solar Sense — Market opportunity</h1>
         <p data-en="Safety and intelligence for decentralized solar—hardware, machine learning, and panel-level monitoring, fault detection, and active control." data-zh="分布式太阳能的安全与智能——硬件、机器学习，以及组件级监控、故障检测与主动控制。">Safety and intelligence for decentralized solar—hardware, machine learning, and panel-level monitoring, fault detection, and active control.</p>
         <p class="analysis-hero-snapshot" data-en="Pricing targets: ~$21 production cost, ~$37 residential and commercial retail, ~$200 education and research SKU (Solar Sense Pro). Go-to-market funding: ~$860K (Phase 1 — product development and research market entry, 2025-2027) → ~$3M (Phase 2 — research expansion and commercial market entry, 2028-2029)." data-zh="定价目标：约 21 美元生产成本、约 37 美元户用/工商业零售、约 200 美元教育与研究版本（Solar Sense Pro）。市场进入资金：约 86 万美元（第一阶段——产品开发与研究市场进入，2025-2027年）→ 约 300 万美元（第二阶段——研究扩展与商业市场进入，2028-2029年）。">Pricing targets: ~$21 production cost, ~$37 residential and commercial retail, ~$200 education and research SKU (Solar Sense Pro). Go-to-market funding: ~$860K (Phase 1 — product development and research market entry, 2025-2027) → ~$3M (Phase 2 — research expansion and commercial market entry, 2028-2029).</p>
+        <ul class="metrics-grid reveal-stagger">
+          <li class="metric-card reveal-item">
+            <p class="metric-num" data-count="553" data-suffix=" GW">553 GW</p>
+            <p class="metric-label" data-en="2024 global new installations" data-zh="2024 年全球新增装机">2024 global new installations</p>
+          </li>
+          <li class="metric-card reveal-item">
+            <p class="metric-num" data-count="16" data-suffix="%">16%</p>
+            <p class="metric-label" data-en="Assumed annual growth (CAGR)" data-zh="假设年复合增长率（CAGR）">Assumed annual growth (CAGR)</p>
+          </li>
+          <li class="metric-card reveal-item">
+            <p class="metric-num" data-count="37" data-prefix="$">$37</p>
+            <p class="metric-label" data-en="Hardware ASP anchor per module" data-zh="每组件硬件 ASP 锚点">Hardware ASP anchor per module</p>
+          </li>
+          <li class="metric-card reveal-item">
+            <p class="metric-num" data-count="1.7" data-prefix="$" data-suffix="B" data-decimals="1">$1.7B</p>
+            <p class="metric-label" data-en="Year-1 SaaS TAM (new installs)" data-zh="首年 SaaS TAM（仅新增装机）">Year-1 SaaS TAM (new installs)</p>
+          </li>
+        </ul>
       </div>
     </section>
     <section class="section charts-section">
       <div class="container">
         <p class="charts-intro" data-en="Global deployment, panel-level safety and intelligence context, hardware and SaaS economics at the $37 retail anchor, and why modest adoption still implies a large TAM—five charts." data-zh="全球装机、组件级安全与智能背景、以 37 美元零售价为锚的硬件与 SaaS 经济学，以及温和渗透率下仍可支撑可观 TAM——五张图。">Global deployment, panel-level safety and intelligence context, hardware and SaaS economics at the $37 retail anchor, and why modest adoption still implies a large TAM—five charts.</p>
         <div class="charts-story">
-          <div class="story-chart-block">
+          <div class="story-chart-block reveal">
             <div class="story-beat">
               <h3 class="story-headline" data-en="The market is large and split across segments" data-zh="市场规模大且按场景分布">The market is large and split across segments</h3>
               <p class="story-narrative" data-en="In 2024, global new solar installations reached 553 GW. Utility-scale accounts for 62%; distributed (residential and C&I) makes up the rest. This mix defines where module-level intelligence can add the most value." data-zh="2024年全球新增光伏装机约553 GW。集中式占62%，分布式（户用与工商业）占其余。这一结构决定了组件级智能可创造最大价值的场景。">In 2024, global new solar installations reached 553 GW. Utility-scale accounts for 62%; distributed (residential and C&I) makes up the rest. This mix defines where module-level intelligence can add the most value.</p>
@@ -99,7 +246,7 @@
               <div class="chart-wrap"><img src="assets/charts/segment.svg" alt="Global deployment by segment (2024, GW)" width="480" height="320" loading="lazy" /></div>
             </div>
           </div>
-          <div class="story-chart-block">
+          <div class="story-chart-block reveal">
             <div class="story-beat">
               <h3 class="story-headline" data-en="China leads; global deployment is diversified" data-zh="中国领先，全球装机分布多元">China leads; global deployment is diversified</h3>
               <p class="story-narrative" data-en="China represents about 60% of 2024 deployment. Europe, the US, India, and the rest of the world add a diversified base. For Solar Sense, this means a clear China opportunity plus multiple pilot and scale markets." data-zh="中国约占2024年装机的60%。欧洲、美国、印度及其他地区构成多元市场。对 Solar Sense 而言，既存在明确的中国机遇，也有多国试点与规模化空间。">China represents about 60% of 2024 deployment. Europe, the US, India, and the rest of the world add a diversified base. For Solar Sense, this means a clear China opportunity plus multiple pilot and scale markets.</p>
@@ -108,7 +255,7 @@
               <div class="chart-wrap"><img src="assets/charts/markets.svg" alt="Top 5 markets by deployment (2024, GW)" width="480" height="320" loading="lazy" /></div>
             </div>
           </div>
-          <div class="story-chart-block">
+          <div class="story-chart-block reveal">
             <div class="story-beat">
               <h3 class="story-headline" data-en="Growth is strong—the pipeline is expanding" data-zh="增长强劲，装机 pipeline 持续扩大">Growth is strong—the pipeline is expanding</h3>
               <p class="story-narrative" data-en="At an assumed 16% CAGR, new installations rise from 553 GW (2024) to about 862 GW (2027). More modules each year mean a growing addressable market for hardware and SaaS." data-zh="在16%年复合增长率假设下，年新增装机从553 GW（2024）增至约862 GW（2027）。每年更多组件意味着硬件与 SaaS 的可触达市场持续扩大。">At an assumed 16% CAGR, new installations rise from 553 GW (2024) to about 862 GW (2027). More modules each year mean a growing addressable market for hardware and SaaS.</p>
@@ -117,7 +264,7 @@
               <div class="chart-wrap"><img src="assets/charts/projection.svg" alt="3-year projection (GW)" width="480" height="320" loading="lazy" /></div>
             </div>
           </div>
-          <div class="story-chart-block">
+          <div class="story-chart-block reveal">
             <div class="story-beat">
               <h3 class="story-headline" data-en="Revenue scales with adoption—even low penetration matters" data-zh="收入随渗透率提升而放大，低渗透率亦有意义">Revenue scales with adoption—even low penetration matters</h3>
               <p class="story-narrative" data-en="At $37 per module, 0.5–1% adoption already implies hundreds of millions in annual revenue (global or China-only). At 2–5%, the opportunity reaches billions. The chart shows why modest, credible adoption targets support a strong TAM story." data-zh="在每组件37美元假设下，0.5%–1%的渗透率即对应数亿美元年收入（全球或仅中国）。2%–5%时机会达数十亿。图表说明为何适度、可实现的渗透率目标即可支撑可观的 TAM 叙事。">At $37 per module, 0.5–1% adoption already implies hundreds of millions in annual revenue (global or China-only). At 2–5%, the opportunity reaches billions. The chart shows why modest, credible adoption targets support a strong TAM story.</p>
@@ -126,7 +273,7 @@
               <div class="chart-wrap tall"><img src="assets/charts/revenue.svg" alt="Revenue scenarios by adoption rate" width="480" height="320" loading="lazy" /></div>
             </div>
           </div>
-          <div class="story-chart-block">
+          <div class="story-chart-block reveal">
             <div class="story-beat">
               <h3 class="story-headline" data-en="A realistic path: 1% adoption drives hardware and recurring SaaS" data-zh="现实路径：1%渗透率驱动硬件与 recurring SaaS">A realistic path: 1% adoption drives hardware and recurring SaaS</h3>
               <p class="story-narrative" data-en="In a 1% adoption scenario, hardware revenue grows with the market each year. SaaS from prior-year installs builds the recurring base; by years 4–5, recurring revenue inflects. This is the story of how hardware plus software creates a durable business." data-zh="在1%渗透率情景下，硬件收入随市场逐年增长；往年安装带来的 SaaS 构筑经常性收入基础，到第4–5年 recurring 收入拐点出现。这正是“硬件+软件”构建可持续业务的故事。">In a 1% adoption scenario, hardware revenue grows with the market each year. SaaS from prior-year installs builds the recurring base; by years 4–5, recurring revenue inflects. This is the story of how hardware plus software creates a durable business.</p>
@@ -576,6 +723,9 @@ All tables in this document are suitable for export to slides or appendix; sourc
         if (typeof marked !== 'undefined') {
           marked.setOptions({ gfm: true, breaks: true });
           contentEl.innerHTML = marked.parse(md);
+          contentEl.querySelectorAll('h2').forEach(function (el) {
+            el.classList.add('reveal-item');
+          });
         } else {
           contentEl.innerHTML = '<p class="markdown-error">Markdown renderer not loaded.</p>';
         }
