@@ -515,6 +515,105 @@
     items.forEach(function (item) { observer.observe(item.el); });
   }
 
+  /* Hero flip card: auto-cycle + hover/click to reveal hardware render. */
+  function initHeroFlip() {
+    var flip = document.querySelector('.hero-flip');
+    if (!flip) return;
+
+    var flipped = false;
+    var paused = false;
+    var autoTimer = null;
+    var resumeTimer = null;
+    var flipTimer = null;
+    var AUTO_MS = 5200;
+    var FLIP_MS = 950;
+
+    function setFlipped(state) {
+      flipped = state;
+      flip.classList.toggle('is-flipped', flipped);
+      flip.setAttribute('aria-pressed', flipped ? 'true' : 'false');
+    }
+
+    function pulseFlip() {
+      flip.classList.add('is-flipping');
+      if (flipTimer) clearTimeout(flipTimer);
+      flipTimer = setTimeout(function () {
+        flip.classList.remove('is-flipping');
+      }, FLIP_MS);
+    }
+
+    function toggle() {
+      setFlipped(!flipped);
+      pulseFlip();
+    }
+
+    function stopAuto() {
+      if (autoTimer) clearInterval(autoTimer);
+      autoTimer = null;
+    }
+
+    function startAuto() {
+      if (reduced || paused) return;
+      stopAuto();
+      autoTimer = setInterval(toggle, AUTO_MS);
+    }
+
+    function pauseAuto(ms) {
+      paused = true;
+      stopAuto();
+      if (resumeTimer) clearTimeout(resumeTimer);
+      resumeTimer = setTimeout(function () {
+        paused = false;
+        startAuto();
+      }, ms || AUTO_MS * 2);
+    }
+
+    flip.addEventListener('mouseenter', function () {
+      paused = true;
+      stopAuto();
+      if (!flipped) {
+        setFlipped(true);
+        pulseFlip();
+      }
+    });
+
+    flip.addEventListener('mouseleave', function () {
+      paused = false;
+      if (flipped) {
+        setFlipped(false);
+        pulseFlip();
+      }
+      startAuto();
+    });
+
+    flip.addEventListener('click', function () {
+      pauseAuto();
+      toggle();
+    });
+
+    flip.addEventListener('keydown', function (e) {
+      if (e.key !== 'Enter' && e.key !== ' ') return;
+      e.preventDefault();
+      pauseAuto();
+      toggle();
+    });
+
+    if (reduced) return;
+
+    if ('IntersectionObserver' in window) {
+      new IntersectionObserver(function (entries) {
+        if (entries[0].isIntersecting) startAuto();
+        else {
+          stopAuto();
+          setFlipped(false);
+          flip.classList.remove('is-flipping');
+        }
+      }, { threshold: 0.35 }).observe(flip);
+    } else {
+      startAuto();
+    }
+  }
+
   function initFocusRings() {
     /* CSS handles focus-visible; ensure keyboard users see sections after nav */
     document.querySelectorAll('a[href^="#"]').forEach(function (link) {
@@ -534,6 +633,7 @@
   initHeroSpotlight();
   initNeuralMesh();
   initHeroDepth();
+  initHeroFlip();
   initTilt();
   initMagneticButtons();
   initScrollUI();
