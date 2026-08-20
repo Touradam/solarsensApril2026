@@ -141,8 +141,22 @@
             <img src="assets/SolarSenseDigitalTwin.png" alt="Solar Sense digital twin and system overview" width="900" height="500" loading="lazy">
           </div>
           <div class="tech-diagram">
-            <img src="assets/pv-neural-net.png" alt="Neural network approach to PV fault detection" width="600" height="400" loading="lazy">
+            <div class="tech-flip" id="nnFlip" role="link" tabindex="0" aria-label="Open the interactive neural network demo">
+              <div class="tech-flip-inner">
+                <div class="tech-flip-face tech-flip-front">
+                  <img src="assets/pv-neural-net.png" alt="Neural network approach to PV fault detection" width="600" height="400" loading="lazy">
+                  <span class="tech-diagram-hint" data-en="Click to flip open" data-zh="点击翻转打开">Click to flip open</span>
+                </div>
+                <div class="tech-flip-face tech-flip-back" aria-hidden="true">
+                  <span class="tech-flip-back-title" data-en="Live neural network" data-zh="实时神经网络">Live neural network</span>
+                  <span class="tech-flip-back-sub" data-en="Launching the interactive demo…" data-zh="正在打开交互演示…">Launching the interactive demo…</span>
+                </div>
+              </div>
+            </div>
           </div>
+        </div>
+        <div class="tech-anim-cta">
+          <a href="pv-neural-net.html" class="btn btn-secondary" data-en="Explore the live neural network" data-zh="探索实时神经网络">Explore the live neural network</a>
         </div>
         <div class="cards four-cols capability-cards reveal-stagger">
           <article class="card reveal-item">
@@ -446,9 +460,35 @@
         iframe.src = base + '?' + params.join('&');
       }
 
+      /** Neural network diagram: flip the card, then open the interactive demo. */
+      function initNnFlip() {
+        var flip = document.getElementById('nnFlip');
+        if (!flip) return;
+        var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        var going = false;
+        function go() {
+          if (going) return;
+          going = true;
+          if (reduced) {
+            window.location.href = 'pv-neural-net.html';
+            return;
+          }
+          flip.classList.add('flipping');
+          setTimeout(function () { window.location.href = 'pv-neural-net.html'; }, 700);
+        }
+        flip.addEventListener('click', go);
+        flip.addEventListener('keydown', function (e) {
+          if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            go();
+          }
+        });
+      }
+
       initDemoYoutube();
       initToggle();
       initSmoothScroll();
+      initNnFlip();
     })();
   </script>
   <script src="assets/motion.js" defer></script>
