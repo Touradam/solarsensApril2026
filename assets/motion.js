@@ -526,7 +526,7 @@
     var resumeTimer = null;
     var flipTimer = null;
     var AUTO_MS = 5200;
-    var FLIP_MS = 950;
+    var FLIP_MS = 550;
 
     function setFlipped(state) {
       flipped = state;
