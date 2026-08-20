@@ -1,0 +1,1444 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>SolarSense | How the PV Neural Network Learns</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Outfit:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --gold: #c4a35a;
+    --gold-light: #e2c887;
+    --gold-dark: #9a7b3c;
+    --gold-glow: rgba(196, 163, 90, 0.35);
+    --ink: #0c0c0f;
+    --ink-raised: #12121a;
+    --surface: #18181f;
+    --surface-hover: #1f1f28;
+    --border: rgba(255, 255, 255, 0.08);
+    --border-gold: rgba(196, 163, 90, 0.25);
+    --text: #eceae4;
+    --text-muted: #9c9a94;
+    --text-dim: #6b6963;
+    --green: #8fbf7f;
+    --blue: #6ea8fe;
+    --red: #e0655a;
+    --radius-sm: 8px;
+    --radius-md: 12px;
+    --radius-lg: 16px;
+    --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.45);
+    --shadow-lift: 0 14px 36px rgba(0, 0, 0, 0.55);
+    --ease: cubic-bezier(0.4, 0, 0.2, 1);
+    --font-display: 'Outfit', system-ui, sans-serif;
+    --font-body: 'DM Sans', system-ui, sans-serif;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: var(--ink);
+    color: var(--text);
+    font-family: var(--font-body);
+    line-height: 1.6;
+    min-height: 100vh;
+    padding: 28px clamp(16px, 4vw, 48px) 56px;
+  }
+  /* Ambient gold glows, top-left and bottom-right */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    background:
+      radial-gradient(560px 380px at 12% -5%, rgba(196, 163, 90, 0.08), transparent 65%),
+      radial-gradient(720px 520px at 95% 105%, rgba(196, 163, 90, 0.06), transparent 65%);
+  }
+  /* Load-in reveal */
+  .reveal { opacity: 0; transform: translateY(16px); animation: rise 0.65s var(--ease) forwards; }
+  @keyframes rise { to { opacity: 1; transform: translateY(0); } }
+  header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    gap: 16px;
+    max-width: 1400px;
+    margin: 0 auto 24px;
+  }
+  .eyebrow {
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 8px;
+  }
+  h1 {
+    font-family: var(--font-display);
+    font-size: clamp(1.6rem, 3vw, 2.2rem);
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    line-height: 1.15;
+  }
+  h1 span {
+    background: linear-gradient(120deg, var(--gold-light), var(--gold) 70%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+  .sub { color: var(--text-muted); margin-top: 8px; font-size: 0.95rem; max-width: 52ch; }
+  .back {
+    color: var(--gold-light);
+    text-decoration: none;
+    font-size: 0.88rem;
+    border: 1px solid var(--border-gold);
+    padding: 9px 16px;
+    border-radius: var(--radius-sm);
+    white-space: nowrap;
+    transition: background 0.25s var(--ease), border-color 0.25s var(--ease), transform 0.25s var(--ease);
+  }
+  .back:hover { background: rgba(196, 163, 90, 0.08); border-color: var(--gold); transform: translateY(-1px); }
+  main {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 350px;
+    gap: 20px;
+    max-width: 1400px;
+    margin: 0 auto;
+    align-items: start;
+  }
+  .panel, .card {
+    background: linear-gradient(180deg, var(--ink-raised), #101018);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-md);
+  }
+  .card {
+    padding: 20px;
+    transition: transform 0.35s var(--ease), box-shadow 0.35s var(--ease), border-color 0.35s var(--ease);
+  }
+  .card[hidden] { display: none; }
+  /* Toggle switch list */
+  .toggle-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    min-height: 44px;
+    font-size: 0.88rem;
+    cursor: pointer;
+  }
+  .toggle { position: absolute; opacity: 0; pointer-events: none; }
+  .switch {
+    width: 40px;
+    height: 22px;
+    border-radius: 999px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    position: relative;
+    flex-shrink: 0;
+    transition: background 0.3s var(--ease), border-color 0.3s var(--ease);
+  }
+  .switch::after {
+    content: '';
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: var(--text-muted);
+    transition: transform 0.3s var(--ease), background 0.3s var(--ease), box-shadow 0.3s var(--ease);
+  }
+  .toggle:checked + .switch { background: rgba(196, 163, 90, 0.25); border-color: var(--gold); }
+  .toggle:checked + .switch::after {
+    transform: translateX(18px);
+    background: var(--gold-light);
+    box-shadow: 0 0 8px var(--gold-glow);
+  }
+  .toggle:focus-visible + .switch { outline: 2px solid var(--gold-light); outline-offset: 2px; }
+  .card:hover {
+    transform: translateY(-2px);
+    border-color: var(--border-gold);
+    box-shadow: var(--shadow-lift);
+  }
+  .network-panel { position: relative; padding: 14px 14px 0; overflow: hidden; }
+  /* Spotlight glow follows the cursor */
+  .network-panel::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background: radial-gradient(300px 300px at var(--mx, 50%) var(--my, 38%), rgba(196, 163, 90, 0.07), transparent 70%);
+  }
+  #net { width: 100%; height: auto; display: block; position: relative; }
+  .caption {
+    min-height: 48px;
+    display: flex;
+    align-items: center;
+    padding: 12px 16px;
+    border-top: 1px solid var(--border);
+    color: var(--text-muted);
+    font-size: 0.92rem;
+    transition: opacity 0.2s;
+    position: relative;
+  }
+  .caption::before {
+    content: '';
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--gold);
+    box-shadow: 0 0 8px var(--gold-glow);
+    margin-right: 12px;
+    flex-shrink: 0;
+    animation: pulse 2.6s var(--ease) infinite;
+  }
+  @keyframes pulse {
+    0%, 100% { opacity: 0.5; transform: scale(1); }
+    50% { opacity: 1; transform: scale(1.35); }
+  }
+  .tooltip {
+    position: absolute;
+    z-index: 10;
+    background: rgba(31, 31, 40, 0.85);
+    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
+    border: 1px solid var(--border-gold);
+    border-radius: var(--radius-md);
+    padding: 10px 12px;
+    font-size: 0.78rem;
+    line-height: 1.5;
+    max-width: 280px;
+    pointer-events: none;
+    box-shadow: var(--shadow-lift);
+  }
+  .tooltip b { color: var(--gold-light); font-weight: 600; }
+  .tooltip .muted { color: var(--text-dim); }
+  .side { display: flex; flex-direction: column; gap: 20px; }
+  .card h2 {
+    font-family: var(--font-display);
+    font-size: 0.78rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.16em;
+    color: var(--gold);
+    margin-bottom: 16px;
+  }
+  .btn-row { display: flex; gap: 8px; flex-wrap: wrap; }
+  .btn {
+    font-family: var(--font-body);
+    font-size: 0.88rem;
+    font-weight: 500;
+    color: var(--text);
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    padding: 9px 18px;
+    cursor: pointer;
+    transition: background 0.25s var(--ease), border-color 0.25s var(--ease), color 0.25s var(--ease), transform 0.25s var(--ease), box-shadow 0.25s var(--ease);
+  }
+  .btn:hover {
+    background: rgba(196, 163, 90, 0.06);
+    border-color: var(--gold);
+    color: var(--gold-light);
+    transform: translateY(-1px);
+  }
+  .btn:active { transform: translateY(0); }
+  .btn.primary {
+    background: linear-gradient(135deg, var(--gold-light), var(--gold) 55%, var(--gold-dark));
+    border-color: var(--gold);
+    color: #14100a;
+    font-weight: 700;
+    box-shadow: 0 4px 16px rgba(196, 163, 90, 0.25);
+  }
+  .btn.primary:hover {
+    background: linear-gradient(135deg, #eed9a0, var(--gold-light) 55%, var(--gold));
+    color: #14100a;
+    box-shadow: 0 6px 22px rgba(196, 163, 90, 0.4);
+    transform: translateY(-1px);
+  }
+  .btn.ghost { background: transparent; }
+  .btn:focus-visible, .back:focus-visible, input[type="range"]:focus-visible {
+    outline: 2px solid var(--gold-light);
+    outline-offset: 2px;
+  }
+  .ctl { margin-top: 16px; }
+  .ctl label {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.82rem;
+    color: var(--text-muted);
+    margin-bottom: 8px;
+  }
+  .ctl label span { color: var(--gold-light); font-variant-numeric: tabular-nums; }
+  /* Custom gold sliders with filled track (via --fill) */
+  input[type="range"] {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 100%;
+    height: 4px;
+    border-radius: 999px;
+    background: linear-gradient(to right, var(--gold) 0%, var(--gold-light) var(--fill, 50%), var(--surface) var(--fill, 50%));
+    cursor: pointer;
+  }
+  input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: radial-gradient(circle at 35% 35%, var(--gold-light), var(--gold) 70%);
+    border: 1px solid var(--gold-dark);
+    box-shadow: 0 0 10px var(--gold-glow);
+    transition: transform 0.2s var(--ease);
+  }
+  input[type="range"]::-webkit-slider-thumb:hover { transform: scale(1.2); }
+  input[type="range"]::-moz-range-thumb {
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: radial-gradient(circle at 35% 35%, var(--gold-light), var(--gold) 70%);
+    border: 1px solid var(--gold-dark);
+    box-shadow: 0 0 10px var(--gold-glow);
+    transition: transform 0.2s var(--ease);
+  }
+  input[type="range"]::-moz-range-thumb:hover { transform: scale(1.2); }
+  input[type="range"]::-moz-range-track { background: transparent; }
+  .readouts {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+    margin: 18px 0 14px;
+  }
+  .readouts > div {
+    position: relative;
+    overflow: hidden;
+    background: linear-gradient(180deg, var(--surface-hover), var(--surface));
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    padding: 10px 12px;
+  }
+  .readouts > div::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--gold), transparent);
+    opacity: 0.5;
+  }
+  .readouts span { display: block; font-size: 0.68rem; color: var(--text-dim); text-transform: uppercase; letter-spacing: 0.08em; }
+  .readouts strong { font-family: var(--font-display); font-size: 1.1rem; font-weight: 600; color: var(--gold-light); font-variant-numeric: tabular-nums; }
+  #chart { width: 100%; height: 150px; display: block; }
+  .legend { display: flex; align-items: center; gap: 8px; font-size: 0.78rem; color: var(--text-muted); margin-top: 10px; }
+  .dot { width: 10px; height: 10px; border-radius: 50%; display: inline-block; margin-left: 6px; }
+  .dot:first-child { margin-left: 0; }
+  .dot.gold { background: var(--gold); box-shadow: 0 0 6px var(--gold-glow); }
+  .dot.green { background: var(--green); }
+  .sensor-row { margin-bottom: 16px; }
+  .sensor-row label {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.85rem;
+    margin-bottom: 7px;
+  }
+  .sensor-row label .val { color: var(--gold-light); font-variant-numeric: tabular-nums; }
+  .presets { margin-top: 6px; }
+  .presets .btn { font-size: 0.8rem; padding: 8px 13px; }
+  .panel-presets { justify-content: center; padding: 2px 14px 14px; margin-top: 0; }
+  .bar-row {
+    display: grid;
+    grid-template-columns: 74px 1fr 42px;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 12px;
+    font-size: 0.85rem;
+  }
+  .bar-row .pct { text-align: right; color: var(--text-muted); font-variant-numeric: tabular-nums; transition: color 0.3s; }
+  .sub-label { margin-left: 6px; font-size: 0.68em; letter-spacing: 0.1em; text-transform: uppercase; opacity: 0.65; }
+  .bar-row.win .pct { color: var(--text); font-weight: 700; }
+  .bar { height: 10px; background: var(--surface); border-radius: 6px; overflow: hidden; border: 1px solid var(--border); }
+  .bar > i {
+    display: block;
+    height: 100%;
+    width: 0;
+    border-radius: 6px;
+    transition: width 0.5s var(--ease), box-shadow 0.4s var(--ease);
+  }
+  .bar > i.win { box-shadow: 0 0 14px 0 currentColor; }
+  .pred {
+    margin-top: 12px;
+    font-family: var(--font-display);
+    font-size: 1.05rem;
+    font-weight: 600;
+    min-height: 26px;
+  }
+  /* SVG element styling */
+  #net text { font-family: var(--font-body); fill: var(--text-muted); font-size: 11px; }
+  #net .layer-title { font-family: var(--font-display); font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; fill: var(--text-dim); }
+  #net .out-pct { font-family: var(--font-display); font-size: 13px; font-weight: 600; opacity: 0.8; transition: opacity 0.3s; }
+  #net .out-pct.win { opacity: 1; font-size: 15px; font-weight: 700; }
+  #net .out-sub { font-size: 9px; letter-spacing: 0.12em; text-transform: uppercase; opacity: 0.7; }
+  #net .edge { fill: none; stroke-linecap: round; transition: stroke-width 0.35s, opacity 0.35s, stroke 0.35s; }
+  #net .edge.hot { filter: drop-shadow(0 0 5px rgba(226, 200, 135, 0.85)); }
+  /* Dominant decision path for the current prediction, in the winning class color */
+  #net .edge.on-path { filter: drop-shadow(0 0 6px currentColor); }
+  #net .node-base.path-lit { stroke: currentColor; stroke-width: 1.6; filter: drop-shadow(0 0 6px currentColor); }
+  #net .hit { stroke: transparent; stroke-width: 14; pointer-events: stroke; fill: none; }
+  #net .node-base { stroke: var(--border-gold); stroke-width: 1; transition: stroke 0.25s var(--ease), filter 0.25s var(--ease); }
+  #net .node-base.hot { stroke: var(--gold-light); filter: drop-shadow(0 0 6px var(--gold-glow)); }
+  /* Breathing halo ring, staggered per node */
+  #net .node-halo { fill: none; stroke: var(--gold); stroke-width: 1; animation: breathe 4.2s ease-in-out infinite; }
+  @keyframes breathe { 0%, 100% { stroke-opacity: 0.10; } 50% { stroke-opacity: 0.45; } }
+  /* Slowly rotating dashed orbit ring */
+  #net .node-orbit {
+    fill: none;
+    stroke: var(--gold-dark);
+    stroke-width: 1;
+    stroke-dasharray: 3 7;
+    opacity: 0.45;
+    transform-box: fill-box;
+    transform-origin: center;
+    animation: spin 26s linear infinite;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  #net .node-act { transition: opacity 0.3s; pointer-events: none; filter: drop-shadow(0 0 5px currentColor); }
+  #net .node-core { pointer-events: none; transition: opacity 0.3s; }
+  /* Ripple burst when a neuron fires during a forward pass */
+  #net .ripple {
+    fill: none;
+    stroke-width: 1.5;
+    pointer-events: none;
+    transform-box: fill-box;
+    transform-origin: center;
+    animation: ripple 0.65s var(--ease) forwards;
+  }
+  @keyframes ripple { from { transform: scale(0.75); opacity: 0.55; } to { transform: scale(2); opacity: 0; } }
+  #net .node-hover { cursor: default; }
+  /* Reduced motion: no traveling pulses, no morph or reveal transitions */
+  body.reduced #net .edge, body.reduced #net .node-act, body.reduced .bar > i { transition: none; }
+  body.reduced #net .node-halo, body.reduced #net .node-orbit { animation: none; }
+  body.reduced .reveal { animation: none; opacity: 1; transform: none; }
+  body.reduced .caption::before { animation: none; }
+  @media (max-width: 980px) {
+    main { grid-template-columns: 1fr; }
+    header { align-items: flex-start; flex-direction: column; }
+  }
+</style>
+</head>
+<body>
+<header class="reveal">
+  <div>
+    <div class="eyebrow">SolarSense Intelligence</div>
+    <h1>How <span>SolarSense</span> Thinks</h1>
+    <p class="sub">A neural network learns to detect shading, degradation and hot spots from live panel sensor data.</p>
+  </div>
+  <a class="back" href="index.html">Back to site</a>
+</header>
+<main>
+  <section class="panel network-panel reveal" style="animation-delay: 0.08s" aria-label="Interactive neural network">
+    <svg id="net" viewBox="0 0 760 600" role="img" aria-label="Neural network diagram"></svg>
+    <div class="btn-row presets panel-presets" id="presets"></div>
+    <div id="tooltip" class="tooltip" hidden></div>
+    <div id="caption" class="caption"></div>
+  </section>
+  <aside class="side">
+    <div class="card reveal" style="animation-delay: 0.16s" id="trainCard" hidden>
+      <h2>Training</h2>
+      <div class="btn-row">
+        <button id="trainBtn" class="btn primary" aria-label="Start or pause training">Train</button>
+        <button id="stepBtn" class="btn" aria-label="Train a single epoch">Step</button>
+        <button id="resetBtn" class="btn ghost" aria-label="Reset weights">Reset</button>
+      </div>
+      <div class="ctl">
+        <label for="speed">Training speed <span id="speedVal">8 epochs/s</span></label>
+        <input type="range" id="speed" min="1" max="30" step="1" value="8" aria-label="Training speed in epochs per second">
+      </div>
+      <div class="ctl">
+        <label for="lr">Learning rate <span id="lrVal">0.05</span></label>
+        <input type="range" id="lr" min="0.01" max="1" step="0.01" value="0.05" aria-label="Learning rate">
+      </div>
+      <div class="readouts">
+        <div><span>Epoch</span><strong id="epochOut">0</strong></div>
+        <div><span>Loss</span><strong id="lossOut">-</strong></div>
+        <div><span>Accuracy</span><strong id="accOut">-</strong></div>
+      </div>
+      <canvas id="chart" aria-label="Loss and accuracy over training epochs"></canvas>
+      <div class="legend"><span class="dot gold"></span>Loss <span class="dot green"></span>Accuracy</div>
+    </div>
+    <div class="card reveal" style="animation-delay: 0.24s" id="sensorCard" hidden>
+      <h2>Live sensors</h2>
+      <div id="sliders"></div>
+    </div>
+    <div class="card reveal" style="animation-delay: 0.32s">
+      <h2>Display</h2>
+      <label class="toggle-row">
+        <span>Training panel</span>
+        <input type="checkbox" id="toggleTraining" class="toggle" aria-label="Show training panel">
+        <span class="switch" aria-hidden="true"></span>
+      </label>
+      <label class="toggle-row">
+        <span>Sensor sliders</span>
+        <input type="checkbox" id="toggleSensors" class="toggle" aria-label="Show sensor sliders">
+        <span class="switch" aria-hidden="true"></span>
+      </label>
+      <label class="toggle-row">
+        <span>Prediction panel</span>
+        <input type="checkbox" id="togglePrediction" class="toggle" aria-label="Show prediction panel">
+        <span class="switch" aria-hidden="true"></span>
+      </label>
+    </div>
+    <div class="card reveal" style="animation-delay: 0.32s" id="predCard" hidden>
+      <h2>Prediction</h2>
+      <div id="bars"></div>
+      <div id="predLabel" class="pred">Move a sensor slider to run a forward pass.</div>
+    </div>
+  </aside>
+</main>
+
+<script>
+'use strict';
+/* ============================================================
+   CONFIG - everything tunable lives here
+   ============================================================ */
+const CONFIG = {
+  seed: 42,                 // reproducible dataset and init
+  layerSizes: [4, 6, 5, 5, 4, 4], // sensors -> 4 hidden layers -> 4 conditions
+  datasetSize: 500,         // synthetic samples, split into train/test
+  testSplit: 0.2,
+  maxEpochs: 400,
+  pretrainEpochs: 150,    // epochs run at load so presets classify correctly right away
+  learningRate: 0.05,
+  batchSize: 8,
+  gradClip: 1,            // clip averaged batch gradients; prevents collapse
+  epochsPerSecond: 8,
+  pulseMs: 380,             // travel time of one pulse along an edge
+  layerGapMs: 130,          // pause between layers during forward pass
+  weightClip: 2.0,          // |w| above this renders at max thickness
+  weightHistory: 140,       // epochs kept per edge for sparklines
+  colors: {
+    gold: '#c4a35a', goldLight: '#e2c887',
+    pos: '#c4a35a', neg: '#6ea8fe',
+    // Normal, Shading, PID, Hot spot
+    classes: ['#8fbf7f', '#6ea8fe', '#e0a75a', '#e0655a']
+  }
+};
+// Rendering choice: SVG for the network (per-node and per-edge DOM hover
+// events are trivial), Canvas for the training chart (cheap full redraws).
+
+const REDUCED = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+if (REDUCED) document.body.classList.add('reduced');
+
+const C = CONFIG.colors;
+const CLASS_NAMES = ['Normal', 'Shading', 'PID', 'Hot spot'];
+// Shading is a single output node; a live subscript grades severity from irradiance
+const shadingSeverity = () => (state.input[3] * 1200 < 350 ? 'full' : 'partial');
+const classLabel = j => (j === 1 ? 'Shading (' + shadingSeverity() + ')' : CLASS_NAMES[j]);
+const LAYERS = CONFIG.layerSizes.length;
+const N_WEIGHTS = CONFIG.layerSizes.reduce((s, n, i, a) => i ? s + n * a[i - 1] : s, 0);
+const N_BIASES = CONFIG.layerSizes.reduce((s, n, i) => i ? s + n : s, 0);
+
+const SENSORS = [
+  { key: 'volt', name: 'Voltage',     unit: 'V',    min: 0, max: 45,   step: 0.5, val: 35 },
+  { key: 'cur',  name: 'Current',     unit: 'A',    min: 0, max: 12,   step: 0.1, val: 8.6 },
+  { key: 'temp', name: 'Temperature', unit: '°C',   min: 0, max: 90,   step: 1,   val: 42 },
+  { key: 'irr',  name: 'Irradiance',  unit: 'W/m²', min: 0, max: 1200, step: 10,  val: 900 }
+];
+const PRESETS = [
+  { name: 'Sunny day',       vals: [36, 9.2, 45, 1000] },
+  { name: 'Partial shade',   vals: [34, 2.8, 38, 800] },
+  { name: 'Full shade',      vals: [30, 0.6, 26, 160] },
+  { name: 'PID',             vals: [27.5, 7.8, 47, 980] },
+  { name: 'Hot spot',        vals: [27, 6.5, 74, 950] }
+];
+
+/* ============================================================
+   Utils: seeded PRNG, formatting, math helpers
+   ============================================================ */
+function mulberry32(seed) {
+  let a = seed >>> 0;
+  return function () {
+    a |= 0; a = (a + 0x6D2B79F5) | 0;
+    let t = Math.imul(a ^ (a >>> 15), 1 | a);
+    t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
+    return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+  };
+}
+const fmt = (n, d = 3) => Number(n).toFixed(d);
+const clamp = (v, lo, hi) => Math.min(hi, Math.max(lo, v));
+const sleep = ms => new Promise(r => setTimeout(r, ms));
+function gauss(rand) {
+  const u = Math.max(rand(), 1e-9), v = Math.max(rand(), 1e-9);
+  return Math.sqrt(-2 * Math.log(u)) * Math.cos(2 * Math.PI * v);
+}
+function softmax(z) {
+  const m = Math.max(...z);
+  const e = z.map(v => Math.exp(v - m));
+  const s = e.reduce((a, b) => a + b, 0);
+  return e.map(v => v / s);
+}
+const argmax = arr => arr.indexOf(Math.max(...arr));
+
+/* ============================================================
+   Synthetic field data: physically plausible clusters
+   ============================================================ */
+function genSample(cls, rand) {
+  let irr, temp, v, i;
+  if (cls === 0) {          // Normal: current tracks irradiance, temp moderate
+    irr = 700 + rand() * 500;
+    temp = 20 + irr * 0.025 + gauss(rand) * 3;
+    v = 38 - (temp - 25) * 0.10 + gauss(rand) * 0.8;
+    i = (irr / 1200) * 11.5 * (0.92 + rand() * 0.08);
+  } else if (cls === 1) {   // Shading: current collapses; severity spans partial to full
+    if (rand() < 0.55) {    // partial: irradiance decent
+      irr = 500 + rand() * 500;
+      temp = 20 + irr * 0.022 + gauss(rand) * 3;
+      i = (irr / 1200) * 11.5 * (0.25 + rand() * 0.30);
+      v = 38 - (temp - 25) * 0.10 - 1.5 + gauss(rand) * 0.8;
+    } else {                // full: very low irradiance, panel cool
+      irr = 60 + rand() * 260;
+      temp = 15 + irr * 0.03 + gauss(rand) * 2.5;
+      i = (irr / 1200) * 11.5 * (0.30 + rand() * 0.45);
+      v = (36 - (temp - 25) * 0.08) * (0.86 + rand() * 0.08);
+    }
+  } else if (cls === 2) {   // PID: voltage sags under full sun, current slightly low
+    irr = 700 + rand() * 400;
+    temp = 20 + irr * 0.026 + gauss(rand) * 3;
+    v = (38 - (temp - 25) * 0.10) * (0.70 + rand() * 0.10);
+    i = (irr / 1200) * 11.5 * (0.78 + rand() * 0.12);
+  } else {                  // Hot spot: temperature abnormally high, voltage sags
+    irr = 700 + rand() * 400;
+    temp = 42 + irr * 0.03 + gauss(rand) * 4;
+    v = (38 - (temp - 25) * 0.10) * (0.80 + rand() * 0.08);
+    i = (irr / 1200) * 11.5 * (0.70 + rand() * 0.15);
+  }
+  irr = clamp(irr, 50, 1200); temp = clamp(temp, 5, 90);
+  v = clamp(v, 5, 45);        i = clamp(i, 0.05, 12);
+  return { x: [v / 45, i / 12, temp / 90, irr / 1200], cls, y: CLASS_NAMES.map((_, k) => (k === cls ? 1 : 0)) };
+}
+function makeDataset(rand) {
+  const data = [];
+  const per = Math.floor(CONFIG.datasetSize / CLASS_NAMES.length);
+  for (let cls = 0; cls < CLASS_NAMES.length; cls++) for (let k = 0; k < per; k++) data.push(genSample(cls, rand));
+  for (let i = data.length - 1; i > 0; i--) {
+    const j = Math.floor(rand() * (i + 1));
+    [data[i], data[j]] = [data[j], data[i]];
+  }
+  const nTest = Math.floor(data.length * CONFIG.testSplit);
+  return { train: data.slice(nTest), test: data.slice(0, nTest) };
+}
+
+/* ============================================================
+   Model: hand-written MLP with leaky ReLU hidden layers and
+   softmax output, trained by mini-batch gradient descent on
+   cross-entropy loss via backpropagation. Leaky ReLU keeps
+   gradients flowing through 4 hidden layers (tanh vanished),
+   and small batches converge far faster than full-batch here.
+   ============================================================ */
+function createModel(sizes, rand) {
+  const layers = [];
+  for (let l = 1; l < sizes.length; l++) {
+    const fanIn = sizes[l - 1];
+    const W = [];
+    for (let j = 0; j < sizes[l]; j++) {
+      const row = [];
+      for (let i = 0; i < fanIn; i++) row.push((rand() * 2 - 1) * Math.sqrt(2 / fanIn)); // He-style init
+      W.push(row);
+    }
+    layers.push({ W, b: new Array(sizes[l]).fill(0) });
+  }
+  return layers;
+}
+function forward(model, x) {
+  const acts = [x.slice()];
+  const zs = [];
+  let a = x;
+  for (let l = 0; l < model.length; l++) {
+    const { W, b } = model[l];
+    const z = [];
+    for (let j = 0; j < W.length; j++) {
+      let s = b[j];
+      for (let i = 0; i < W[j].length; i++) s += W[j][i] * a[i];
+      z.push(s);
+    }
+    zs.push(z);
+    a = (l === model.length - 1) ? softmax(z) : z.map(v => (v > 0 ? v : 0.01 * v));
+    acts.push(a);
+  }
+  return { acts, zs };
+}
+function trainEpoch(model, trainSet, lr, rand, batchSize) {
+  const order = trainSet.map((_, i) => i);
+  for (let i = order.length - 1; i > 0; i--) {
+    const j = Math.floor(rand() * (i + 1));
+    [order[i], order[j]] = [order[j], order[i]];
+  }
+  let loss = 0;
+  for (let b0 = 0; b0 < order.length; b0 += batchSize) {
+    const batch = order.slice(b0, b0 + batchSize);
+    const dW = model.map(l => l.W.map(row => row.map(() => 0)));
+    const db = model.map(l => l.b.map(() => 0));
+    for (const idx of batch) {
+      const s = trainSet[idx];
+      const { acts } = forward(model, s.x);
+      const L = model.length;
+      const out = acts[L];
+      loss -= Math.log(Math.max(out[s.cls], 1e-9));
+      const deltas = new Array(L);
+      deltas[L - 1] = out.map((p, j) => p - s.y[j]); // softmax + cross-entropy gradient
+      for (let k = L - 2; k >= 0; k--) {
+        const d = [];
+        for (let i = 0; i < CONFIG.layerSizes[k + 1]; i++) {
+          let sum = 0;
+          for (let j = 0; j < CONFIG.layerSizes[k + 2]; j++) sum += model[k + 1].W[j][i] * deltas[k + 1][j];
+          const a = acts[k + 1][i];
+          d.push((a > 0 ? 1 : 0.01) * sum); // leaky ReLU derivative
+        }
+        deltas[k] = d;
+      }
+      for (let k = 0; k < L; k++) {
+        for (let j = 0; j < model[k].W.length; j++) {
+          db[k][j] += deltas[k][j];
+          for (let i = 0; i < model[k].W[j].length; i++) dW[k][j][i] += deltas[k][j] * acts[k][i];
+        }
+      }
+    }
+    const n = batch.length;
+    const clip = CONFIG.gradClip;
+    for (let k = 0; k < model.length; k++) {
+      for (let j = 0; j < model[k].W.length; j++) {
+        model[k].b[j] -= lr * clamp(db[k][j] / n, -clip, clip);
+        for (let i = 0; i < model[k].W[j].length; i++) model[k].W[j][i] -= lr * clamp(dW[k][j][i] / n, -clip, clip);
+      }
+    }
+  }
+  return loss / trainSet.length;
+}
+function accuracy(model, testSet) {
+  let correct = 0;
+  for (const s of testSet) if (argmax(forward(model, s.x).acts[model.length]) === s.cls) correct++;
+  return correct / testSet.length;
+}
+
+/* ============================================================
+   State
+   ============================================================ */
+const state = {
+  epoch: 0,
+  lossHist: [], accHist: [],
+  training: false,
+  mode: 'idle',            // 'idle' | 'training'
+  lr: CONFIG.learningRate,
+  eps: CONFIG.epochsPerSecond,
+  lastEpoch: 0,
+  forwardBusy: false,
+  said90: false,
+  input: SENSORS.map(s => s.val / s.max),
+  acts: null, zs: null,
+  nextAmbient: 0
+};
+let model = createModel(CONFIG.layerSizes, mulberry32(CONFIG.seed));
+let shuffleRand = mulberry32(CONFIG.seed + 2);
+const dataset = makeDataset(mulberry32(CONFIG.seed + 1));
+
+/* ============================================================
+   SVG construction and layout
+   ============================================================ */
+const SVGNS = 'http://www.w3.org/2000/svg';
+const svg = document.getElementById('net');
+const tooltip = document.getElementById('tooltip');
+const panelEl = document.querySelector('.network-panel');
+const pulses = [];
+const nodeMeta = []; // nodeMeta[l][j] = { base, act, hit, name }
+const edgeMeta = []; // edgeMeta[k] = [{ line, i, j, hist }]
+const outPctEls = []; // percentage text under each output node
+let shadingSubEl = null; // live partial/full subscript under the Shading node
+let positions = [];
+
+function computePositions() {
+  const W = 760, H = 600, marginX = 100, topPad = 320;
+  positions = CONFIG.layerSizes.map((n, l) => {
+    const x = marginX + l * ((W - 2 * marginX) / (LAYERS - 1));
+    const spacing = Math.min(86, 400 / Math.max(n - 1, 1));
+    return Array.from({ length: n }, (_, j) => ({ x, y: topPad + (j - (n - 1) / 2) * spacing }));
+  });
+}
+function el(tag, attrs) {
+  const e = document.createElementNS(SVGNS, tag);
+  for (const k in attrs) e.setAttribute(k, attrs[k]);
+  return e;
+}
+// Straight connection; the tiny nudge avoids a degenerate bbox so gradients always render
+function edgePathD(p1, p2) {
+  const y2 = Math.abs(p2.y - p1.y) < 1 ? p1.y + 1 : p2.y;
+  return 'M ' + p1.x + ' ' + p1.y + ' L ' + p2.x + ' ' + y2;
+}
+function buildSVG() {
+  computePositions();
+  const defs = el('defs', {});
+  const filter = el('filter', { id: 'glow', x: '-80%', y: '-80%', width: '260%', height: '260%' });
+  filter.appendChild(el('feGaussianBlur', { stdDeviation: 3.5, result: 'b' }));
+  const merge = el('feMerge', {});
+  merge.appendChild(el('feMergeNode', { in: 'b' }));
+  merge.appendChild(el('feMergeNode', { in: 'SourceGraphic' }));
+  filter.appendChild(merge);
+  defs.appendChild(filter);
+  const nodeGrad = el('radialGradient', { id: 'nodeGrad', cx: '35%', cy: '35%', r: '80%' });
+  nodeGrad.appendChild(el('stop', { offset: '0%', 'stop-color': '#23232e' }));
+  nodeGrad.appendChild(el('stop', { offset: '100%', 'stop-color': '#14141b' }));
+  defs.appendChild(nodeGrad);
+  // Directional flow gradient: faint at the source neuron, bright at the target
+  const flowPos = el('linearGradient', { id: 'flowPos' });
+  flowPos.appendChild(el('stop', { offset: '0%', 'stop-color': C.pos, 'stop-opacity': 0.2 }));
+  flowPos.appendChild(el('stop', { offset: '100%', 'stop-color': C.goldLight, 'stop-opacity': 1 }));
+  defs.appendChild(flowPos);
+  svg.appendChild(defs);
+
+  const gEdges = el('g', {}), gHits = el('g', {}), gNodes = el('g', {});
+  const gRipples = el('g', { id: 'ripples' });
+  const gPulses = el('g', { filter: 'url(#glow)' });
+  gPulses.setAttribute('id', 'pulses');
+  svg.appendChild(gEdges); svg.appendChild(gHits); svg.appendChild(gNodes); svg.appendChild(gRipples); svg.appendChild(gPulses);
+
+  const layerNames = CONFIG.layerSizes.map((_, l) =>
+    l === 0 ? 'Sensors' : l === LAYERS - 1 ? 'Condition' : 'Hidden layer ' + l);
+  CONFIG.layerSizes.forEach((n, l) => {
+    const t = el('text', { x: positions[l][0].x, y: 44, 'text-anchor': 'middle', class: 'layer-title' });
+    t.textContent = layerNames[l];
+    gNodes.appendChild(t);
+  });
+
+  for (let k = 0; k < LAYERS - 1; k++) {
+    edgeMeta.push([]);
+    for (let j = 0; j < CONFIG.layerSizes[k + 1]; j++) {
+      for (let i = 0; i < CONFIG.layerSizes[k]; i++) {
+        const p1 = positions[k][i], p2 = positions[k + 1][j];
+        const d = edgePathD(p1, p2);
+        const line = el('path', { d, class: 'edge', stroke: 'url(#flowPos)', 'stroke-width': 1, opacity: 0.2 });
+        const hit = el('path', { d, class: 'hit' });
+        gEdges.appendChild(line); gHits.appendChild(hit);
+        const meta = { line, i, j, hist: [], len: line.getTotalLength() };
+        edgeMeta[k].push(meta);
+        hit.addEventListener('mouseenter', e => {
+          line.classList.add('hot');
+          nodeMeta[k][i].base.classList.add('hot');
+          nodeMeta[k + 1][j].base.classList.add('hot');
+          showTooltip(edgeTipHTML(k, meta), e);
+        });
+        hit.addEventListener('mousemove', moveTooltip);
+        hit.addEventListener('mouseleave', () => {
+          line.classList.remove('hot');
+          nodeMeta[k][i].base.classList.remove('hot');
+          nodeMeta[k + 1][j].base.classList.remove('hot');
+          hideTooltip();
+        });
+      }
+    }
+  }
+
+  CONFIG.layerSizes.forEach((n, l) => {
+    nodeMeta.push([]);
+    for (let j = 0; j < n; j++) {
+      const p = positions[l][j];
+      const halo = el('circle', { cx: p.x, cy: p.y, r: 24, class: 'node-halo', style: 'animation-delay: ' + (l * 0.5 + j * 0.25).toFixed(2) + 's' });
+      const orbit = el('circle', { cx: p.x, cy: p.y, r: 21, class: 'node-orbit', style: 'animation-direction: ' + ((l + j) % 2 ? 'reverse' : 'normal') });
+      const base = el('circle', { cx: p.x, cy: p.y, r: 18, class: 'node-base', fill: 'url(#nodeGrad)' });
+      const act = el('circle', { cx: p.x, cy: p.y, r: 13, class: 'node-act', opacity: 0, fill: C.gold });
+      const core = el('circle', { cx: p.x, cy: p.y, r: 4.5, class: 'node-core', opacity: 0, fill: C.goldLight });
+      const hit = el('circle', { cx: p.x, cy: p.y, r: 26, fill: 'transparent', class: 'node-hover' });
+      gNodes.appendChild(halo); gNodes.appendChild(orbit); gNodes.appendChild(base);
+      gNodes.appendChild(act); gNodes.appendChild(core); gNodes.appendChild(hit);
+      nodeMeta[l].push({ base, act, core, hit });
+      hit.addEventListener('mouseenter', e => { base.classList.add('hot'); showTooltip(neuronTipHTML(l, j), e); });
+      hit.addEventListener('mousemove', moveTooltip);
+      hit.addEventListener('mouseleave', () => { base.classList.remove('hot'); hideTooltip(); });
+      if (l === 0) {
+        const t = el('text', { x: p.x - 28, y: p.y + 4, 'text-anchor': 'end' });
+        t.textContent = SENSORS[j].name;
+        gNodes.appendChild(t);
+      }
+      if (l === LAYERS - 1) {
+        const isShading = j === 1;
+        const t = el('text', { x: p.x + 28, y: isShading ? p.y - 3 : p.y + 4, fill: C.classes[j] });
+        t.textContent = CLASS_NAMES[j];
+        gNodes.appendChild(t);
+        if (isShading) {
+          shadingSubEl = el('text', { x: p.x + 28, y: p.y + 12, class: 'out-sub', fill: C.classes[j] });
+          shadingSubEl.textContent = 'partial';
+          gNodes.appendChild(shadingSubEl);
+        }
+        const pct = el('text', { x: p.x, y: p.y + 44, 'text-anchor': 'middle', class: 'out-pct', fill: C.classes[j] });
+        gNodes.appendChild(pct);
+        outPctEls.push(pct);
+      }
+    }
+  });
+}
+
+/* ============================================================
+   Rendering updates
+   ============================================================ */
+// Greedy backtrace from the winning output through the strongest |w * a| contributor
+// of each layer: the chain of neurons that most drives the current prediction.
+function decisionPath() {
+  const L = model.length;
+  const win = argmax(state.acts[L]);
+  const edges = new Set(), nodes = new Set([L + ':' + win]);
+  let j = win;
+  for (let k = L - 1; k >= 0; k--) {
+    let bi = 0, bv = -1;
+    for (let i = 0; i < model[k].W[j].length; i++) {
+      const c = Math.abs(model[k].W[j][i] * state.acts[k][i]);
+      if (c > bv) { bv = c; bi = i; }
+    }
+    edges.add(k + ':' + bi + ':' + j);
+    nodes.add(k + ':' + bi);
+    j = bi;
+  }
+  return { win, edges, nodes };
+}
+function updateEdges() {
+  const dp = state.acts ? decisionPath() : null;
+  for (let l = 0; l < nodeMeta.length; l++) {
+    for (let j = 0; j < nodeMeta[l].length; j++) {
+      const on = dp && dp.nodes.has(l + ':' + j);
+      nodeMeta[l][j].base.classList.toggle('path-lit', !!on);
+      if (on) nodeMeta[l][j].base.style.color = C.goldLight;
+    }
+  }
+  for (let k = 0; k < edgeMeta.length; k++) {
+    for (const e of edgeMeta[k]) {
+      const w = model[k].W[e.j][e.i];
+      const m = Math.min(Math.abs(w), CONFIG.weightClip);
+      const on = dp && dp.edges.has(k + ':' + e.i + ':' + e.j);
+      e.line.setAttribute('stroke', 'url(#flowPos)');
+      if (on) {
+        e.line.style.color = C.goldLight;
+        e.line.style.strokeWidth = (1.4 + m * 2.2).toFixed(2);
+        e.line.style.opacity = 0.95;
+      } else {
+        e.line.style.strokeWidth = (0.6 + m * 2.2).toFixed(2);
+        e.line.style.opacity = ((0.10 + (m / CONFIG.weightClip) * 0.75) * (dp ? 0.5 : 1)).toFixed(3);
+      }
+      e.line.classList.toggle('on-path', !!on);
+    }
+  }
+}
+function revealLayer(l) {
+  const a = state.acts[l];
+  for (let j = 0; j < a.length; j++) {
+    const v = a[j];
+    let op, col;
+    if (l === 0) { op = 0.25 + 0.75 * v; col = C.goldLight; }
+    else if (l === LAYERS - 1) { op = 0.15 + 0.85 * v; col = C.classes[j]; }
+    else { op = 0.12 + 0.88 * Math.min(Math.abs(v), 1); col = C.gold; }
+    nodeMeta[l][j].act.setAttribute('fill', col);
+    nodeMeta[l][j].act.style.opacity = op.toFixed(3);
+    nodeMeta[l][j].act.style.color = col; // currentColor feeds the glow
+    nodeMeta[l][j].core.setAttribute('fill', col);
+    nodeMeta[l][j].core.style.opacity = op.toFixed(3);
+  }
+}
+function revealAll() { for (let l = 0; l < LAYERS; l++) revealLayer(l); }
+
+/* ============================================================
+   Forward pass: instant math, staged pulse animation
+   ============================================================ */
+function computeForward() {
+  const res = forward(model, state.input);
+  state.acts = res.acts;
+  state.zs = res.zs;
+}
+function spawnPulses(k) {
+  const g = document.getElementById('pulses');
+  const now = performance.now();
+  for (const e of edgeMeta[k]) {
+    const w = model[k].W[e.j][e.i];
+    const m = Math.min(Math.abs(w), CONFIG.weightClip) / CONFIG.weightClip;
+    if (m < 0.03) continue; // a dead connection carries no signal
+    const color = C.goldLight;
+    const dur = CONFIG.pulseMs * (1.15 - 0.45 * m); // strong signals travel faster
+    const r = 2.4 + 3.2 * m;
+    const p0 = e.line.getPointAtLength(0);
+    // lagging tail dot gives each pulse a comet feel
+    const tail = el('circle', { cx: p0.x, cy: p0.y, r: (r * 0.55).toFixed(2), fill: color, opacity: 0 });
+    g.appendChild(tail);
+    pulses.push({ el: tail, path: e.line, len: e.len, t0: now + 70, dur, baseOpacity: 0.4 });
+    const c = el('circle', { cx: p0.x, cy: p0.y, r: r.toFixed(2), fill: color, opacity: 0 });
+    g.appendChild(c);
+    pulses.push({ el: c, path: e.line, len: e.len, t0: now, dur, baseOpacity: 0.45 + 0.55 * m });
+  }
+}
+// Gentle background data stream so the network never looks frozen
+function spawnAmbientPulse() {
+  const k = Math.floor(Math.random() * edgeMeta.length);
+  const e = edgeMeta[k][Math.floor(Math.random() * edgeMeta[k].length)];
+  const w = model[k].W[e.j][e.i];
+  const m = Math.min(Math.abs(w) / 0.8, 1); // 0.8 keeps small init weights streaming
+  if (m < 0.05 || Math.random() > 0.3 + 0.7 * m) return; // strong edges stream more often
+  const p0 = e.line.getPointAtLength(0);
+  const c = el('circle', { cx: p0.x, cy: p0.y, r: (1.8 + 2 * m).toFixed(2), fill: C.goldLight, opacity: 0 });
+  document.getElementById('pulses').appendChild(c);
+  pulses.push({ el: c, path: e.line, len: e.len, t0: performance.now(), dur: 1000, baseOpacity: 0.30 + 0.45 * m });
+}
+function spawnRipples(l) {
+  const g = document.getElementById('ripples');
+  for (let j = 0; j < nodeMeta[l].length; j++) {
+    const p = positions[l][j];
+    const col = l === 0 ? C.goldLight : l === LAYERS - 1 ? C.classes[j] : C.gold;
+    const r = el('circle', { cx: p.x, cy: p.y, r: 18, class: 'ripple', stroke: col });
+    r.addEventListener('animationend', () => r.remove());
+    g.appendChild(r);
+  }
+}
+async function forwardAnimated() {
+  if (state.forwardBusy) { silentForward(); return; }
+  state.forwardBusy = true;
+  computeForward();
+  if (REDUCED) {
+    revealAll(); updateEdges(); updateBars();
+    state.forwardBusy = false;
+    return;
+  }
+  setCaption('Forward pass: sensor values flow through the network, layer by layer.');
+  revealLayer(0);
+  spawnRipples(0);
+  for (let k = 0; k < model.length; k++) {
+    spawnPulses(k);
+    await sleep(CONFIG.pulseMs + CONFIG.layerGapMs);
+    revealLayer(k + 1);
+    spawnRipples(k + 1);
+  }
+  updateEdges(); // reveal the decision path once the signal lands
+  updateBars();
+  state.forwardBusy = false;
+}
+function silentForward() {
+  computeForward();
+  updateEdges();
+  revealAll();
+  updateBars();
+}
+
+/* ============================================================
+   Prediction bars
+   ============================================================ */
+const barsEl = document.getElementById('bars');
+const predLabel = document.getElementById('predLabel');
+const barFills = [], barPcts = [], barRows = [];
+let shadingBarSub = null;
+function buildBars() {
+  CLASS_NAMES.forEach((n, i) => {
+    const row = document.createElement('div');
+    row.className = 'bar-row';
+    const name = document.createElement('span');
+    name.textContent = n;
+    name.style.color = C.classes[i];
+    if (i === 1) {
+      shadingBarSub = document.createElement('span');
+      shadingBarSub.className = 'sub-label';
+      shadingBarSub.textContent = 'partial';
+      name.appendChild(shadingBarSub);
+    }
+    const bar = document.createElement('div');
+    bar.className = 'bar';
+    const fill = document.createElement('i');
+    fill.style.background = C.classes[i];
+    fill.style.color = C.classes[i]; // currentColor feeds the win glow
+    bar.appendChild(fill);
+    const pct = document.createElement('span');
+    pct.className = 'pct';
+    pct.textContent = '0%';
+    row.appendChild(name); row.appendChild(bar); row.appendChild(pct);
+    barsEl.appendChild(row);
+    barFills.push(fill); barPcts.push(pct); barRows.push(row);
+  });
+}
+function updateBars() {
+  const p = state.acts[LAYERS - 1];
+  const top = argmax(p);
+  for (let i = 0; i < CLASS_NAMES.length; i++) {
+    barFills[i].style.width = (p[i] * 100).toFixed(1) + '%';
+    barFills[i].classList.toggle('win', i === top);
+    barRows[i].classList.toggle('win', i === top);
+    barPcts[i].textContent = Math.round(p[i] * 100) + '%';
+    outPctEls[i].textContent = Math.round(p[i] * 100) + '%';
+    outPctEls[i].classList.toggle('win', i === top);
+  }
+  const sev = shadingSeverity();
+  if (shadingSubEl) {
+    shadingSubEl.textContent = sev;
+    shadingSubEl.style.opacity = top === 1 ? 0.9 : 0.3;
+  }
+  if (shadingBarSub) {
+    shadingBarSub.textContent = sev;
+    shadingBarSub.style.opacity = top === 1 ? 0.85 : 0.35;
+  }
+  predLabel.innerHTML = 'Prediction: <span style="color:' + C.classes[top] + '">' + CLASS_NAMES[top] + '</span>' +
+    (top === 1 ? ' <span class="sub-label">' + sev + '</span>' : '') +
+    ' (' + Math.round(p[top] * 100) + '%)';
+}
+
+/* ============================================================
+   Training loop
+   ============================================================ */
+const epochOut = document.getElementById('epochOut');
+const lossOut = document.getElementById('lossOut');
+const accOut = document.getElementById('accOut');
+const trainBtn = document.getElementById('trainBtn');
+
+function updateReadouts(loss, acc) {
+  epochOut.textContent = state.epoch;
+  lossOut.textContent = loss === null ? '-' : fmt(loss, 3);
+  accOut.textContent = acc === null ? '-' : Math.round(acc * 100) + '%';
+}
+function pushWeightHistory() {
+  for (let k = 0; k < edgeMeta.length; k++) {
+    for (const e of edgeMeta[k]) {
+      e.hist.push(model[k].W[e.j][e.i]);
+      if (e.hist.length > CONFIG.weightHistory) e.hist.shift();
+    }
+  }
+}
+function doEpoch() {
+  const loss = trainEpoch(model, dataset.train, state.lr, shuffleRand, CONFIG.batchSize);
+  state.epoch++;
+  const acc = accuracy(model, dataset.test);
+  state.lossHist.push(loss);
+  state.accHist.push(acc);
+  pushWeightHistory();
+  updateEdges();
+  updateReadouts(loss, acc);
+  drawChart();
+  if (state.epoch % 3 === 0) silentForward();
+  if (!state.said90 && acc >= 0.9) {
+    state.said90 = true;
+    setCaption('Accuracy just passed 90%: the network now reliably separates every operating condition.');
+  } else if (state.epoch % 10 === 0) {
+    setCaption('Epoch ' + state.epoch + ': backpropagation is adjusting ' + N_WEIGHTS + ' weights and ' + N_BIASES + ' biases. Loss ' + fmt(loss, 3) + '.');
+  }
+  if (state.epoch >= CONFIG.maxEpochs) {
+    pauseTraining();
+    setCaption('Training complete. Try the scenario presets to test the trained network.');
+  }
+}
+function pauseTraining() {
+  state.training = false;
+  state.mode = 'idle';
+  trainBtn.textContent = 'Train';
+  trainBtn.classList.remove('active');
+}
+trainBtn.addEventListener('click', () => {
+  if (state.training) {
+    pauseTraining();
+    setCaption('Paused. Press Train to continue, or Step to run a single epoch.');
+    return;
+  }
+  if (state.epoch >= CONFIG.maxEpochs) resetAll();
+  state.training = true;
+  state.mode = 'training';
+  trainBtn.textContent = 'Pause';
+  trainBtn.classList.add('active');
+  state.lastEpoch = performance.now();
+  setCaption('Training: each epoch runs forward passes and backpropagation over ' + dataset.train.length + ' synthetic field samples.');
+});
+document.getElementById('stepBtn').addEventListener('click', () => {
+  if (state.training) pauseTraining();
+  if (state.epoch >= CONFIG.maxEpochs) return;
+  doEpoch();
+});
+document.getElementById('resetBtn').addEventListener('click', resetAll);
+function resetAll() {
+  pauseTraining();
+  model = createModel(CONFIG.layerSizes, mulberry32(CONFIG.seed));
+  shuffleRand = mulberry32(CONFIG.seed + 2);
+  state.epoch = 0;
+  state.lossHist = [];
+  state.accHist = [];
+  state.said90 = false;
+  for (const arr of edgeMeta) for (const e of arr) e.hist = [];
+  updateEdges();
+  updateReadouts(null, null);
+  drawChart();
+  silentForward();
+  setCaption('Weights reset to small random values. The network is naive again: press Train to watch it learn.');
+}
+
+/* ============================================================
+   Loss / accuracy chart (canvas)
+   ============================================================ */
+const chartEl = document.getElementById('chart');
+function drawChart() {
+  const dpr = window.devicePixelRatio || 1;
+  const w = chartEl.clientWidth || 300, h = 150;
+  chartEl.width = w * dpr;
+  chartEl.height = h * dpr;
+  const ctx = chartEl.getContext('2d');
+  ctx.scale(dpr, dpr);
+  ctx.clearRect(0, 0, w, h);
+  ctx.strokeStyle = 'rgba(255,255,255,0.06)';
+  ctx.lineWidth = 1;
+  for (let g = 1; g < 4; g++) {
+    ctx.beginPath(); ctx.moveTo(0, h * g / 4); ctx.lineTo(w, h * g / 4); ctx.stroke();
+  }
+  const n = state.lossHist.length;
+  if (!n) {
+    ctx.fillStyle = '#6b6963';
+    ctx.font = '12px "DM Sans", system-ui, sans-serif';
+    ctx.fillText('Press Train to begin.', 10, h / 2);
+    return;
+  }
+  const maxLoss = Math.max(...state.lossHist, 0.05);
+  const px = i => 8 + (i / Math.max(n - 1, 1)) * (w - 16);
+  const lossY = i => h - 8 - (state.lossHist[i] / maxLoss) * (h - 24);
+  const area = ctx.createLinearGradient(0, 0, 0, h);
+  area.addColorStop(0, 'rgba(196, 163, 90, 0.20)');
+  area.addColorStop(1, 'rgba(196, 163, 90, 0)');
+  ctx.beginPath();
+  state.lossHist.forEach((v, i) => { i ? ctx.lineTo(px(i), lossY(i)) : ctx.moveTo(px(i), lossY(i)); });
+  ctx.lineTo(px(n - 1), h - 8);
+  ctx.lineTo(px(0), h - 8);
+  ctx.closePath();
+  ctx.fillStyle = area;
+  ctx.fill();
+  ctx.strokeStyle = C.gold; ctx.lineWidth = 2; ctx.beginPath();
+  state.lossHist.forEach((v, i) => { i ? ctx.lineTo(px(i), lossY(i)) : ctx.moveTo(px(i), lossY(i)); });
+  ctx.stroke();
+  ctx.strokeStyle = C.classes[0]; ctx.beginPath();
+  state.accHist.forEach((v, i) => {
+    const y = h - 8 - v * (h - 24);
+    i ? ctx.lineTo(px(i), y) : ctx.moveTo(px(i), y);
+  });
+  ctx.stroke();
+}
+window.addEventListener('resize', drawChart);
+
+/* ============================================================
+   Tooltips
+   ============================================================ */
+function sparkline(hist) {
+  if (hist.length < 2) return '<span class="muted">Train to see this weight evolve.</span>';
+  const h = hist.slice(-80);
+  const min = Math.min(...h), max = Math.max(...h), span = (max - min) || 1e-6;
+  const pts = h.map((v, i) => (i / (h.length - 1) * 116 + 2).toFixed(1) + ',' + (24 - ((v - min) / span) * 20).toFixed(1)).join(' ');
+  let zero = '';
+  if (min < 0 && max > 0) {
+    const zy = (24 - ((0 - min) / span) * 20).toFixed(1);
+    zero = '<line x1="2" y1="' + zy + '" x2="118" y2="' + zy + '" stroke="rgba(255,255,255,0.15)" stroke-width="1"/>';
+  }
+  return '<svg width="120" height="26">' + zero + '<polyline points="' + pts + '" fill="none" stroke="' + C.goldLight + '" stroke-width="1.5"/></svg>';
+}
+function neuronTipHTML(l, j) {
+  if (!state.acts) computeForward();
+  if (l === 0) {
+    const s = SENSORS[j];
+    return '<b>' + s.name + '</b><br>Raw: ' + s.val + ' ' + s.unit + '<br>Normalized input: ' + fmt(state.acts[0][j], 3);
+  }
+  const name = l === LAYERS - 1 ? classLabel(j) : 'H' + l + '.' + (j + 1);
+  const b = model[l - 1].b[j];
+  const z = state.zs[l - 1][j];
+  const a = state.acts[l][j];
+  const terms = model[l - 1].W[j]
+    .map((w, i) => ({ t: w * state.acts[l - 1][i], w, i }))
+    .sort((p, q) => Math.abs(q.t) - Math.abs(p.t))
+    .slice(0, 3);
+  const termStr = terms.map(o => fmt(o.w, 2) + '·' + fmt(state.acts[l - 1][o.i], 2)).join(' + ');
+  const actName = l === LAYERS - 1 ? 'softmax' : 'leaky_relu';
+  return '<b>' + name + '</b><br>Weighted sum z = ' + fmt(z, 3) + ' (bias ' + fmt(b, 3) + ')' +
+    '<br>Activation ' + actName + '(z) = ' + fmt(a, 3) +
+    '<br><span class="muted">' + termStr + ' + … + bias</span>';
+}
+function edgeTipHTML(k, e) {
+  const w = model[k].W[e.j][e.i];
+  const from = k === 0 ? SENSORS[e.i].name : 'H' + k + '.' + (e.i + 1);
+  const to = k === LAYERS - 2 ? classLabel(e.j) : 'H' + (k + 1) + '.' + (e.j + 1);
+  return '<b>Weight ' + fmt(w, 4) + '</b><br><span class="muted">' + from + ' → ' + to + '</span><br>' + sparkline(e.hist);
+}
+function showTooltip(html, e) {
+  tooltip.innerHTML = html;
+  tooltip.hidden = false;
+  moveTooltip(e);
+}
+function moveTooltip(e) {
+  const r = panelEl.getBoundingClientRect();
+  let x = e.clientX - r.left + 14;
+  let y = e.clientY - r.top + 14;
+  x = Math.min(x, r.width - 290);
+  y = Math.min(y, r.height - 130);
+  tooltip.style.left = Math.max(4, x) + 'px';
+  tooltip.style.top = Math.max(4, y) + 'px';
+}
+function hideTooltip() { tooltip.hidden = true; }
+
+/* ============================================================
+   Insight captions
+   ============================================================ */
+const captionEl = document.getElementById('caption');
+const IDLE_CAPTIONS = [
+  'Hover any neuron to see its math, or any connection to see its weight.',
+  'Move a sensor slider to run a live forward pass through the network.',
+  'The network arrives pre-trained. Reset it from the training panel to watch it learn from scratch.',
+  'Edge thickness shows weight strength; the bright fade runs from each sensor toward the outputs.',
+  'The glowing chain shows the strongest neurons behind the current prediction.'
+];
+let idleIdx = 0;
+function setCaption(text) {
+  captionEl.style.opacity = 0;
+  setTimeout(() => {
+    captionEl.textContent = text;
+    captionEl.style.opacity = 1;
+  }, REDUCED ? 0 : 200);
+}
+setInterval(() => {
+  if (state.mode === 'idle' && !document.hidden) {
+    setCaption(IDLE_CAPTIONS[idleIdx++ % IDLE_CAPTIONS.length]);
+  }
+}, 7000);
+
+/* ============================================================
+   Sensor sliders and scenario presets
+   ============================================================ */
+function buildSliders() {
+  const wrap = document.getElementById('sliders');
+  SENSORS.forEach((s, idx) => {
+    const row = document.createElement('div');
+    row.className = 'sensor-row';
+    const label = document.createElement('label');
+    label.setAttribute('for', 'sl-' + s.key);
+    const nm = document.createElement('span');
+    nm.textContent = s.name;
+    const val = document.createElement('span');
+    val.className = 'val';
+    val.textContent = s.val + ' ' + s.unit;
+    label.appendChild(nm); label.appendChild(val);
+    const input = document.createElement('input');
+    input.type = 'range';
+    input.id = 'sl-' + s.key;
+    input.min = s.min; input.max = s.max; input.step = s.step; input.value = s.val;
+    input.setAttribute('aria-label', s.name);
+    input.addEventListener('input', () => {
+      s.val = parseFloat(input.value);
+      val.textContent = s.val + ' ' + s.unit;
+      state.input[idx] = s.val / s.max;
+      paintRange(input);
+      if (state.training || state.forwardBusy || REDUCED) silentForward();
+      else forwardAnimated();
+    });
+    row.appendChild(label); row.appendChild(input);
+    wrap.appendChild(row);
+    s._input = input;
+    s._valEl = val;
+    paintRange(input);
+  });
+}
+function buildPresets() {
+  const wrap = document.getElementById('presets');
+  PRESETS.forEach(p => {
+    const btn = document.createElement('button');
+    btn.className = 'btn';
+    btn.textContent = p.name;
+    btn.addEventListener('click', () => {
+      p.vals.forEach((v, idx) => {
+        const s = SENSORS[idx];
+        s.val = v;
+        s._input.value = v;
+        s._valEl.textContent = v + ' ' + s.unit;
+        state.input[idx] = v / s.max;
+        paintRange(s._input);
+      });
+      setCaption('Scenario: ' + p.name + '. Watch how the network classifies these sensor readings.');
+      if (state.training || REDUCED) silentForward();
+      else forwardAnimated();
+    });
+    wrap.appendChild(btn);
+  });
+}
+
+/* ============================================================
+   Speed and learning-rate controls
+   ============================================================ */
+function paintRange(input) {
+  const pct = ((input.value - input.min) / (input.max - input.min)) * 100;
+  input.style.setProperty('--fill', pct + '%');
+}
+const speedEl = document.getElementById('speed');
+const speedVal = document.getElementById('speedVal');
+speedEl.addEventListener('input', () => {
+  state.eps = parseInt(speedEl.value, 10);
+  speedVal.textContent = state.eps + ' epochs/s';
+  paintRange(speedEl);
+});
+const lrEl = document.getElementById('lr');
+const lrVal = document.getElementById('lrVal');
+lrEl.addEventListener('input', () => {
+  state.lr = parseFloat(lrEl.value);
+  lrVal.textContent = state.lr.toFixed(2);
+  paintRange(lrEl);
+});
+for (const [toggleId, cardId] of [['toggleTraining', 'trainCard'], ['toggleSensors', 'sensorCard'], ['togglePrediction', 'predCard']]) {
+  document.getElementById(toggleId).addEventListener('change', e => {
+    document.getElementById(cardId).hidden = !e.target.checked;
+    drawChart(); // chart canvas has zero width while its card is hidden
+  });
+}
+if (!REDUCED) {
+  panelEl.addEventListener('mousemove', e => {
+    const r = panelEl.getBoundingClientRect();
+    panelEl.style.setProperty('--mx', (((e.clientX - r.left) / r.width) * 100).toFixed(1) + '%');
+    panelEl.style.setProperty('--my', (((e.clientY - r.top) / r.height) * 100).toFixed(1) + '%');
+  });
+}
+
+/* ============================================================
+   Main animation loop: pulses and epoch scheduling
+   ============================================================ */
+function tick(now) {
+  for (let i = pulses.length - 1; i >= 0; i--) {
+    const p = pulses[i];
+    const t = (now - p.t0) / p.dur;
+    if (t >= 1) { p.el.remove(); pulses.splice(i, 1); continue; }
+    if (t < 0) continue; // tail dots wait for their delayed start
+    const e = t < 0.5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2;
+    const pt = p.path.getPointAtLength(p.len * e);
+    p.el.setAttribute('cx', pt.x);
+    p.el.setAttribute('cy', pt.y);
+    p.el.setAttribute('opacity', (p.baseOpacity * Math.sin(Math.PI * t)).toFixed(3));
+  }
+  if (!state.forwardBusy && !REDUCED && now >= state.nextAmbient) {
+    state.nextAmbient = now + 150 + Math.random() * 250;
+    spawnAmbientPulse();
+  }
+  if (state.training && now - state.lastEpoch >= 1000 / state.eps) {
+    state.lastEpoch = now;
+    doEpoch();
+  }
+  requestAnimationFrame(tick);
+}
+
+/* ============================================================
+   Init
+   ============================================================ */
+buildSVG();
+buildBars();
+buildSliders();
+buildPresets();
+paintRange(speedEl);
+paintRange(lrEl);
+// Pre-train so the condition presets classify correctly on first load.
+// Reset wipes the weights for visitors who want to watch it learn from scratch.
+for (let e = 0; e < CONFIG.pretrainEpochs; e++) {
+  const loss = trainEpoch(model, dataset.train, state.lr, shuffleRand, CONFIG.batchSize);
+  state.epoch++;
+  state.lossHist.push(loss);
+  state.accHist.push(accuracy(model, dataset.test));
+  pushWeightHistory();
+}
+if (state.accHist[state.accHist.length - 1] >= 0.9) state.said90 = true;
+updateEdges();
+updateReadouts(state.lossHist[state.lossHist.length - 1], state.accHist[state.accHist.length - 1]);
+silentForward();
+drawChart();
+setCaption('Pre-trained on ' + dataset.train.length + ' field samples: click a condition preset below and watch the data flow. Reset in the training panel to watch it learn from scratch.');
+requestAnimationFrame(tick);
+</script>
+</body>
+</html>
