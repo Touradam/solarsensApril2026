@@ -871,6 +871,8 @@ h1, h2, h3, h4, h5, h6,
 .hero-frame {
   margin: 0;
   padding: var(--space-md);
+  width: 100%;
+  max-width: 594px;
   background: var(--surface);
   border-radius: var(--radius-lg);
   border: 1px solid var(--border);
@@ -949,7 +951,6 @@ h1, h2, h3, h4, h5, h6,
 .hero-flip {
   position: relative;
   width: 100%;
-  max-width: 560px;
   aspect-ratio: 1114 / 720;
   perspective: 1200px;
   cursor: pointer;
